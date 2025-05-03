@@ -1,0 +1,52 @@
+﻿@model E_commerce_23TH0024.Models.AspNetUsers
+
+@{
+    ViewBag.Title = "Xem chi tiết";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xem Chi tiết</h4>
+@ViewBag.Success
+<div>
+    <dl class="dl-horizontal table">
+        <div class="row mt-2">
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+        </div>
+        <div class="form-group row mt-2">
+            <dt class="col-md-2">
+                Email
+            </dt>
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </div>
+
+        <div class="row mt-2">
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.EmailConfirmed)
+            </dt>
+
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.EmailConfirmed)
+            </dd>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <a href='@Url.Action("CreatePassWord", "AspNetUsers_23TH0024", new {UserId = Model.Id})'>Tạo mật khẩu mới</a>
+            </div>
+        </div>
+        @Html.Partial("_ViewFields")
+        
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class="btn btn-edit"}) |
+    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+</p>

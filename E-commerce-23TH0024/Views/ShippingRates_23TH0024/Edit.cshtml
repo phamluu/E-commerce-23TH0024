@@ -1,0 +1,34 @@
+﻿@model E_commerce_23TH0024.Models.ShippingRate
+
+@{
+    ViewBag.Title = "Cập nhật bảng giá";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4 class="title">Cập nhật bảng giá</h4>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.Partial("_Fields", Model)
+    <div class="form-group row mt-3">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            <input type="submit" value="Save" class="btn btn-default btn-save" />
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
+
+        </div>
+    </div>
+</div>
+}
+
+<script>
+$(document).ready(function() {
+        $('#Region').select2();
+});
+</script>

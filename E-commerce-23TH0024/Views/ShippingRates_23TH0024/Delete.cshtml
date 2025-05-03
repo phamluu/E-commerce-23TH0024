@@ -1,0 +1,15 @@
+﻿@model E_commerce_23TH0024.Models.ShippingRate
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xóa bảng giá</h4>
+
+<h6 class="alert alert-warning">Bạn có chắc chắn muốn xóa bảng giá này?</h6>
+<div>
+    @Html.Partial("_ViewFields")
+
+    @Html.Partial("_FormDelete")
+</div>

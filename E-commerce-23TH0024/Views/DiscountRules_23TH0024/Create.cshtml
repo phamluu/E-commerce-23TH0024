@@ -1,0 +1,33 @@
+﻿@model E_commerce_23TH0024.Models.DiscountRule
+
+@{
+    ViewBag.Title = "Thêm chương trình";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Thêm chương trình</h4>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        @Html.Partial("_Fields")
+        <div class="form-group row mt-3">
+            <div class="col-md-2"></div>
+            <div class="col-md-9">
+                <input type="submit" value="Lưu" class="btn btn-default btn-save" />
+                @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+            </div>
+        </div>
+    </div>
+}
+<script>
+$(document).ready(function() {
+    $('#ProductGroupID').select2();
+    $('#CustomerTypeID').select2();
+});
+</script>
+

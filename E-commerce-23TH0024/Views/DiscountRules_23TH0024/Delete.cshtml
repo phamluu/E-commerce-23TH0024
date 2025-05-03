@@ -1,0 +1,67 @@
+﻿@model E_commerce_23TH0024.Models.DiscountRule
+
+@{
+    ViewBag.Title = "Xóa " + Model.Name;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">@ViewBag.Title </h4>
+
+<h6 class="alert alert-warning">Bạn có chắc chắn muốn xóa giảm giá này?</h6>
+<div>
+    <dl class="dl-horizontal">
+        <div class="row">
+            <div class="col-6">
+                <label class="font-weight-bold">Tên chương trình: </label>
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Loại giảm giá: </label>
+                @Html.DisplayFor(model => model.Discount_Type)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Mô tả: </label>
+                @Html.DisplayFor(model => model.Description)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Tổng tối thiểu </label>
+                @Html.DisplayFor(model => model.MinTotalPrice)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Số tiền giảm giá: </label>
+                @Html.DisplayFor(model => model.DiscountAmount)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Phần trăm giảm giá </label>
+                @Html.DisplayFor(model => model.DiscountPercent)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Loại khách hàng: </label>
+                @Html.DisplayFor(model => model.CustomerTypeID)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Ngày bắt đầu </label>
+                @Html.DisplayFor(model => model.StartDate)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Ngày kết thúc: </label>
+                @Html.DisplayFor(model => model.EndDate)
+            </div>
+            <div class="col-6">
+                <label class="font-weight-bold">Loại sản phẩm: </label>
+                @Html.DisplayFor(model => model.LoaiSanPham.TenLSP)
+            </div>
+        </div>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class="btn btn-list"})
+        </div>
+    }
+</div>

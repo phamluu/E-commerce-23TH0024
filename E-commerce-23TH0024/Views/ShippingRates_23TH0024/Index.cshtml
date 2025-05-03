@@ -1,0 +1,58 @@
+﻿@using E_commerce_23TH0024.Models
+@model IEnumerable<E_commerce_23TH0024.Models.ShippingRate>
+
+@{
+    ViewBag.Title = "Bảng giá vận chuyển";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Bảng giá vận chuyển</h4>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", "", new {@class = "btn btn-add"})
+</p>
+<div id="gridContent">
+    <table class="table table-borderd table-hover">
+        <thead>
+            <tr class="grid-header">
+                <th>
+                    @Html.DisplayName("Từ (km)")
+                </th>
+                <th>
+                    @Html.DisplayName("Đến (km)")
+                </th>
+                <th>
+                    @Html.DisplayName("Giá mặc định")
+                </th>
+                <th>
+                    @Html.DisplayName("Giá/ km")
+                </th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FromDistance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ToDistance)
+                </td>
+                <td>
+                    @Helper.money(item.FixedPrice)
+                </td>
+                <td>
+                    @Helper.money(item.PricePerKm)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
+                    <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
+                    <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

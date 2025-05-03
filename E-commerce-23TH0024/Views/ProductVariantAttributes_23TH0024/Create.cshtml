@@ -1,0 +1,75 @@
+﻿@model E_commerce_23TH0024.Models.ProductVariantAttribute
+
+@{
+    ViewBag.Title = "Thêm giá trị biến thể";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4 class="title">Thêm giá trị biến thể</h4>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group mt-2">
+        @Html.LabelFor(model => model.IdProductVariant, "Biến thể", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("VariantID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdProductVariant, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group mt-2">
+        @Html.LabelFor(model => model.IdProductAttribute, "Thuộc tính", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AttributeID", null,"Chọn thuộc tính", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdProductAttribute, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mt-2">
+        @Html.LabelFor(model => model.IdAttributeValue, "Giá trị thuộc tính", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AttributeValueID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdProductAttribute, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu" class="btn btn-default btn-save" />
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
+        </div>
+    </div>
+</div>
+}
+
+<script>
+    $(document).ready(function () {
+        var attributeValueDropdown = $("#AttributeValueID");
+        attributeValueDropdown.empty();
+            $("#AttributeID").change(function () {
+                var attributeId = $(this).val();
+                if (attributeId) {
+                    $.ajax({
+                        url: '@Url.Action("ValueListForAttribute", "AttributeValues_23TH0024")', 
+                        type: 'GET',
+                        data: { AttributeID: attributeId },
+                        success: function (data) {
+                            attributeValueDropdown.empty(); 
+                            attributeValueDropdown.append('<option value="">Chọn giá trị</option>');
+                            $.each(data, function (index, item) {
+                                attributeValueDropdown.append('<option value="' + item.Value + '">' + item.Text + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Có lỗi xảy ra khi lấy dữ liệu.");
+                        }
+                    });
+                } else {
+                    $("#AttributeValueID").empty();
+                }
+            });
+        });
+</script>

@@ -1,0 +1,27 @@
+﻿@model E_commerce_23TH0024.Models.Menu
+<dl class="dl-horizontal">
+    <dt>
+        Loại Menu
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.LoaiMenu)
+    </dd>
+
+    <dt>
+        Loại sản phẩm
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.LoaiSanPham.TenLSP)
+    </dd>
+
+    <dt>
+        Nhóm menu
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.NhomMenu1.TenNhomMenu)
+    </dd>
+
+</dl>

@@ -1,0 +1,15 @@
+﻿@model E_commerce_23TH0024.Models.Menu
+
+@{
+    ViewBag.Title = "Xem chi tiết menu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div>
+    <h4 class="title">Chi tiết Menu</h4>
+    @Html.Partial("_ViewFields")
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class="btn btn-edit"}) |
+    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class="btn btn-list"})
+</p>

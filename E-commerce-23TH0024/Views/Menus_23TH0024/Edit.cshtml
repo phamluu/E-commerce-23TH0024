@@ -1,0 +1,22 @@
+﻿@model E_commerce_23TH0024.Models.Menu
+
+@{
+    ViewBag.Title = "Sửa Menu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4 class="title">Menu</h4>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.Partial("_Fields", Model)
+
+    @Html.Partial("_FormActions")
+</div>
+}
+

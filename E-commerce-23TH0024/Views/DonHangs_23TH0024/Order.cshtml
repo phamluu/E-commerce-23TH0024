@@ -1,0 +1,127 @@
+﻿@using E_commerce_23TH0024.Models
+@model E_commerce_23TH0024.Models.DonHang
+@{
+    ViewBag.Title = "Đặt hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string diachi = (Model != null && Model.KhachHang != null) ? Model.KhachHang.DiaChi : "";
+}
+<div class="banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+        <div class="container">
+            <h1>Đặt hàng</h1>
+        </div>
+
+    </div>
+</div>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @*@Html.AntiForgeryToken()*@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cart-summary">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
+                    {
+                        <h4>Thông tin đặt hàng</h4>
+                        @Html.Hidden("MaKH", Model.KhachHang.Id)
+                        <div class="form-group">
+                            @Html.DisplayName("Họ tên")
+                            @Html.TextBoxFor(x => x.KhachHang.HoTen, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayName("Email")
+                            @Html.TextBoxFor(x => x.KhachHang.AspNetUser.Email, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayName("Điện thoại")
+                            @Html.TextBoxFor(x => x.KhachHang.SoDienThoai, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        if (!string.IsNullOrEmpty(Model.KhachHang.DiaChi))
+                        {
+                            <div class="form-group">
+                                @Html.DisplayName("Địa chỉ")
+                                @Html.TextBoxFor(x => x.KhachHang.DiaChi, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        }
+                        else
+                        {
+                                <p>Hãy cập nhật địa chỉ giao hàng</p>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            Vui lòng <a href='@Url.Action("Login", "Account")'>đăng nhập</a> tài khoản khách hàng để tiếp tục đặt hàng
+                            <p>Nếu bạn chưa có tài khoản. Hãy <a href='@Url.Action("Register", "Account")'>Đăng ký</a></p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cart-summary">
+                    <label>Phương thức vận chuyển</label>
+                    @Html.DropDownList("shippingMethod", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="cart-summary">
+                    <h4>Thông tin đơn hàng</h4>
+                    <div class="cart-item">
+                        <label>Tổng tiền</label>
+                        <span>@Helper.money(Model.TotalProductAmount)</span>
+                    </div>
+                    <div class="cart-item">
+                        <label>VAT</label>
+                        <span></span>
+                    </div>
+                    <div class="cart-item">
+                        <label>Phí vận chuyển</label>
+                        <span id="shippingFee">@Helper.money(Model.ShippingFee)</span>
+                    </div>
+                    <div class="cart-item total">
+                        <label>Thành tiền</label>
+                        <span>@Helper.money(Model.TotalAmount)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        if (User.Identity.IsAuthenticated && User.IsInRole("khachhang") && !string.IsNullOrEmpty(Model.KhachHang.DiaChi))
+        {
+            <div class="d-flex mb-3" style=" justify-content: right;">
+                <input type="submit" value="Đặt hàng" class="btn btn-default btn-primary" />
+            </div>
+        }
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#shippingMethod').change(function () {
+        $('#loading').show();
+        var shippingMethodValue = $(this).val();
+        if (shippingMethodValue) {
+            $.ajax({
+                url: '@Url.Action("CalculateShippingFee", "DonHangs_23TH0024")',
+                type: 'GET',
+                data: {
+                    shippingMethod: shippingMethodValue
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        $('#shippingFee').text(response.shippingFee);
+                        $('.total span').text(response.Total);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra khi tính phí vận chuyển.');
+                },
+                complete: function () {
+                    $('#loading').hide();
+                }
+            });
+        }
+    });
+});
+</script>

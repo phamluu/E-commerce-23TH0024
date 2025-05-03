@@ -1,0 +1,120 @@
+﻿<div id="sidebar-menu">
+
+    <ul class="metismenu" id="side-menu">
+
+        <li class="menu-title">Navigation</li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-clone"></i>
+                <span> Sản phẩm </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    @Html.ActionLink("Loại sản phẩm", "Index", "LoaiSanPhams_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Sản phẩm", "Index", "SanPhams_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Thuộc tính sản phẩm", "Index", "Attributes_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Giá trị thuộc tính", "Index", "AttributeValues_23TH0024")
+                </li>
+
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-clone"></i>
+                <span> Tính phí </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    @Html.ActionLink("Giảm giá", "Index", "DiscountRules_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Đơn hàng", "Index", "DonHangs_23TH0024")
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-cube"></i>
+                <span> Người dùng </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="@Url.Action("Index","AspNetUsers_23TH0024")">Tài khoản</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","KhachHangs_23TH0024")">Khách hàng</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","CustomerTypes_23TH0024")">Loại khách hàng</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","NhanViens_23TH0024")">Nhân viên</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-cube"></i>
+                <span> Menu </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="@Url.Action("Index","Menus_23TH0024")">Menu</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-clone"></i>
+                <span> Vận chuyển </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li><a href="@Url.Action("ShippingFee","Shipping_23TH0024")">Tính phí vận chuyển</a></li>
+                <li>
+                    @Html.ActionLink("Phương thức vận chuyển", "Index", "DeliveryMethods_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Bảng giá vận chuyển", "Index", "ShippingRates_23TH0024")
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-clone"></i>
+                <span> Khu vực </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    @Html.ActionLink("Tỉnh/ thành phố", "Index", "Cities_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Quận/ huyện", "Index", "Districts_23TH0024")
+                </li>
+                <li>
+                    @Html.ActionLink("Phường/ xã", "Index", "Wards_23TH0024")
+                </li>
+            </ul>
+        </li>
+        <li class="menu-title">Cài đặt</li>
+        <li>
+            <a href='@Url.Action("Index","Configurations_23TH0024")'>
+                <i class="fe-settings noti-icon"></i>
+                <span> Cấu hình </span>
+            </a>
+        </li>
+    </ul>
+
+</div>

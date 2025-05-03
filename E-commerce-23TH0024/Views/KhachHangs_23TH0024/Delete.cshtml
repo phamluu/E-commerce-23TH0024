@@ -1,0 +1,23 @@
+﻿@model E_commerce_23TH0024.Models.KhachHang
+
+@{
+    ViewBag.Title = "Xóa thông tin khách hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xóa thông tin khách hàng</h4>
+
+<h6 class="alert alert-warning">Bạn có chắn chắn xóa thông tin khách hàng này?</h6>
+<div>
+    @Html.Partial("_ViewFields")
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default btn-delete" /> |
+            @Html.ActionLink("Quay lại", "Index", "", new { @class = "btn btn-list" })
+        </div>
+    }
+</div>

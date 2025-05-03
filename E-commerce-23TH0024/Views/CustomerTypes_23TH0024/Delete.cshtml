@@ -1,0 +1,22 @@
+﻿@model E_commerce_23TH0024.Models.CustomerType
+
+@{
+    ViewBag.Title = "Xóa loại khách hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xóa loại khách hàng @Model.CustomerTypeName</h4>
+
+<h6 class="alert alert-warning">Bạn có muốn xóa @Model.CustomerTypeName</h6>
+<div>
+    @Html.Partial("_ViewFields")
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default btn-delete" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+        </div>
+    }
+</div>

@@ -1,0 +1,16 @@
+﻿@model E_commerce_23TH0024.Models.CustomerType
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xem Loại khách hàng</h4>
+
+<div>
+    @Html.Partial("_ViewFields")
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class = "btn btn-edit"}) |
+    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+</p>

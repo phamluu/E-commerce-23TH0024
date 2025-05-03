@@ -1,0 +1,25 @@
+﻿@model E_commerce_23TH0024.Models.ProductAttribute
+
+@{
+    ViewBag.Title = "Xem thuộc tính";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Tên thuộc tính
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttributeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

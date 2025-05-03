@@ -1,0 +1,62 @@
+﻿@model E_commerce_23TH0024.Models.ShippingRate
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.ShippingMethodID, "Phương thức giao hàng", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("ShippingMethodID", null, htmlAttributes: new { @class = "form-control multiselect" })
+        @Html.ValidationMessageFor(model => model.ShippingMethodID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.FromDistance, "Khoảng cách từ", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.FromDistance, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FromDistance, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.ToDistance, "Khoảng cách đến", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ToDistance, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ToDistance, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.FixedPrice, "Giá", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.FixedPrice, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FixedPrice, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.PricePerKm, "Giá/ km", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.PricePerKm, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PricePerKm, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.Region, "Khu vực", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("Region", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Region, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.WeightLitmit, "Cân nặng tối đa", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.WeightLitmit, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.WeightLitmit, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group row mt-2">
+    @Html.LabelFor(model => model.CreateAt, "Ngày tạo", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.CreateAt, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CreateAt, "", new { @class = "text-danger" })
+    </div>
+</div>

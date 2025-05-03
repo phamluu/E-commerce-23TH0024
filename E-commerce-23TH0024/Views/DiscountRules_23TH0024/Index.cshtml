@@ -1,0 +1,73 @@
+﻿@using E_commerce_23TH0024.Models
+@model IEnumerable<E_commerce_23TH0024.Models.DiscountRule>
+
+@{
+    ViewBag.Title = "Chương trình giảm giá";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Thiết lặp giảm giá</h4>
+
+<p>
+    @Html.ActionLink("Thêm chương trình", "Create", "", new { @class = "btn btn-add" })
+    <a class="btn btn-delete" href="javascript:void(0);"
+       onclick="if(confirm('Bạn có chắc chắn muốn xóa tất cả?')) { window.location.href='@Url.Action("DeleteAll")'; }">Xóa tất cả</a>
+</p>
+@Html.Partial("_AlertMessages")
+<div id="gridContent">
+    <table class="table table-borderd table-hover">
+        <tr class="grid-header">
+            <th>
+                @Html.DisplayName("Tên chương trình")
+            </th>
+            <th>
+                @Html.DisplayName("Loại sản phẩm")
+            </th>
+            <th>
+                @Html.DisplayName("Số tiền giảm")
+            </th>
+            <th>
+                @Html.DisplayName("Phần trăm")
+            </th>
+            <th>
+                @Html.DisplayName("Ngày bắt đầu")
+            </th>
+            <th>
+                @Html.DisplayName("Ngày kết thúc")
+            </th>
+            <th>Chức năng</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiSanPham.TenLSP)
+                </td>
+                <td>
+                    @Helper.money(item.DiscountAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountPercent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
+                    <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
+                    <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

@@ -1,0 +1,81 @@
+﻿@model E_commerce_23TH0024.Models.DiscountRule
+<div class="row">
+    <div class="col-7">
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.Name, "Tên chương trình", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.ProductGroupID, "Loại sản phẩm", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.DropDownList("ProductGroupID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProductGroupID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.CustomerTypeID, "Loại khách hàng", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.DropDownList("CustomerTypeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerTypeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.Description, "Mô tả", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.MinTotalPrice, "Áp dụng tổng tiền tối thiểu", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.MinTotalPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MinTotalPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.Discount_Type, "Loại giảm giá", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Discount_Type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Discount_Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.DiscountPercent, "Phần trăm giảm", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DiscountPercent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountPercent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.StartDate, "Ngày bắt đầu", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.EndDate, "Ngày kết thúc", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.DiscountAmount, "Tiền giảm (đ)", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>

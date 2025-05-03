@@ -1,0 +1,17 @@
+﻿@using E_commerce_23TH0024.Models
+@model IEnumerable<E_commerce_23TH0024.Models.MenuViewModels>
+@{ 
+    Layout = "";
+}
+@if (Model != null && Model.Count() > 0)
+{
+<ul class="navbar-nav flex-grow-1">
+    @foreach (var item in Model)
+    {
+        if (!string.IsNullOrEmpty(item.MenuName))
+        {
+            <li><a href='/@item.Url' class="nav-link">@item.MenuName</a></li>
+        }
+    }
+</ul>
+}

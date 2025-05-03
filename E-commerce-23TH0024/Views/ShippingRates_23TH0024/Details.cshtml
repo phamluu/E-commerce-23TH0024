@@ -1,0 +1,14 @@
+﻿@model E_commerce_23TH0024.Models.ShippingRate
+
+@{
+    ViewBag.Title = "Giá vận chuyển";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Chi tiết giá vận chuyển</h4>
+
+@Html.Partial("_ViewFields")
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new { @class = "btn btn-edit" }) |
+    @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
+</p>

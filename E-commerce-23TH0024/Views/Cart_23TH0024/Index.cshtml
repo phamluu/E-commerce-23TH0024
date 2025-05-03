@@ -1,0 +1,86 @@
+﻿@using System.Globalization;
+@using E_commerce_23TH0024.Models
+@model E_commerce_23TH0024.Models.Cart
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+        <div class="container">
+            <h1>Giỏ hàng của bạn</h1>
+        </div>
+
+    </div>
+</div>
+<div class="container cart">
+
+    @if (Model.Items.Count == 0)
+    {
+        <p>Giỏ hàng của bạn đang trống.</p>
+    }
+    else
+    {
+        <table class="table">
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td colspan="2">
+                        <h5> @Html.DisplayFor(modelItem => item.TenSP)</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:30%;"><img src="~/Uploads/@Html.DisplayFor(modelItem => item.Anh)" /></td>
+                    <td>
+                        
+                        <div>
+                            @if (item.Discount != null)
+                            {
+                                <div>
+                                    <span class="old-price">
+                                        @Helper.money(item.DonGia)
+                                    </span>
+                                    <span class="price">
+                                        @Helper.money(item.FinalPrice)
+                                    </span>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <span class="price">
+                                    @Helper.money(item.DonGia)
+                                </span>
+                            }
+                        </div>
+                            <div style="display:flex; align-items: center;" class="btn-quantity">
+                                <button type="button" class="decreaseQty" style="font-size: 20px; padding: 0px 10px;">-</button>
+                                <input type="number" data-id="@item.Id" class="quantity" value="@Html.DisplayFor(modelItem => item.SoLuong)" min="1" style="width: 50px; height: 35px; text-align: center;" />
+                                <button type="button" class="increaseQty" style="font-size: 20px; padding: 0px 10px;">+</button>
+                            </div>
+
+                        
+                    </td>
+                    <td>
+                        <a href='@Url.Action("RemoveFromCart", "Cart_23TH0024", new {productId = item.Id})' title="Xóa" class="btn-delete"><i class="fas fa-remove"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div class="d-flex mb-3" style=" justify-content: right;">
+           <span style="font-size: 21px; color: #e90909; font-weight: 500;">Tổng tiền: @Helper.money(Model.Total)</span>
+        </div>
+        <div class="d-flex mb-3" style=" justify-content: right;">
+            <a href='@Url.Action("Order","DonHangs_23TH0024")' class="btn btn-save btn-primary">Tiếp tục</a>
+        </div>
+    }
+
+</div>
+
+<script>
+    $(document).ready(function () {
+       
+    });</script>

@@ -1,0 +1,179 @@
+﻿@using Azure.Core
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/backend\libs\jquery-vectormap\jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/backend/css/icons.min.css" rel="stylesheet" />
+    <link href="~/Content/backend/css/app.min.css" rel="stylesheet" />
+    <link href="~/Content/backend/css/style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="navbar-custom">
+            <ul class="list-unstyled topnav-menu float-right mb-0">
+
+                <li class="d-none d-sm-block">
+                    @Html.ActionLink("In thiệp cưới", "Index", "DashBoard_23TH0024", "", new { @class = "logo" })
+                </li>
+                <li class="d-none d-sm-block">
+                </li>
+                @* <li class="dropdown notification-list"> *@
+                @*     <a class="nav-link dropdown-toggle waves-light waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> *@
+                @*         <i class="fe-bell noti-icon"></i> *@
+                @*         <span class="badge badge-danger rounded-circle noti-icon-badge">5</span> *@
+                @*     </a> *@
+                @*     <div class="dropdown-menu dropdown-menu-right dropdown-lg"> *@
+                @*         <div class="dropdown-item noti-title"> *@
+                @*             <h5 class="m-0 text-white"> *@
+                @*                 <span class="float-right"> *@
+                @*                     <a href="" class="text-white"> *@
+                @*                         <small>Xóa tất cả</small> *@
+                @*                     </a> *@
+                @*                 </span>Thông báo *@
+                @*             </h5> *@
+                @*         </div> *@
+
+                @*         <div class="slimscroll noti-scroll"> *@
+                @*             <a href="javascript:void(0);" class="dropdown-item notify-item active"> *@
+                @*                 <div class="notify-icon"> *@
+                @*                     <img src="~/Content/backend/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> *@
+                @*                 </div> *@
+                @*                 <p class="notify-details">Cristina Pride</p> *@
+                @*                 <p class="text-muted mb-0 user-msg"> *@
+                @*                     <small>Hi, How are you? What about our next meeting</small> *@
+                @*                 </p> *@
+                @*             </a> *@
+                @*             <a href="javascript:void(0);" class="dropdown-item notify-item"> *@
+                @*                 <div class="notify-icon bg-primary"> *@
+                @*                     <i class="mdi mdi-comment-account-outline"></i> *@
+                @*                 </div> *@
+                @*                 <p class="notify-details"> *@
+                @*                     Caleb Flakelar commented on Admin *@
+                @*                     <small class="text-muted">1 min ago</small> *@
+                @*                 </p> *@
+                @*             </a> *@
+                @*             <a href="javascript:void(0);" class="dropdown-item notify-item"> *@
+                @*                 <div class="notify-icon"> *@
+                @*                     <img src="/backend\images\users\user-4.jpg" class="img-fluid rounded-circle" alt=""> *@
+                @*                 </div> *@
+                @*                 <p class="notify-details">Karen Robinson</p> *@
+                @*                 <p class="text-muted mb-0 user-msg"> *@
+                @*                     <small>Wow ! this admin looks good and awesome design</small> *@
+                @*                 </p> *@
+                @*             </a> *@
+                @*         </div> *@
+                @*         <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all"> *@
+                @*             Xem tất cả *@
+                @*             <i class="fi-arrow-right"></i> *@
+                @*         </a> *@
+
+                @*     </div> *@
+                @* </li> *@
+                @* @if (Request.IsAuthenticated)
+                {
+                    <li class="dropdown notification-list">
+                        <a class="nav-link  nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="~/Content/backend/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
+                            <span class="pro-user-name ml-1">
+                                @User.Identity.GetUserName() <i class="mdi mdi-chevron-down"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0 text-white">
+                                    Welcome !
+                                </h5>
+                            </div>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-user"></i>
+                                <span>My Account</span>
+                            </a>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-settings"></i>
+                                <span>Cài đặt</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item notify-item">
+                                    <i class="fe-log-out"></i>
+                                    <span>Đăng xuất</span>
+                                </a>
+                            }
+                        </div>
+                    </li>
+                } *@
+            </ul>
+            <div class="logo-box">
+                <a href='@Url.Action("Index", "DashBoard_23TH0024")' class="logo text-center">
+                    <span class="logo-lg">
+                        <span class="logo-lg-text-light">Hồng Len</span>
+                    </span>
+                    <span class="logo-sm">
+                        <span class="logo-sm-text-dark">X</span>
+                    </span>
+                </a>
+            </div>
+
+            <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                <li>
+                    <button class="button-menu-mobile waves-effect waves-light">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="left-side-menu">
+            <div class="slimscroll-menu">
+                @Html.Partial("_SideBar")
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="content-page">
+            <script src="~/Content/backend/js/vendor.min.js"></script>
+            @RenderBody()
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            2024 &copy; Design by <a href="">Phạm Thị Thanh Lưu - 23TH0024</a>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="rightbar-overlay"></div>
+    <script src="~/Content/backend/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="~/Content/backend/js/app.min.js"></script> @*left menu*@
+    @RenderSection("scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/Scripts/custom_signalR.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script>
+        $(".multiselect").select2();
+    </script>
+</body>
+</html>

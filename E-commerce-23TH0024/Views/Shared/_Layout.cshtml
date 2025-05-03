@@ -1,0 +1,126 @@
+﻿@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - E_commerce_23TH0024</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/E_commerce_23TH0024.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">E_commerce_23TH0024</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - E_commerce_23TH0024 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html> *@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - IN ẤN HỒNG LEN</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/E_commerce_23TH0024.styles.css" asp-append-version="true" /> 
+    <link href="~/css/style.css" rel="stylesheet" />
+   
+    @* @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery") *@
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
+            <div class="container" style="position:relative">
+                @Html.ActionLink("Thiệp cưới", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    @{
+                        //Html.RenderAction("MenuListForGroup", "Menus_23TH0024", new { menuGroup = "main-menu", viewName = "Partial/_MainMenu" });
+                    }
+                </div>
+                <div style="position: absolute; right: 0; top: 0; display: flex ">
+                    <div class="navbar-brand sticky">
+                        <a href='@Url.Action("Index","Cart_23TH0024")' class="shopping-cart">
+                            <span>0</span>
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </div>
+                    @* @Html.Partial("_LoginPartial") *@
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+    <footer>
+        <div class="container align-content-center align-text-center">
+            <p>CÔNG TY TNHH TMDV HỒNG LEN</p>
+            <p>Điện thoại: 0904.844.382 - 094.760.9406</p>
+            <p>Địa chỉ: 123 Củ Chi - Vĩnh Hải - Nha Trang</p>
+            <p>© 2024 - 23TH0024</p>
+        </div>
+    </footer>
+    <div id="loading" style="display:none;">
+        <span>Đang tải...</span>
+    </div>
+   @*  @Scripts.Render("~/bundles/bootstrap") *@
+    @RenderSection("scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="https://chatbot.inanhonglen.com/static/chat.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/Scripts/custom_signalR.js"></script>
+
+</body>
+
+</html>

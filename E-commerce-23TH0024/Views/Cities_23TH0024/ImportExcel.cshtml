@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "ImportExcel";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h4 class="title">Import Data from Excel</h4>
+
+@using (Html.BeginForm("ImportExcel", "Cities_23TH0024", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <label for="file">Chọn file:</label>
+        <input type="file" id="file" name="file" />
+    </div>
+    <br />
+    <button type="submit" class="btn  btn-default">Import</button>
+}
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert-success">@ViewBag.Message</p>
+}

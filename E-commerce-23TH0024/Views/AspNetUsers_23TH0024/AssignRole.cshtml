@@ -1,0 +1,25 @@
+﻿@model E_commerce_23TH0024.Models.AssignRoleViewModel
+@{
+    ViewBag.Title = "Gán vai trò";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Gán vai trò cho @Model.UserName</h4>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @foreach (var role in Model.Roles)
+        {
+            <div class="form-group mt-2">
+                <input type="checkbox" name="SelectedRoles" value="@role.Value" @(role.Selected ? "checked" : "") />
+                <label>@role.Text</label>
+            </div>
+        }
+    </div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-save">Lưu thay đổi</button>
+        @Html.ActionLink("Quay lại danh sách", "Index", new {}, new {@class = "btn btn-list"} )
+    </div>
+    
+}

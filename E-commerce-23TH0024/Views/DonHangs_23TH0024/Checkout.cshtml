@@ -1,0 +1,66 @@
+﻿@using E_commerce_23TH0024.Models
+@model E_commerce_23TH0024.Models.DonHang
+@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+        <div class="container">
+            <h1>Thanh toán</h1>
+        </div>
+
+    </div>
+</div>
+<div class="container">
+    <h4 class="mt-3 mb-3 alert-success">Xác Nhận Đơn Hàng Thành Công!</h4>
+
+    <div class="order-details">
+        <h4 class="title">Thông Tin Đơn Hàng:</h4>
+        <table>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+            </tr>
+            @foreach (var item in Model.ChiTietDonHangs)
+            {
+                <tr>
+                    <td>@item.SanPham.TenSP</td>
+                    <td>@item.SoLuong</td>
+                    <td>
+                        <span class="old-price">@Helper.money(item.DonGia)</span>
+                        <span style="color:red;">@Helper.money(item.DonGia - item.DiscountApplied)</span>
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+        <p class=""><b>Tổng tiền sản phẩm: </b>@Helper.money(Model.TotalProductAmount)</p>
+        <p class=""><b>VAT:</b> @Model.VAT</p>
+        <p class=""><b>Phí vận chuyển: </b>@Helper.money(Model.ShippingFee)</p>
+        <p class="total-price"><b>Tổng cộng:</b> @Helper.money(Model.TotalAmount)</p>
+        @{ 
+            decimal TotalUnit = Model.ChiTietDonHangs.Sum(x => x.DonGia * x.SoLuong);
+        }
+        <p style="color:green;">Bạn đã tiết kiệm được @Helper.money(TotalUnit - Model.TotalProductAmount)</p>
+    </div>
+
+    <div class="payment-method">
+        <h4 class="title">Phương Thức Thanh Toán:</h4>
+        <ul>
+            <li><strong>Thanh toán khi nhận hàng (COD):</strong> Bạn thanh toán tiền mặt khi nhận hàng.</li>
+            <li>
+                <strong>Chuyển khoản ngân hàng:</strong> Chuyển khoản trực tiếp vào tài khoản ngân hàng của chúng tôi.
+                <div class="body-content" style="display:none;"></div>
+            </li>
+            <li><strong>Thẻ tín dụng / Thẻ ghi nợ:</strong> Sử dụng thẻ tín dụng hoặc thẻ ghi nợ để thanh toán trực tuyến qua cổng thanh toán.</li>
+            <li><strong>Ví điện tử (Momo, ZaloPay, VNPAY, etc.):</strong> Sử dụng các ví điện tử như Momo, ZaloPay, VNPAY để thanh toán nhanh chóng và tiện lợi.</li>
+            <li><strong>Thanh toán qua QR Code:</strong> Quét mã QR để thanh toán nhanh chóng qua các nền tảng thanh toán trực tuyến.</li>
+        </ul>
+    </div>
+
+</div>
+
+

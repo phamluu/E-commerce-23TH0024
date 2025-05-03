@@ -1,0 +1,35 @@
+﻿@model E_commerce_23TH0024.Models.KhachHang
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayName("Họ tên")
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.HoTen)
+    </dd>
+
+    <dt>
+        @Html.DisplayName("Số điện thoại")
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.SoDienThoai)
+    </dd>
+
+    <dt>
+        @Html.DisplayName("Địa chỉ")
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DiaChi)
+    </dd>
+
+    <dt>
+        @Html.DisplayName("Tài khoản")
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AspNetUser.UserName)
+    </dd>
+
+</dl>

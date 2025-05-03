@@ -1,0 +1,40 @@
+﻿@model E_commerce_23TH0024.Models.AspNetUsers
+
+@{
+    ViewBag.Title = "Xóa người dùng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xóa người dùng</h4>
+
+<h6 class="alert alert-warning">Bạn có chắc chắn muốn xóa người dùng này?</h6>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        @Html.Partial("_ViewFields")
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+        </div>
+    }
+</div>

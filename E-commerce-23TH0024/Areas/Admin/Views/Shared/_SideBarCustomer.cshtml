@@ -1,0 +1,46 @@
+﻿
+<div class="box">
+    <h4 class="title">Dịch vụ</h4>
+    <ul>
+        <li>
+            <a href='@Url.Action("OrderListForCustomer", "DonHangs_23TH0024")'>Đơn hàng đã đặt</a>
+        </li>
+        <li>
+            <a href="">Dịch vụ đang sử dụng</a>
+        </li>
+    </ul>
+</div>
+<div class="box">
+    <ul>
+        <h4 class="title">Kế toán</h4>
+        <li>
+            <a href="">Điểm tích lũy</a>
+        </li>
+        <li>
+            <a href="">Danh sách công nợ</a>
+        </li>
+    </ul>
+</div>
+<div class="box">
+    <ul>
+        <h4 class="title">Thông tin tài khoản</h4>
+        <li>
+            @Html.ActionLink("Xem thông tin", "ViewProfile", "KhachHangs_23TH0024")
+        </li>
+        <li>
+            @Html.ActionLink("Sửa hồ sơ", "UpdateProfile", "KhachHangs_23TH0024")
+        </li>
+        <li>
+            @Html.ActionLink("Đổi mật khẩu", "ChangePassword", "Manage")
+            
+        </li>
+        <li>
+        <li>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit">Đăng xuất</button>
+            }
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,106 @@
+﻿@model E_commerce_23TH0024.Models.KhachHang
+
+@{
+    ViewBag.Title = "Xem hồ sơ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container customer">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("~/Views/Shared/_SideBarCustomer.cshtml")
+        </div>
+        <div class="col-md-8">
+            <h4 class="title">Xem hồ sơ</h4>
+            <hr />
+            <dl class="dl-horizontal grid-container">
+                <dt>
+                    @Html.DisplayName("Họ tên")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HoTen)
+                </dd>
+                <dt>
+                    @Html.DisplayName("UserName")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AspNetUser.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayName("Số điện thoại")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SoDienThoai)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Latitude")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Latitude)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Longitude")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Longitude)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Địa chỉ")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DiaChi)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Tỉnh/ thành phố")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.City.CityName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Loại khách hàng")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CustomerType.CustomerTypeName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Quận huyện")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.District.DistrictName)
+                </dd>
+
+
+
+                <dt>
+                    @Html.DisplayName("Xã phường")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ward.WardName)
+                </dd>
+                <p class="btn btn-edit">
+                    @Html.ActionLink("Sửa hồ sơ", "UpdateProfile")
+                </p>
+            </dl>
+            
+        </div>
+    </div>
+    
+</div>
+

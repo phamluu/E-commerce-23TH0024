@@ -1,0 +1,44 @@
+﻿@* @model E_commerce_23TH0024.Models.ProductVariantAttribute
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProductVariantAttribute</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AttributeValue.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttributeValue.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductVariant.VariantID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductVariant.VariantID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Attribute1.AttributeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attribute1.AttributeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+ *@

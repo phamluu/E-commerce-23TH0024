@@ -1,0 +1,24 @@
+﻿@model E_commerce_23TH0024.Models.Menu
+<div class="form-group">
+    @Html.LabelFor(model => model.NhomMenu, "Nhóm Menu", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("NhomMenu", null, htmlAttributes: new { @class = "form-control multiselect" })
+        @Html.ValidationMessageFor(model => model.NhomMenu, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LoaiMenu, "Loại Menu", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.LoaiMenu, (SelectList)ViewBag.LoaiMenu, "Chọn loại menu", new { @class = "form-control multiselect" })
+        @Html.ValidationMessageFor(model => model.LoaiMenu, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.MaLoaiMenu, "Mã Loại Menu", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("MaLoaiMenu", null, htmlAttributes: new { @class = "form-control multiselect" })
+        @Html.ValidationMessageFor(model => model.MaLoaiMenu, "", new { @class = "text-danger" })
+    </div>
+</div>

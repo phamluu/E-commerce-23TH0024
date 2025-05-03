@@ -1,0 +1,55 @@
+﻿@model E_commerce_23TH0024.Models.NhanVien
+
+@{
+    ViewBag.Title = "Xóa thông tin nhân viên";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xóa thông tin nhân viên</h4>
+
+<h6 class="alert-danger">Bạn có chắc chắn muốn xóa thông tin nhân viên này?</h6>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Họ tên")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Số điện thoại")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoDienThoai)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Địa chỉ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Tên đăng nhập")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default btn-delete" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+        </div>
+    }
+</div>

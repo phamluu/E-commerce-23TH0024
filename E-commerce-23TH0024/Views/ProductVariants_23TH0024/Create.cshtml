@@ -1,0 +1,23 @@
+﻿@model IEnumerable<E_commerce_23TH0024.Models.ProductAttribute>
+@{ 
+    int i = 0;
+}
+    @*@Html.AntiForgeryToken()*@
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        @foreach (var item in Model)
+                {
+            <div class="form-group">
+                <label class="font-weight-bold">@item.AttributeName</label>
+                @Html.Hidden("attributes[" + i + "].AttributeID", item.Id)
+                @Html.DropDownList("attributes[" + i + "].AttributeValueID", new SelectList(item.AttributeValues, "ValueID", "Value"), new { @class = "form-control" })
+
+            </div>
+            i++;
+        }
+    </div>
+
+
+
