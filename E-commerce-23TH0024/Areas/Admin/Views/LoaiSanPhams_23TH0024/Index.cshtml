@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<E_commerce_23TH0024.Models.LoaiSanPham>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách loại sản phẩm";
 }
 
-<h1>Index</h1>
+<h3 class="title">@ViewData["Title"]</h3>
 
 <p>
     @Html.ActionLink("Thêm mới", "Create", new { @class = "btn btn-default" })
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TenLSP)
+                @Html.DisplayName("Tên loại sản phẩm")
             </th>
             <th></th>
         </tr>

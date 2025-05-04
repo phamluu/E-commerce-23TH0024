@@ -77,7 +77,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return NotFound();
             }
-            ViewBag.ProductID = new SelectList(db.SanPhams, "MaSP", "TenSP", productVariant.IdSanPham);
+            ViewBag.ProductID = new SelectList(db.SanPham, "MaSP", "TenSP", productVariant.IdSanPham);
             return View(productVariant);
         }
 
@@ -94,7 +94,7 @@ namespace E_commerce_23TH0024.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductID = new SelectList(db.SanPhams, "MaSP", "TenSP", productVariant.IdSanPham);
+            ViewBag.ProductID = new SelectList(db.SanPham, "MaSP", "TenSP", productVariant.IdSanPham);
             return View(productVariant);
         }
 

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<E_commerce_23TH0024.Models.SanPhamViewModels>
+
+@{
+    ViewBag.Title = "Sản phẩm";
+}
+<style>
+    .d-flex {
+        align-items: center;
+    }
+
+    .form-search label {
+        white-space: nowrap;
+        margin-right: 5px;
+    }
+</style>
+<h4 class="title">Sản phẩm</h4>
+
+<div class="mb-3">
+    @Html.ActionLink("Thêm mới", "Create",  new { @class = "btn btn-default btn-add" })
+    @Html.ActionLink("ImportExcel", "ImportExcel", "FileTransfer_23TH0024",  new { @class = "btn btn-default btn-importexcel" })
+    @Html.ActionLink("Import tùy chỉnh", "ImportExcel_Custom", "FileTransfer_23TH0024",  new { @class = "btn btn-default btn-importzip" })
+    @Html.ActionLink("ExportExcel", "ExportExcel", "FileTransfer_23TH0024",  new { @class = "btn btn-default btn-exportexcel" })
+    <button class="btn btn-primary dropdown-toggle btn-delete" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        Xóa
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Xóa chọn</a>
+        <a class="dropdown-item" href="#">Xóa tùy chỉnh</a>
+        <a class="dropdown-item" href="javascript:void(0);" onclick="if(confirm('Bạn có chắc chắn muốn xóa tất cả?')) { window.location.href='@Url.Action("DeleteAll")'; }">Xóa tất cả</a>
+    </div>
+</div>
+@* <div class="form-search mb-3"> *@
+@*     @using (Html.BeginForm("TimKiemNC", "SanPhams_23TH0024", FormMethod.Get)) *@
+@*     { *@
+@*         @Html.AntiForgeryToken() *@
+@*         <div class="row"> *@
+@*             <div class="col-md-4"> *@
+@*                 <div class="d-flex"> *@
+@*                     <label><b>Tên sản phẩm</b></label> *@
+@*                     @Html.TextBox("TenSP", "", new { @class = "form-control" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="col-md-4"> *@
+@*                 <div class="d-flex"> *@
+@*                     <label><b>Thuộc loại</b></label> *@
+@*                     @Html.DropDownList("MaLSP", null, "Tất cả", htmlAttributes: new { @class = "form-control" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="col-md-4"> *@
+@*                 <div class="d-flex"> *@
+@*                     <label><b>Đơn giá</b></label><span class="mr-1">Từ </span> *@
+@*                     @Html.TextBox("DonGiaFrom", "", new { @class = "form-control mr-1", @type = "number" }) *@
+@*                     <span class="mr-1">Đến</span> *@
+@*                     @Html.TextBox("DonGiaTo", "", new { @class = "form-control", @type = "" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="col-md-3 mt-3"> *@
+@*                 <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default bg-success" /> *@
+@*                 <input type="button" name="Nhapmoi" value="Nhập mới" class="btn btn-default bg-secondary" onclick="location.href='@Url.Action("TimKiemNC", "SanPhams_23TH0024")'" /> *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* </div> *@
+@Html.Partial("_AlertMessages")
+<div id="gridContent">
+    <table id="grid">
+        <thead>
+            <th>STT</th>
+            <th>Hình đại diện</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Đơn vị tính</th>
+            <th>Loại sản phẩm</th>
+            <th>Chức năng</th>
+        </thead>
+        <tbody>
+            @foreach (var item in Model){
+                <tr>
+                    <td></td>
+                    <td><img src="~/Uploads/@item.Anh" class="img-fluid"/></td>
+                    <td>@item.TenSP </td>
+                    <td>@item.DonGia</td>
+                    <td>@item.DVT</td>
+                    <td>@item.LoaiSanPham.TenLSP</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.Id})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
+                        <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
+                        <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
+                    </td>
+                </tr>
+            }
+           
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    document.getElementById("dropdownMenuButton").addEventListener("click", function () {
+        var dropdownMenu = this.nextElementSibling;
+        if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+            dropdownMenu.style.display = "block";
+        } else {
+            dropdownMenu.style.display = "none";
+        }
+    });
+    $(document).ready(function () {
+        $('#MaLSP').select2();
+    });
+</script>

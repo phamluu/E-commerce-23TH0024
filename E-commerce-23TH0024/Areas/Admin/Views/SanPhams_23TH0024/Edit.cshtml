@@ -1,0 +1,158 @@
+﻿@using E_commerce_23TH0024.Models
+@model E_commerce_23TH0024.Models.SanPham
+
+@{
+    ViewBag.Title = "Cập nhật sản phẩm";
+}
+
+@using (Html.BeginForm("Edit", "SanPhams_23TH0024", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 class="title">Cập nhật sản phẩm</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.Partial("_Fields", Model)
+
+        <div class="mt-2">
+            <h5 class="sub-header"><span>Biến thể sản phẩm</span> <label><i class="fas fa-chevron-up"></i></label></h5>
+            <div class="mb-2">
+                <button type="button" class="btn btn-primary btn-add mt-3 mb-3" data-toggle="modal" data-target="#exampleModal">
+                    Thêm biến thể
+                </button>
+                @if (Model.ProductVariants != null && Model.ProductVariants.Count() > 0)
+                {
+                    <div class="table mt-2">
+                        <div class="table-cell table-cell-header">Biến thể</div>
+                        <div class="table-cell table-cell-header">Thuộc tính</div>
+                        <div class="table-cell table-cell-header">Số lượng</div>
+                        <div class="table-cell table-cell-header">Giá</div>
+                        <div class="table-cell table-cell-header">Chức năng</div>
+                        @foreach (var item in Model.ProductVariants)
+                        {
+                            List<string> lstAttr = new List<string>();
+                            <div class="form-group table-row">
+                                <div class=" table-cell">@item.Id</div>
+                                <div class="table-cell">
+                                    @foreach (var att in item.ProductVariantAttributes)
+                                    {
+                                        if (att.ProductAttribute != null)
+                                        {
+                                            lstAttr.Add(att.ProductAttribute.AttributeName + ": " + att.AttributeValue.Value);
+                                        }
+                                        else
+                                        {
+                                            lstAttr.Add(att.AttributeValue.Value);
+                                        }
+
+                                    }
+                                    <span>@string.Join(",", lstAttr)</span>
+                                </div>
+                                <div class=" table-cell">@item.StockQuantity</div>
+                                <div class=" table-cell">@item.Price</div>
+                                <div class=" table-cell">
+                                    @*<a href="" class="btn edit-btn"><i class="fas fa-edit"></i></a>*@
+                                    <a href="javascript:void(0)" class="btn delete-btn" onclick="deleteProductVariant(@item.Id)"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                }
+
+
+            </div>
+        </div>
+
+        @Html.Partial("_FormActions")
+    </div>
+}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm biến thể</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="variantForm">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Id)
+                <input type="hidden" name="ProductID" value="@Model.Id" />
+                <div class="modal-body">
+                    @{
+                        //Html.RenderAction("Create", "ProductVariants_23TH0024");
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="submitVariant">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".sub-header").on("click", function () {
+        $(this).next().slideToggle();
+        $(this).find("label i").toggleClass("fa-chevron-up fa-chevron-down");
+    })
+            function deleteProductVariant(variantID) {
+                if (confirm('Bạn có chắc chắn muốn xóa biến thể này?')) {
+                    debugger;
+        $.ajax({
+            url: '@Url.Action("Delete", "ProductVariants_23TH0024")',
+            type: 'GET',
+            data: { id: variantID },
+            beforeSend: function () {
+                console.log("Gửi yêu cầu xóa với ID: " + variantID);
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.success == true) {
+                    //$('#variant_' + variantID).remove();
+                    alert('Biến thể đã được xóa thành công!');
+                } else {
+                    alert('Có lỗi xảy ra khi xóa biến thể.');
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Có lỗi xảy ra: ' + error);
+            }
+        });
+    }
+}
+
+    $(document).ready(function () {
+
+        $("#variantForm").submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                url: '@Url.Action("Create", "ProductVariants_23TH0024")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        $('#exampleModal').modal('hide');
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Có lỗi xảy ra: ' + error);
+                }
+            });
+        });
+    })
+
+
+</script>
+

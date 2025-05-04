@@ -1,9 +1,0 @@
-﻿@model E_commerce_23TH0024.Models.LoaiSanPham
-
-<div class="form-group row mt-2">
-    @Html.LabelFor(model => model.TenLSP, "Tên loại sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.TenLSP, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.TenLSP, "", new { @class = "text-danger" })
-    </div>
-</div>

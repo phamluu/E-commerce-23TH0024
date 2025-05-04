@@ -38,7 +38,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         }
         private int ThongKeSanPham()
         {
-            var sanphams = _db.SanPhams.Count();
+            var sanphams = _db.SanPham.Count();
             return sanphams;
         }
         private int ThongKeKhachHang()

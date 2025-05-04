@@ -16,7 +16,7 @@ namespace E_commerce_23TH0024.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(string viewname = "ProductList")
         {
-            var products = await _context.SanPhams.ToListAsync();
+            var products = await _context.SanPham.ToListAsync();
             var productViewModels = products.Select(sp => new SanPhamViewModels
             {
                 Id = sp.Id,

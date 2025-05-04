@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
- 
+    [Area("Admin")]
     public class ProductVariants_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
@@ -77,7 +77,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             {
                 return NotFound();
             }
-            ViewBag.ProductID = new SelectList(db.SanPhams, "MaSP", "TenSP", productVariant.IdSanPham);
+            ViewBag.ProductID = new SelectList(db.SanPham, "MaSP", "TenSP", productVariant.IdSanPham);
             return View(productVariant);
         }
 
@@ -94,7 +94,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProductID = new SelectList(db.SanPhams, "MaSP", "TenSP", productVariant.IdSanPham);
+            ViewBag.ProductID = new SelectList(db.SanPham, "MaSP", "TenSP", productVariant.IdSanPham);
             return View(productVariant);
         }
 

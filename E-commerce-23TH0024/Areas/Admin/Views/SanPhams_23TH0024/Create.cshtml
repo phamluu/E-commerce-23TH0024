@@ -1,0 +1,21 @@
+﻿@model E_commerce_23TH0024.Models.SanPham
+
+@{
+    ViewBag.Title = "Thêm mới";
+}
+
+
+@using (Html.BeginForm("Create", "SanPhams_23TH0024", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 class="title">Thêm Sản phẩm</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.Partial("_Fields", Model)
+    </div>
+    @Html.Partial("_FormActions")
+}
+
+

@@ -24,7 +24,7 @@ namespace E_commerce_23TH0024.Controllers
         {
             Cart cart = GetCart();
             foreach (var item in cart.Items) { 
-                var product = db.SanPhams.SingleOrDefault(x => x.Id == item.Id);
+                var product = db.SanPham.SingleOrDefault(x => x.Id == item.Id);
                 if (product != null)
                 {
                     item.Anh = product.Anh;
@@ -62,7 +62,7 @@ namespace E_commerce_23TH0024.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult AddToCart(int productId, int quantity)
         {
-            var product = db.SanPhams.FirstOrDefault(p => p.Id == productId);
+            var product = db.SanPham.FirstOrDefault(p => p.Id == productId);
 
             if (product != null)
             {

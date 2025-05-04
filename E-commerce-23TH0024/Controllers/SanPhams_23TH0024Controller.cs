@@ -30,7 +30,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 VariantStr = string.Join(",", Variant);
             }
-            var product = _context.SanPhams.FromSqlRaw("EXEC SanPham_TimKiem @TenSP, @MaLSP, @DonGiaFrom, @DonGiaTo, @Variant",
+            var product = _context.SanPham.FromSqlRaw("EXEC SanPham_TimKiem @TenSP, @MaLSP, @DonGiaFrom, @DonGiaTo, @Variant",
                 new SqlParameter("@TenSP", (object)TenSP ?? DBNull.Value),
                 new SqlParameter("@MaLSP", (object)MaLSP ?? DBNull.Value),
                 new SqlParameter("@DonGiaFrom", (object)DonGiaFrom ?? DBNull.Value),
@@ -78,7 +78,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return BadRequest();
             }
-            SanPham sanPham = _context.SanPhams.Find(id);
+            SanPham sanPham = _context.SanPham.Find(id);
             var sanPhamViewModel = ObjectMapper.Map<SanPham, SanPhamViewModels>(sanPham);
             if (sanPham == null)
             {
@@ -161,7 +161,7 @@ namespace E_commerce_23TH0024.Controllers
                     sanPham.Anh = fileName;
 
                 }
-                _context.SanPhams.Add(sanPham);
+                _context.SanPham.Add(sanPham);
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Thêm sản phẩm thành công!";
                 return RedirectToAction("Index");
@@ -178,7 +178,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return new BadRequestResult();
             }
-            SanPham sanPham = _context.SanPhams.Find(id);
+            SanPham sanPham = _context.SanPham.Find(id);
             if (sanPham == null)
             {
                 return NotFound();
@@ -246,7 +246,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return new BadRequestResult();
             }
-            SanPham sanPham = _context.SanPhams.Find(id);
+            SanPham sanPham = _context.SanPham.Find(id);
             if (sanPham == null)
             {
                 return NotFound();
@@ -259,14 +259,14 @@ namespace E_commerce_23TH0024.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SanPham sanPham = _context.SanPhams.Find(id);
+            SanPham sanPham = _context.SanPham.Find(id);
             if (sanPham == null)
             {
                 TempData["ErrorMessage"] = "Không tìm thấy sản phẩm để xóa!";
                 return RedirectToAction("Index");
             }
             XoaAnhCu(sanPham.Anh);
-            _context.SanPhams.Remove(sanPham);
+            _context.SanPham.Remove(sanPham);
             _context.SaveChanges();
             TempData["SuccessMessage"] = "Xóa sản phẩm thành công!";
             return RedirectToAction("Index");
@@ -274,12 +274,12 @@ namespace E_commerce_23TH0024.Controllers
         [Authorize(Roles = "admin,nhanvien")]
         public ActionResult DeleteAll()
         {
-            IEnumerable<SanPham> sanPham = _context.SanPhams;
+            IEnumerable<SanPham> sanPham = _context.SanPham;
             if (sanPham != null)
             {
                 foreach (var item in sanPham)
                 {
-                    _context.SanPhams.Remove(item);
+                    _context.SanPham.Remove(item);
                     XoaAnhCu(item.Anh);
                 }
                 TempData["SuccessMessage"] = "Tất cả sản phẩm đã được xóa thành công!";

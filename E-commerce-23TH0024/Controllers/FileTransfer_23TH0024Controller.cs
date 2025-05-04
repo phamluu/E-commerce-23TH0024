@@ -102,7 +102,7 @@ namespace E_commerce_23TH0024.Controllers
                     Anh = row["Anh"].ToString(),
                     MoTa = row["MoTa"].ToString(),
                 };
-                db.SanPhams.Add(product);
+                db.SanPham.Add(product);
             }
             db.SaveChanges();
         }
@@ -182,7 +182,7 @@ namespace E_commerce_23TH0024.Controllers
                                     {
                                         sp.TenSP = TenSP + " " + Path.GetFileNameWithoutExtension(entry.FullName);
                                     }
-                                    db.SanPhams.Add(sp);
+                                    db.SanPham.Add(sp);
                                     db.SaveChanges();
                                 }
                             }
@@ -223,7 +223,7 @@ namespace E_commerce_23TH0024.Controllers
         #region ExportExcel
         public ActionResult ExportExcel()
         {
-            var products = db.SanPhams.ToList();
+            var products = db.SanPham.ToList();
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 

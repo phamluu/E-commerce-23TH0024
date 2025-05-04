@@ -23,7 +23,7 @@ using E_commerce_23TH0024.Controllers;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
-    
+    [Area("Admin")]
     public class DonHangs_23TH0024Controller : Controller
     {
         private readonly IHttpContextAccessor _contextAccessor;
@@ -66,7 +66,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                 var cart = JsonConvert.DeserializeObject<Cart>(cartData);
                 foreach (var item in cart.Items)
                 {
-                    var product = db.SanPhams.SingleOrDefault(x => x.Id == item.Id);
+                    var product = db.SanPham.SingleOrDefault(x => x.Id == item.Id);
                     if (product != null)
                     {
                         item.Anh = product.Anh;
@@ -144,7 +144,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "khachhang")]
+        
         [HttpPost]
         public async Task<ActionResult> Order(int MaKH, int shippingMethod)
         {
@@ -193,7 +193,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             donHang.KhachHang = khachhang;
             return View(donHang);
         }
-        [Authorize(Roles = "khachhang")]
+       
         public ActionResult Checkout(int id)
         {
             var donHang = db.DonHangs.Include(d => d.ChiTietDonHangs).FirstOrDefault(d => d.Id == id);
@@ -203,14 +203,14 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             }
             return View(donHang);
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Index()
         {
             var donHangs = db.DonHangs.Include(d => d.KhachHang).OrderByDescending(x => x.Id);
             return View(donHangs.ToList());
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+       
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -225,7 +225,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Create()
         {
             ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen");
@@ -234,7 +234,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View();
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("SoHD,NgayDatHang,NgayGiaoHang,MaKH,MaNVDuyet,MaNVGH,TinhTrang")] DonHang donHang)
@@ -252,7 +252,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -270,7 +270,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind("SoHD,NgayDatHang,NgayGiaoHang,MaKH,MaNVDuyet,MaNVGH,TinhTrang")] DonHang donHang)
@@ -287,7 +287,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -302,7 +302,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

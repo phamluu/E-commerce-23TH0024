@@ -64,7 +64,7 @@ namespace E_commerce_23TH0024.Controllers
                 var cart = JsonConvert.DeserializeObject<Cart>(cartData);
                 foreach (var item in cart.Items)
                 {
-                    var product = db.SanPhams.SingleOrDefault(x => x.Id == item.Id);
+                    var product = db.SanPham.SingleOrDefault(x => x.Id == item.Id);
                     if (product != null)
                     {
                         item.Anh = product.Anh;

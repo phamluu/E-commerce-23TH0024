@@ -16,7 +16,7 @@ namespace E_commerce_23TH0024.Data
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
 
         public DbSet<LoaiSanPham> LoaiSanPham { get; set; }
-        public DbSet<SanPham> SanPhams { get; set; }
+        public DbSet<SanPham> SanPham { get; set; }
         
         public DbSet<AttributeValue> AttributeValues { get; set; }
         public DbSet<ChiTietDonHang> ChiTietDonHang { get; set; }

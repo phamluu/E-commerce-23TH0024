@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
-   
+    [Area("Admin")]
     public class ProductVariantAttributes_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
