@@ -6,17 +6,17 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "admin,nhanvien")]
+    [Area("Admin")]
     public class DashBoard_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext _db;
         public ActionResult Index()
         {
-            ViewBag.DonHang = ThongKeDonHang();
-            ViewBag.SanPham = ThongKeSanPham();
-            ViewBag.KhachHang = ThongKeKhachHang();
+            //ViewBag.DonHang = ThongKeDonHang();
+            //ViewBag.SanPham = ThongKeSanPham();
+            //ViewBag.KhachHang = ThongKeKhachHang();
             return View();
         }
 
@@ -29,7 +29,7 @@ namespace E_commerce_23TH0024.Controllers
                     {
                         Thang = g.Key.Thang,
                         Nam = g.Key.Nam,
-                        TongTien = g.Sum(x => x.TotalProductAmount) 
+                        TongTien = g.Sum(x => x.TotalProductAmount)
                     })
                     .OrderBy(x => x.Nam)
                     .ThenBy(x => x.Thang)

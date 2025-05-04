@@ -2,10 +2,9 @@
 @using Newtonsoft.Json
 @{
     ViewBag.Title = "Trang quản trị";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     List<ThongKeDonHang> donhangs = ViewBag.DonHang as List<ThongKeDonHang>;
-    var thangs = donhangs.Select(x => "Tháng" + x.Thang).ToList();
-    var doanhthus = donhangs.Select(x => x.TongTien).ToList();
+    var thangs = donhangs != null ? donhangs.Select(x => "Tháng" + x.Thang).ToList() : new List<string>();
+    var doanhthus = donhangs != null ? donhangs.Select(x => x.TongTien).ToList() : new List<decimal>();
 }
 <style>
     .container-fluid .card-box {
