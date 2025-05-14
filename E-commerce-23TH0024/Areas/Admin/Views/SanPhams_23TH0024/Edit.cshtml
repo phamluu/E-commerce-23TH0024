@@ -11,6 +11,7 @@
 
     <div class="form-horizontal">
         <h4 class="title">Cập nhật sản phẩm</h4>
+        @Html.Partial("_AlertMessages")
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 

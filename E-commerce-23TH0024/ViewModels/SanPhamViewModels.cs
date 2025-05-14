@@ -76,9 +76,12 @@ namespace E_commerce_23TH0024.Models
             {
                 if (LoaiSanPham != null)
                 {
-                    return Helper.RemoveVietnameseAccent(this.LoaiSanPham.TenLSP) + "/" + Helper.RemoveVietnameseAccent(this.TenSP) + "-" + this.Id;
+                    if (!string.IsNullOrEmpty(this.LoaiSanPham.TenLSP))
+                    {
+                        return Helper.RemoveVietnameseAccent(this.LoaiSanPham.TenLSP) + "/" + Helper.RemoveVietnameseAccent(this.TenSP) + "-" + this.Id;
+                    }
                 }
-                return null;
+                return Helper.RemoveVietnameseAccent(this.TenSP) + "-" + this.Id;
             }
         }
     }

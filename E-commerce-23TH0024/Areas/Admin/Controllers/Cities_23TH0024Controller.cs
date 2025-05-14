@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Authorization;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     public class Cities_23TH0024Controller : Controller
     {

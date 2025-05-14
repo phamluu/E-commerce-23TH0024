@@ -1,7 +1,12 @@
 a {
     text-decoration: none;
 }
-
+#grid .img-fluid{
+    width:100px;
+}
+.btn-action .btn {
+    font-size: 10px;
+}
 .table {
     display: table;
     width: 100%;
@@ -98,10 +103,12 @@ img {
 .title {
     padding: 10px 0;
     color: green;
-    margin: 10px 0;
+    margin-bottom: 30px;
     border-bottom: green 1px solid;
 }
-
+.head-action {
+    margin-bottom: 20px;
+}
 .detail-btn {
     color: green;
 }

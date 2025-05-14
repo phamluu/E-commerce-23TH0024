@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Authorize(Roles = "admin,nhanvien")]
     public class FileTransfer_23TH0024Controller : Controller
@@ -49,7 +49,7 @@ namespace E_commerce_23TH0024.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-                
+
                 DataTable dt = ReadExcelFile(filePath);
                 SaveDataToDatabase(dt);
                 ViewBag.Message = "File imported successfully!";
@@ -98,7 +98,7 @@ namespace E_commerce_23TH0024.Controllers
                     TenSP = row["TenSP"].ToString(),
                     DonGia = Convert.ToDecimal(row["DonGia"]),
                     DVT = row["DVT"].ToString(),
-                    MaLSP = Convert.ToInt32(row["MaLSP"]),
+                    IdLoaiSanPham = Convert.ToInt32(row["MaLSP"]),
                     Anh = row["Anh"].ToString(),
                     MoTa = row["MoTa"].ToString(),
                 };
@@ -162,9 +162,9 @@ namespace E_commerce_23TH0024.Controllers
                         {
                             Directory.CreateDirectory(directoryPath);
                         }
-                        if (entry.FullName.EndsWith(".jpg", System.StringComparison.OrdinalIgnoreCase) ||
-                            entry.FullName.EndsWith(".png", System.StringComparison.OrdinalIgnoreCase) ||
-                            entry.FullName.EndsWith(".jpeg", System.StringComparison.OrdinalIgnoreCase))
+                        if (entry.FullName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                            entry.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                            entry.FullName.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase))
                         {
                             try
                             {
@@ -174,7 +174,7 @@ namespace E_commerce_23TH0024.Controllers
                                 {
                                     entryStream.CopyTo(fileStream);
                                     SanPham sp = new SanPham();
-                                    sp.MaLSP = MaLSP;
+                                    sp.IdLoaiSanPham = MaLSP;
                                     sp.DonGia = DonGia;
                                     sp.DVT = DVT;
                                     sp.Anh = Path.GetFileNameWithoutExtension(file.FileName) + "/" + entry.FullName;
@@ -249,7 +249,7 @@ namespace E_commerce_23TH0024.Controllers
                     worksheet.Cells[row, 2].Value = product.TenSP;
                     worksheet.Cells[row, 3].Value = product.DonGia;
                     worksheet.Cells[row, 4].Value = product.DVT;
-                    worksheet.Cells[row, 5].Value = product.MaLSP;
+                    worksheet.Cells[row, 5].Value = product.IdLoaiSanPham;
                     worksheet.Cells[row, 6].Value = product.Anh;
                     worksheet.Cells[row, 7].Value = product.MoTa;
                     row++;

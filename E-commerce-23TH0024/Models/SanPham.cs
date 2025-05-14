@@ -9,7 +9,7 @@ public partial class SanPham
 {
     public int Id { get; set; }
 
-    public int? MaLSP { get; set; }
+    public int? IdLoaiSanPham { get; set; }
 
     public string? TenSP { get; set; }
 
@@ -22,8 +22,9 @@ public partial class SanPham
     public string? Anh { get; set; }
 
     public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
-    [ForeignKey("MaLSP")]
-    public virtual LoaiSanPham? LoaiSanPham { get; set; }
+    [ForeignKey("IdLoaiSanPham")]
+    public virtual LoaiSanPham? LoaiSanPham { get; set; } = new LoaiSanPham();
 
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
+
 }

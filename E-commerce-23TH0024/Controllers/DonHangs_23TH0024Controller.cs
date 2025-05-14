@@ -19,9 +19,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using E_commerce_23TH0024.Areas.Admin.Controllers;
 namespace E_commerce_23TH0024.Controllers
 {
-    
+
     public class DonHangs_23TH0024Controller : Controller
     {
         private readonly IHttpContextAccessor _contextAccessor;

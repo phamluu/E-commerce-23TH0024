@@ -31,7 +31,6 @@ namespace E_commerce_23TH0024.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MaLSP = table.Column<int>(type: "int", nullable: true),
                     TenSP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DonGia = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -42,11 +41,6 @@ namespace E_commerce_23TH0024.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SanPham", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SanPham_LoaiSanPham",
-                        column: x => x.MaLSP,
-                        principalTable: "LoaiSanPham",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SanPham_LoaiSanPham_IdLoaiSanPham",
                         column: x => x.IdLoaiSanPham,
@@ -59,11 +53,6 @@ namespace E_commerce_23TH0024.Data.Migrations
                 name: "IX_SanPham_IdLoaiSanPham",
                 table: "SanPham",
                 column: "IdLoaiSanPham");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SanPham_MaLSP",
-                table: "SanPham",
-                column: "MaLSP");
 
         }
 

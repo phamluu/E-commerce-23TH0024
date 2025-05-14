@@ -54,13 +54,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public ActionResult TimKiemNC(string TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null)
+        public ActionResult TimKiemNC(string TenSP = null, int? IdLoaiSanPham = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null)
         {
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "MaLSP", "TenLSP");
+            ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             ViewBag.TenSP = TenSP;
             ViewBag.DonGiaFrom = DonGiaFrom;
             ViewBag.DonGiaTo = DonGiaTo;
-            var products = GetProducts(TenSP, MaLSP, DonGiaFrom, DonGiaTo).ToList();
+            var products = GetProducts(TenSP, IdLoaiSanPham, DonGiaFrom, DonGiaTo).ToList();
 
             if (products.Count() == 0)
                 ViewBag.TB = "Không có thông tin tìm kiếm.";
@@ -71,14 +71,14 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var sanPhams = GetProducts();
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "MaLSP", "TenLSP");
+            ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             return View(sanPhams.ToList());
         }
         
 
         public ActionResult Create()
         {
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
+            ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             SanPham sanPham = new SanPham();
             return View(sanPham);
         }
@@ -86,7 +86,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Id,MaLSP,TenSP,MoTa,DonGia,DVT,Anh")] SanPham sanPham, IFormFile Avatar = null)
+        public async Task<ActionResult> Create([Bind("Id,IdLoaiSanPham,TenSP,MoTa,DonGia,DVT,Anh")] SanPham sanPham, IFormFile Avatar = null)
         {
 
             if (ModelState.IsValid)
@@ -115,7 +115,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             TempData["ErrorMessage"] = "Không thể thêm sản phẩm";
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "Id", "TenLSP", sanPham.MaLSP);
+            ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP", sanPham.IdLoaiSanPham);
             return View(sanPham);
         }
 
@@ -131,7 +131,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "Id", "TenLSP", sanPham.MaLSP);
+            ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP", sanPham.IdLoaiSanPham);
             return View(sanPham);
         }
         
@@ -161,7 +161,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,MaLSP,TenSP,MoTa,DonGia,DVT,Anh")] SanPham sanPham, IFormFile Avatar)
+        public async Task<ActionResult> Edit([Bind("Id,IdLoaiSanPham,TenSP,MoTa,DonGia,DVT,Anh")] SanPham sanPham, IFormFile Avatar = null)
         {
             if (ModelState.IsValid)
             {
@@ -186,7 +186,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             TempData["ErrorMessage"] = "Không thể cập nhật sản phẩm";
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "Id", "TenLSP", sanPham.MaLSP);
+            ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP", sanPham.IdLoaiSanPham);
             return View(sanPham);
         }
         

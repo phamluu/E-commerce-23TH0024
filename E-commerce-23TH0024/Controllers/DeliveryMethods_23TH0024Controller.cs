@@ -11,6 +11,7 @@ using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using E_commerce_23TH0024.Areas.Admin.Controllers;
 
 namespace E_commerce_23TH0024.Controllers
 {

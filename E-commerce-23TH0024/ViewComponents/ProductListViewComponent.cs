@@ -24,7 +24,7 @@ namespace E_commerce_23TH0024.ViewComponents
                 DonGia = sp.DonGia,
                 MoTa = sp.MoTa,
                Anh = sp.Anh,
-               MaLSP = sp.MaLSP,
+               IdLoaiSanPham = sp.IdLoaiSanPham,
                DVT = sp.DVT,
                LoaiSanPham = sp.LoaiSanPham,
                ProductVariants = sp.ProductVariants,

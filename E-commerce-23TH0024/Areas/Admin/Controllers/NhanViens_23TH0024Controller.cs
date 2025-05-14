@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Authorize(Roles = "admin")]
     public class NhanViens_23TH0024Controller : Controller

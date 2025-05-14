@@ -14,7 +14,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     public class Shipping_23TH0024Controller : Controller
     {
@@ -35,7 +35,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 client.DefaultRequestHeaders.Add("User-Agent", "InAn (phamthithanhluu1990@gmail.com)");
                 var response = await client.GetStringAsync(url);
-                var result = JsonConvert.DeserializeObject<System.Collections.Generic.List<dynamic>>(response);
+                var result = JsonConvert.DeserializeObject<List<dynamic>>(response);
                 if (result.Count > 0)
                 {
                     double lat = result[0].lat;
@@ -51,7 +51,7 @@ namespace E_commerce_23TH0024.Controllers
         // Tính khoáng cách
         public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
         {
-            const double R = 6371; 
+            const double R = 6371;
             double dLat = ToRadians(lat2 - lat1);
             double dLon = ToRadians(lon2 - lon1);
             double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
@@ -64,9 +64,9 @@ namespace E_commerce_23TH0024.Controllers
         {
             return degrees * (Math.PI / 180);
         }
-        
+
         // Tính phí ship
-        public async Task<(decimal, double)> CalculateShippingFee(string addressFrom, string addressTo, 
+        public async Task<(decimal, double)> CalculateShippingFee(string addressFrom, string addressTo,
              int? shippingMethod, double? weight = null)
         {
             var (lat1, lng1) = await GetCoordinatesFromAddressAsync(addressFrom);
@@ -74,7 +74,7 @@ namespace E_commerce_23TH0024.Controllers
             double distance = CalculateDistance(lat1, lng1, lat2, lng2);
             var fee = _entity.ShippingRates.FirstOrDefault(x =>
                     x.ShippingMethodID == shippingMethod
-                    && (x.FromDistance <= distance && x.ToDistance >= distance)
+                    && x.FromDistance <= distance && x.ToDistance >= distance
                     );
             decimal ShippingFee = fee.FixedPrice + fee.PricePerKm * (decimal)distance;
             return (ShippingFee, distance);
@@ -83,7 +83,7 @@ namespace E_commerce_23TH0024.Controllers
         {
             var fee = _entity.ShippingRates.FirstOrDefault(x =>
                     x.ShippingMethodID == shippingMethod
-                    && (x.FromDistance <= distance && x.ToDistance >= distance)
+                    && x.FromDistance <= distance && x.ToDistance >= distance
                     );
             return fee;
         }
@@ -98,7 +98,7 @@ namespace E_commerce_23TH0024.Controllers
         [HttpPost]
         public async Task<ActionResult> ShippingFee(ShippingViewModel shipping)
         {
-            if (_contextAccessor.HttpContext?.Request.HasFormContentType  == true)
+            if (_contextAccessor.HttpContext?.Request.HasFormContentType == true)
             {
                 var form = _contextAccessor.HttpContext?.Request.Form;
                 if (form != null && form["isFormSubmitted"] == "true")
@@ -107,7 +107,7 @@ namespace E_commerce_23TH0024.Controllers
                 }
             }
             ViewBag.shippingMethod = new SelectList(_entity.DeliveryMethods, "ShippingMethodID", "MethodName", shipping.shippingMethod);
-            
+
             var (lat1, lng1) = await GetCoordinatesFromAddressAsync(shipping.addressFrom);
             var (lat2, lng2) = await GetCoordinatesFromAddressAsync(shipping.addressTo);
             double distance = CalculateDistance(lat1, lng1, lat2, lng2);

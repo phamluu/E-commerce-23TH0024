@@ -1,8 +1,7 @@
-﻿@model E_commerce_23TH0024.Models.AspNetUsers
+﻿@model E_commerce_23TH0024.Models.RegisterViewModel
 
 @{
     ViewBag.Title = "Thêm người dùng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Thêm người dùng</h4>
@@ -17,10 +16,17 @@
         @Html.Partial("_Fields")
 
         <div class="form-group row mt-2">
-            @Html.LabelFor(model => model.PasswordHash, "Mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Password, "Mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            @Html.LabelFor(model => model.ConfirmPassword, "Xác nhận mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -28,7 +34,7 @@
             <div class="col-md-2"></div>
             <div class="col-md-10">
                 <input type="submit" value="Lưu" class="btn btn-default btn-save" />
-                @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+                @Html.ActionLink("Quay lại danh sách", "Index", new {@class = "btn btn-list"})
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     public class Wards_23TH0024Controller : Controller
     {
@@ -47,7 +47,7 @@ namespace E_commerce_23TH0024.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-                
+
                 DataTable dt = _fileTransfer.ReadExcelFile(filePath);
                 SaveAllToDatabase(dt);
                 ViewBag.Message = "File imported successfully!";
@@ -73,13 +73,13 @@ namespace E_commerce_23TH0024.Controllers
                     db.Cities.Add(city);
                     db.SaveChanges();
                 }
-                
+
                 var district = db.Districts.FirstOrDefault(d => d.DistrictName == DistricName && d.CityID == city.Id);
                 if (district == null)
                 {
                     district = new District { DistrictName = DistricName, CityID = city.Id };
                     db.Districts.Add(district);
-                    db.SaveChanges(); 
+                    db.SaveChanges();
                 }
                 var ward = db.Wards.FirstOrDefault(w => w.WardName == WardName && w.Id == district.Id);
                 if (ward == null)

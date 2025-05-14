@@ -61,8 +61,10 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 _context.Add(loaiSanPham);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thêm loại sản phẩm thành công!";
                 return RedirectToAction(nameof(Index));
             }
+            TempData["ErrorMessage"] = "Không thành công!";
             return View(loaiSanPham);
         }
 
@@ -100,6 +102,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 {
                     _context.Update(loaiSanPham);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Cập nhật loại sản phẩm thành công!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -114,6 +117,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            TempData["ErrorMessage"] = "Không cáp nhật thành cong!";
             return View(loaiSanPham);
         }
 
@@ -144,9 +148,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             if (loaiSanPham != null)
             {
                 _context.LoaiSanPham.Remove(loaiSanPham);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Xóa thành công!";
             }
-
-            await _context.SaveChangesAsync();
+            else
+            {
+                TempData["ErrorMessage"] = "Không tồn tại loại sản phẩm!";
+            }
             return RedirectToAction(nameof(Index));
         }
 
