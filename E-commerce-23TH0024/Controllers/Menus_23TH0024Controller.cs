@@ -6,11 +6,12 @@ using System.Net;
 using System.Web;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_23TH0024.Models.SystemSetting;
+using E_commerce_23TH0024.Models.SystemSetting;
 
 namespace E_commerce_23TH0024.Controllers
 {
@@ -20,20 +21,20 @@ namespace E_commerce_23TH0024.Controllers
 
         public ActionResult MenuListForGroup(string menuGroup, string viewName)
         {
-            var menus = db.Menus.Include(m => m.LoaiSanPham).Include(m => m.NhomMenu1).Where(m => m.NhomMenu == menuGroup)
+            var menus = db.Menus.Include(m => m.NhomMenu).Where(m => m.IdNhomMenu == menuGroup)
                 .Select(x => new MenuViewModels
                 {
                     LoaiMenu = x.LoaiMenu,
                     NhomMenu = x.NhomMenu,
-                    NhomMenu1 = x.NhomMenu1,
-                    LoaiSanPham = x.LoaiSanPham,
+                    //NhomMenu1 = x.NhomMenu1,
+                    //LoaiSanPham = x.LoaiSanPham,
                 });
             return View(viewName, menus.ToList());
         }
         [Authorize(Roles = "admin,nhanvien")]
         public ActionResult Index()
         {
-            var menus = db.Menus.Include(m => m.LoaiSanPham).Include(m => m.NhomMenu1);
+            var menus = db.Menus.Include(m => m.NhomMenu);
             return View(menus.ToList());
         }
 

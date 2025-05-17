@@ -5,10 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Controllers
 {

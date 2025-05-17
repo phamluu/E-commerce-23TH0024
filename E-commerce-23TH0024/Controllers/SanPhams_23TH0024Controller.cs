@@ -1,5 +1,6 @@
 ﻿using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
+using E_commerce_23TH0024.Models.Ecommerce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.HttpResults;

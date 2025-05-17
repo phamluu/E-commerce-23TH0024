@@ -1,4 +1,5 @@
-﻿@model E_commerce_23TH0024.Models.ShippingRate
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model ShippingRate
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.FromDistance)
@@ -25,11 +26,11 @@
     </dd>
 
     <dt>
-        @Html.DisplayNameFor(model => model.Region)
+        @Html.DisplayNameFor(model => model.IdCity)
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Region)
+        @Html.DisplayFor(model => model.IdCity)
     </dd>
 
     <dt>

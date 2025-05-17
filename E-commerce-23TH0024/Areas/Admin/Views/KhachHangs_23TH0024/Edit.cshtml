@@ -1,4 +1,5 @@
-﻿@model E_commerce_23TH0024.Models.KhachHang
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model KhachHang
 
 @{
     ViewBag.Title = "Sửa thông tin khách hàng";
@@ -14,7 +15,7 @@
     <h4 class="title">Sửa thông tin khách hàng</h4>
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(x => x.UserID)
+    @Html.HiddenFor(x => x.IdAspNetUsers)
 
 <div class="row">
     <div class="col-6">
@@ -28,10 +29,10 @@
     </div>
     <div class="col-6">
         <div class="form-group row mt-2">
-            @Html.LabelFor(model => model.CustomerTypeID, "Loại khách hàng", htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.LabelFor(model => model.IdCustomerType, "Loại khách hàng", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.DropDownList("CustomerTypeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CustomerTypeID, "", new { @class = "text-danger" })
+                        @Html.DropDownList("IdCustomerType", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdCustomerType, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -44,15 +45,15 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
+    @* <div class="col-6">
         <div class="form-group row mt-2">
-            @Html.LabelFor(model => model.CityID, "Tỉnh/ thành phố", htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.LabelFor(model => model.IdCity, "Tỉnh/ thành phố", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.DropDownList("CityID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("IdCity", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
+    </div> *@
     <div class="col-6">
         <div class="form-group row mt-2">
             @Html.LabelFor(model => model.DiaChi, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-3" })

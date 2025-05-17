@@ -1,10 +1,15 @@
-﻿using E_commerce_23TH0024.Models;
+﻿using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Models.Identity;
+using E_commerce_23TH0024.Models.Location;
+using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Models.SystemSetting;
+using E_commerce_23TH0024.Models.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_23TH0024.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -12,8 +17,8 @@ namespace E_commerce_23TH0024.Data
 
         }
 
-        public DbSet<AspNetRole> AspNetRole { get; set; }
-        public DbSet<AspNetUsers> AspNetUsers { get; set; }
+        //public DbSet<AspNetRole> AspNetRole { get; set; }
+        //public DbSet<AspNetUsers> AspNetUsers { get; set; }
 
         public DbSet<LoaiSanPham> LoaiSanPham { get; set; }
         public DbSet<SanPham> SanPham { get; set; }
@@ -41,12 +46,12 @@ namespace E_commerce_23TH0024.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<AspNetUsers>()
-                .HasMany(u => u.AspNetUserLogins) 
-                .WithOne(ul => ul.User)
-                .HasForeignKey(ul => ul.UserId); 
-            modelBuilder.Entity<AspNetUserLogin>()
-                .HasKey(ul => new { ul.LoginProvider, ul.ProviderKey });
+            //modelBuilder.Entity<AspNetUsers>()
+            //    .HasMany(u => u.AspNetUserLogins) 
+            //    .WithOne(ul => ul.User)
+            //    .HasForeignKey(ul => ul.UserId); 
+            //modelBuilder.Entity<AspNetUserLogin>()
+            //    .HasKey(ul => new { ul.LoginProvider, ul.ProviderKey });
 
             //modelBuilder.Entity<SanPham>(entity =>
             //{

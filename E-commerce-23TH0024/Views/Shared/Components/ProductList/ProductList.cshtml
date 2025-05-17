@@ -1,6 +1,8 @@
 ﻿@using System;
 @using System.Globalization;
 @using E_commerce_23TH0024.Models;
+@using E_commerce_23TH0024.Models.Ecommerce;
+
 @model List<E_commerce_23TH0024.Models.SanPhamViewModels>
 @{
     Layout = null;
@@ -88,9 +90,9 @@
                             <div class="item">
                                 <div class="name">@item.TenSP</div>
                                 <div class="wrap d-flex justify-content-between">
-                                    <div class="info d-none d-sm-block">
+                                    @* <div class="info d-none d-sm-block">
                                         <p class="cate">@item.LoaiSanPham.TenLSP</p>
-                                    </div>
+                                    </div> *@
                                     @if (item.Discount != null)
                                     {
                                         <div class="">
@@ -128,9 +130,9 @@
                                 <div class="item">
                                     <div class="name">@item.TenSP</div>
                                     <div class="wrap d-flex justify-content-between mb-2 mt-2">
-                                        <div class="info d-none d-sm-block">
+                                        @* <div class="info d-none d-sm-block">
                                             <p class="cate">@item.LoaiSanPham.TenLSP</p>
-                                        </div>
+                                        </div> *@
                                         <div class="">
                                             @if (item.Discount != null)
                                             {

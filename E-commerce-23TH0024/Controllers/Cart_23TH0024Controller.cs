@@ -16,8 +16,9 @@ namespace E_commerce_23TH0024.Controllers
     {
         private readonly ApplicationDbContext db;
         private readonly IHttpContextAccessor _contextAccessor;
-        public Cart_23TH0024Controller(IHttpContextAccessor contextAccessor)
+        public Cart_23TH0024Controller(ApplicationDbContext context, IHttpContextAccessor contextAccessor)
         {
+            db = context;
             _contextAccessor = contextAccessor;
         }
         public ActionResult Index()

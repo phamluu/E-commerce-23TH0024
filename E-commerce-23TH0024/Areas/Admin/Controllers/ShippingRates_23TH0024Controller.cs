@@ -4,18 +4,23 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ShippingRates_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
+
+        public ShippingRates_23TH0024Controller(ApplicationDbContext context)
+        {
+            db = context;
+        }
 
         // GET: ShippingRates_23TH0024
         public ActionResult Index()
@@ -56,8 +61,8 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Region = new SelectList(db.Cities, "CityID", "CityName", shippingRate.Region);
-            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.ShippingMethodID);
+            ViewBag.Region = new SelectList(db.Cities, "Id", "CityName", shippingRate.IdCity);
+            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.IdDeliveryMethod);
             return View(shippingRate);
         }
         public ActionResult Edit(int? id)
@@ -71,8 +76,8 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Region = new SelectList(db.Cities, "CityID", "CityName", shippingRate.Region);
-            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.ShippingMethodID);
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName", shippingRate.IdCity);
+            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.IdDeliveryMethod);
             return View(shippingRate);
         }
 
@@ -86,8 +91,8 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Region = new SelectList(db.Cities, "CityID", "CityName", shippingRate.Region);
-            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.ShippingMethodID);
+            ViewBag.IdCity = new SelectList(db.Cities, "CityID", "CityName", shippingRate.IdCity);
+            ViewBag.IdDeliveryMethod = new SelectList(db.DeliveryMethods, "Id", "MethodName", shippingRate.IdDeliveryMethod);
             return View(shippingRate);
         }
 

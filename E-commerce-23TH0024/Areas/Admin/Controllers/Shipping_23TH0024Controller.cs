@@ -1,6 +1,5 @@
 ﻿using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,17 +12,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class Shipping_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext _entity;
         private readonly IHttpContextAccessor _contextAccessor;
         private const string GoogleGeocodeApiKey = "AIzaSyALhO10CboVceYQvAGiSrsIinAaEnJ49aU";
 
-        public Shipping_23TH0024Controller(IHttpContextAccessor contextAccessor = null)
+        public Shipping_23TH0024Controller(ApplicationDbContext entity, IHttpContextAccessor contextAccessor = null)
         {
+            _entity = entity;
             _contextAccessor = contextAccessor;
         }
 
@@ -73,7 +75,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             var (lat2, lng2) = await GetCoordinatesFromAddressAsync(addressTo);
             double distance = CalculateDistance(lat1, lng1, lat2, lng2);
             var fee = _entity.ShippingRates.FirstOrDefault(x =>
-                    x.ShippingMethodID == shippingMethod
+                    x.IdDeliveryMethod == shippingMethod
                     && x.FromDistance <= distance && x.ToDistance >= distance
                     );
             decimal ShippingFee = fee.FixedPrice + fee.PricePerKm * (decimal)distance;
@@ -82,7 +84,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         public ShippingRate shipppingRate(int shippingMethod, double distance)
         {
             var fee = _entity.ShippingRates.FirstOrDefault(x =>
-                    x.ShippingMethodID == shippingMethod
+                    x.IdDeliveryMethod == shippingMethod
                     && x.FromDistance <= distance && x.ToDistance >= distance
                     );
             return fee;
@@ -91,7 +93,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         [Authorize(Roles = "admin,nhanvien")]
         public ActionResult ShippingFee()
         {
-            ViewBag.shippingMethod = new SelectList(_entity.DeliveryMethods, "ShippingMethodID", "MethodName");
+            ViewBag.shippingMethod = new SelectList(_entity.DeliveryMethods, "Id", "MethodName");
             return View();
         }
         [Authorize(Roles = "admin,nhanvien")]

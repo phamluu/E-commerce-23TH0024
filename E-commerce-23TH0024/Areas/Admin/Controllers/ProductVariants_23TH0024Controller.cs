@@ -4,21 +4,23 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Areas.Admin.Controllers;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
     [Area("Admin")]
-    public class ProductVariants_23TH0024Controller : Controller
+    public class ProductVariants_23TH0024Controller : BaseController
     {
         private readonly ApplicationDbContext db;
-
+        public ProductVariants_23TH0024Controller(ApplicationDbContext context) : base(context)
+        {
+        }
         // GET: ProductVariants_23TH0024
         public ActionResult Index()
         {

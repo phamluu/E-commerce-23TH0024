@@ -13,13 +13,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using E_commerce_23TH0024.Models.Location;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class Wards_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
-        private FileTransfer_23TH0024Controller _fileTransfer = new FileTransfer_23TH0024Controller();
+        private readonly FileTransfer_23TH0024Controller _fileTransfer;
+
+        public Wards_23TH0024Controller(ApplicationDbContext context)
+        {
+            db = context;
+            _fileTransfer = new FileTransfer_23TH0024Controller(db);
+        }
+        //private FileTransfer_23TH0024Controller _fileTransfer = new FileTransfer_23TH0024Controller(db);
 
         #region Import tất cả tỉnh/ thành, quận/ huyện, phường/ xã
         public ActionResult ImportAll()
@@ -74,17 +83,17 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                     db.SaveChanges();
                 }
 
-                var district = db.Districts.FirstOrDefault(d => d.DistrictName == DistricName && d.CityID == city.Id);
+                var district = db.Districts.FirstOrDefault(d => d.DistrictName == DistricName && d.IdCity == city.Id);
                 if (district == null)
                 {
-                    district = new District { DistrictName = DistricName, CityID = city.Id };
+                    district = new District { DistrictName = DistricName, IdCity = city.Id };
                     db.Districts.Add(district);
                     db.SaveChanges();
                 }
                 var ward = db.Wards.FirstOrDefault(w => w.WardName == WardName && w.Id == district.Id);
                 if (ward == null)
                 {
-                    ward = new Ward { WardName = WardName, DistrictID = district.Id };
+                    ward = new Ward { WardName = WardName, IdDistrict = district.Id };
                     db.Wards.Add(ward);
                 }
             }
@@ -205,7 +214,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         [Authorize(Roles = "admin,nhanvien")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("WardID,WardName,DistrictID")] Ward ward)
+        public ActionResult Create([Bind("Id,WardName,DistrictID")] Ward ward)
         {
             if (ModelState.IsValid)
             {
@@ -214,7 +223,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.DistrictID);
+            ViewBag.IdDistrict = new SelectList(db.Districts, "Id", "DistrictName", ward.IdDistrict);
             return View(ward);
         }
 
@@ -230,7 +239,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.DistrictID);
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.IdDistrict);
             return View(ward);
         }
 
@@ -245,7 +254,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.DistrictID);
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.IdDistrict);
             return View(ward);
         }
 

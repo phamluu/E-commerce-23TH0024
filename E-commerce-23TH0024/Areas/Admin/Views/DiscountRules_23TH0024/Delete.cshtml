@@ -1,4 +1,5 @@
-﻿@model E_commerce_23TH0024.Models.DiscountRule
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model DiscountRule
 
 @{
     ViewBag.Title = "Xóa " + Model.Name;
@@ -37,7 +38,7 @@
             </div>
             <div class="col-6">
                 <label class="font-weight-bold">Loại khách hàng: </label>
-                @Html.DisplayFor(model => model.CustomerTypeID)
+                @Html.DisplayFor(model => model.IdCustomerType)
             </div>
             <div class="col-6">
                 <label class="font-weight-bold">Ngày bắt đầu </label>

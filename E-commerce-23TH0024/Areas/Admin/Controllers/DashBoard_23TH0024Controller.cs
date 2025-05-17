@@ -12,6 +12,10 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
     public class DashBoard_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext _db;
+        public DashBoard_23TH0024Controller(ApplicationDbContext context)
+        {
+            _db = context;
+        }
         public ActionResult Index()
         {
             //ViewBag.DonHang = ThongKeDonHang();

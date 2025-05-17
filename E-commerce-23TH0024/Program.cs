@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Data.SqlClient;
+using E_commerce_23TH0024.Models.Identity;
+using E_commerce_23TH0024.Extensions;
+using E_commerce_23TH0024.Lib;
+using Microsoft.AspNetCore.Identity.UI.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,11 +15,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// add dbcontext để tạo các migration
+builder.Services.AddDbContext<LocationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<EcommerceDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<UserDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<SystemSettingDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+// end
+
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     // Cấu hình mật khẩu
     options.Password.RequireDigit = false;
@@ -34,6 +53,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 builder.Services.AddHttpContextAccessor(); // bổ sung
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 
 var app = builder.Build();
@@ -57,22 +78,18 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-app.MapControllerRoute(
-    name: "sanpham",
-    pattern: "{tenLoaiSanPham}/{tenSanPham}-{id}",
-    defaults: new { controller = "SanPhams_23TH0024", action = "Details" }
-);
+// Nếu có tham số "seeddata" trong lệnh thì chạy seed và thoát
+if (args.Contains("seeddata"))
+{
+    await app.UseIdentitySeedDataAsync();
+    return;  // Dừng chương trình sau khi seed
+}
 
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-);
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
 
-app.MapRazorPages()
-   .WithStaticAssets();
+// Gọi routes
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapCustomRoutes();
+});
 
 app.Run();

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -20,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using E_commerce_23TH0024.Areas.Admin.Controllers;
+using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
@@ -29,16 +29,18 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         private readonly IHttpContextAccessor _contextAccessor;
         
         private readonly ApplicationDbContext db;
-        public DonHangs_23TH0024Controller(IHttpContextAccessor contextAccessor)
+        private readonly Shipping_23TH0024Controller _shipping;
+        public DonHangs_23TH0024Controller(ApplicationDbContext context, IHttpContextAccessor contextAccessor)
         {
             _contextAccessor = contextAccessor;
+            db = context;
+            _shipping = new Shipping_23TH0024Controller(db);
         }
-        private Shipping_23TH0024Controller _shipping = new Shipping_23TH0024Controller();
         public ActionResult OrderListForCustomer()
         {
             string UserID = User.Identity.GetUserId();
            
-                var kh = db.KhachHangs.SingleOrDefault(x => x.UserID == UserID);
+                var kh = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers == UserID);
                 if (kh != null)
                 {
                     var donhangs = db.DonHangs.FromSqlRaw("EXEC GetDonHangs @UserID, @SoDienThoai, @Email",
@@ -84,14 +86,14 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             double lat = 12.2797806597436;
             double lng = 109.199100989104;
             string UserID = User.Identity.GetUserId();
-            var kh = db.KhachHangs.SingleOrDefault(x => x.UserID.ToString() == UserID);
+            var kh = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
             if (kh == null)
             {
                 return 0;
             }
             double distance = _shipping.CalculateDistance((double)kh.Latitude, (double)kh.Longitude, lat, lng);
             
-            var fees = db.ShippingRates.Where(x =>  x.ShippingMethodID.HasValue && x.ShippingMethodID.Value == shippingMethod
+            var fees = db.ShippingRates.Where(x =>  x.IdDeliveryMethod.HasValue && x.IdDeliveryMethod.Value == shippingMethod
                                                         && x.FromDistance.HasValue && x.FromDistance.Value <= distance
                                                         && (x.ToDistance.HasValue ? x.ToDistance.Value >= distance : true)
                                                       );
@@ -124,7 +126,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
             {
                 var UserID = User.Identity.GetUserId();
-                var khachhang = db.KhachHangs.SingleOrDefault(x => x.UserID.ToString() == UserID);
+                var khachhang = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
                 if (khachhang == null)
                 {
                     //return RedirectToAction("Login", "Account");
@@ -153,15 +155,15 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             try
             {
                 donHang.NgayDatHang = DateTime.Now;
-                donHang.MaKH = MaKH;
-                donHang.ShippingMethodID = shippingMethod;
+                donHang.IdKhachHang = MaKH;
+                donHang.IdDeliveryMethod = shippingMethod;
                 List<CartItem> cartItems = GetCart().Items;
                 decimal Total = 0;
                 foreach (var item in cartItems)
                 {
                     var chiTietDonHang = new ChiTietDonHang
                     {
-                        MaSP = item.Id,
+                        IdSanPham = item.Id,
                         SoLuong = item.SoLuong,
                         DonGia = item.DonGia.Value,
                         DiscountApplied = item.DiscountMax()
@@ -228,16 +230,16 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         
         public ActionResult Create()
         {
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen");
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen");
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen");
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "IdKhachHang", "HoTen");
+            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "IdNhanVien", "HoTen");
+            ViewBag.MaNVGH = new SelectList(db.NhanViens, "IdNhanVien", "HoTen");
             return View();
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("SoHD,NgayDatHang,NgayGiaoHang,MaKH,MaNVDuyet,MaNVGH,TinhTrang")] DonHang donHang)
+        public ActionResult Create([Bind("Id,NgayDatHang,NgayGiaoHang,IdKhachHang,IdNhanVienDuyet,IdNhanVienGiao,TinhTrang")] DonHang donHang)
         {
             if (ModelState.IsValid)
             {
@@ -246,9 +248,9 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.MaKH);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.MaNVDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.MaNVGH);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.IdKhachHang);
+            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 
@@ -264,9 +266,9 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             {
                 return NotFound();
             }
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.MaKH);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.MaNVDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.MaNVGH);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.IdKhachHang);
+            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 
@@ -281,9 +283,9 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.MaKH);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.MaNVDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.MaNVGH);
+            ViewBag.MaKH = new SelectList(db.KhachHangs, "IdKhachHang", "HoTen", donHang.IdKhachHang);
+            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "IdNhanVien", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.MaNVGH = new SelectList(db.NhanViens, "IdNhanVien", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 

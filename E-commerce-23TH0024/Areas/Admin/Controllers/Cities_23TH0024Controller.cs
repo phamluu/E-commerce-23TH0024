@@ -12,17 +12,21 @@ using E_commerce_23TH0024.Models;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Authorization;
+using E_commerce_23TH0024.Models.Location;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class Cities_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly FileTransfer_23TH0024Controller _fileTransfer;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private FileTransfer_23TH0024Controller _fileTransfer = new FileTransfer_23TH0024Controller();
-        public Cities_23TH0024Controller(IHttpContextAccessor httpContextAccessor)
+        public Cities_23TH0024Controller(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
+            db = context;
             _httpContextAccessor = httpContextAccessor;
+            _fileTransfer = new FileTransfer_23TH0024Controller(db);
         }
 
         public ActionResult ImportExcel()
@@ -134,7 +138,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         [Authorize(Roles = "admin,nhanvien")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("CityID,CityName")] City city)
+        public ActionResult Create([Bind("Id,CityName")] City city)
         {
             if (ModelState.IsValid)
             {

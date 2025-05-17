@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using System.Web;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using E_commerce_23TH0024.Models.Identity;
+using E_commerce_23TH0024.Models.Users;
+using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Controllers
 {
@@ -23,11 +25,11 @@ namespace E_commerce_23TH0024.Controllers
     {
         private ApplicationDbContext db;
         private RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
         public AspNetUsers_23TH0024Controller(
             ApplicationDbContext context,
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             db = context;
@@ -127,12 +129,12 @@ namespace E_commerce_23TH0024.Controllers
                     await _userManager.AddToRoleAsync(user, role.Name);
                     if (role.Name == "khachhang")
                     {
-                        var khachhang = new KhachHang { UserID = user.Id };
+                        var khachhang = new KhachHang { IdAspNetUsers = user.Id };
                         db.KhachHangs.Add(khachhang);
                     }
                     else if (role.Name == "nhanvien")
                     {
-                        var nhanvien = new NhanVien { UserID = user.Id };
+                        var nhanvien = new NhanVien { IdAspNetUsers = user.Id };
                         db.NhanViens.Add(nhanvien);
                     }
                 }
@@ -141,12 +143,12 @@ namespace E_commerce_23TH0024.Controllers
                     await _userManager.RemoveFromRoleAsync(user, role.Name);
                     if (role.Name == "khachhang")
                     {
-                        var khachHangs = db.KhachHangs.Where(x => x.UserID == user.Id);
+                        var khachHangs = db.KhachHangs.Where(x => x.IdAspNetUsers == user.Id);
                         db.KhachHangs.RemoveRange(khachHangs);
                     }
                     else if (role.Name == "nhanvien")
                     {
-                        var nhanViens = db.NhanViens.Where(x => x.UserID == user.Id);
+                        var nhanViens = db.NhanViens.Where(x => x.IdAspNetUsers == user.Id);
                         db.NhanViens.RemoveRange(nhanViens);
                     }
                 }
@@ -164,7 +166,8 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return new BadRequestResult(); 
             }
-            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
+            ApplicationUser aspNetUser = db.Users.Find(id);
+            //AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return NotFound();
@@ -187,7 +190,7 @@ namespace E_commerce_23TH0024.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user =  new IdentityUser
+                var user =  new ApplicationUser
                 {
                     UserName = model.UserName,
                     Email = model.Email
@@ -214,11 +217,12 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return new BadRequestResult();
             }
-            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
+            ApplicationUser aspNetUser = db.Users.Find(id);
+            //AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return NotFound();
-            }
+            }   
             return View(aspNetUser);
         }
 
@@ -258,7 +262,8 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return new BadRequestResult();
             }
-            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
+            //AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
+            ApplicationUser aspNetUser = db.Users.Find(id);
             if (aspNetUser == null)
             {
                 return NotFound();
@@ -271,8 +276,10 @@ namespace E_commerce_23TH0024.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
-            db.AspNetUsers.Remove(aspNetUser);
+            ApplicationUser aspNetUser = db.Users.Find(id);
+            //AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
+            db.Users.Remove(aspNetUser);
+            //db.AspNetUsers.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

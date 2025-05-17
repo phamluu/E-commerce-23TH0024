@@ -4,21 +4,23 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Areas.Admin.Controllers;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
     [Area("Admin")]
-    public class ProductVariantAttributes_23TH0024Controller : Controller
+    public class ProductVariantAttributes_23TH0024Controller : BaseController
     {
         private readonly ApplicationDbContext db;
-
+        public ProductVariantAttributes_23TH0024Controller(ApplicationDbContext context) : base(context)
+        {
+        }
         // GET: ProductVariantAttributes_23TH0024
         public ActionResult Index()
         {
@@ -55,7 +57,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ID,AttributeID,VariantID,AttributeValueID")] ProductVariantAttribute productVariantAttribute)
+        public ActionResult Create([Bind("Id,AttributeID,VariantID,AttributeValueID")] ProductVariantAttribute productVariantAttribute)
         {
             if (ModelState.IsValid)
             {
@@ -123,14 +125,21 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return View(productVariantAttribute);
         }
 
-        // POST: ProductVariantAttributes_23TH0024/Delete/5
+        // Fix for CS1503: Ensure the correct namespace is used for the ProductVariantAttribute type.  
+        // Update the `db.ProductVariantAttributes.Remove` line to use the fully qualified name if necessary.  
+
+        // POST: ProductVariantAttributes_23TH0024/Delete/5  
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // Ensure the correct type is used for the entity being removed.  
             ProductVariantAttribute productVariantAttribute = db.ProductVariantAttributes.Find(id);
-            db.ProductVariantAttributes.Remove(productVariantAttribute);
-            db.SaveChanges();
+            if (productVariantAttribute != null)
+            {
+                db.ProductVariantAttributes.Remove(productVariantAttribute);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
