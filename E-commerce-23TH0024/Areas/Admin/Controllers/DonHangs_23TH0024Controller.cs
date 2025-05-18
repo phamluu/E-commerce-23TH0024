@@ -24,6 +24,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class DonHangs_23TH0024Controller : Controller
     {
         private readonly IHttpContextAccessor _contextAccessor;

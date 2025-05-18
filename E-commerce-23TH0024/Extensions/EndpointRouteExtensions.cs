@@ -5,6 +5,11 @@
         public static void MapCustomRoutes(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapControllerRoute(
+                name: "loaisanpham",
+                pattern: "{tenLoaiSanPham}-{id}",
+                defaults: new { controller = "SanPhams_23TH0024", action = "ProductListForCategory" }
+            );
+            endpoints.MapControllerRoute(
                 name: "sanpham",
                 pattern: "{tenLoaiSanPham}/{tenSanPham}-{id}",
                 defaults: new { controller = "SanPhams_23TH0024", action = "Details" }

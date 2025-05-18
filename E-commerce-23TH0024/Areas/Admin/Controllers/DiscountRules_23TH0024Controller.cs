@@ -13,6 +13,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DiscountRules_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;

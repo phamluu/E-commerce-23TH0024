@@ -15,7 +15,7 @@ using E_commerce_23TH0024.Models.Identity;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class NhanViens_23TH0024Controller : BaseController
     {

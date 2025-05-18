@@ -57,11 +57,11 @@ namespace E_commerce_23TH0024.Controllers
         //    ViewBag.Attribute = attribute;
         //    return View(viewname, sanPhams);
         //}
-        public ActionResult ProductListForCategory(int maLoaiSanPham)
+        public ActionResult ProductListForCategory(int id)
         {
-            var sanPham = GetProducts("", maLoaiSanPham).ToList();
+            //var sanPham = GetProducts("", id).ToList();
 
-            var loaiSPEntity = _context.LoaiSanPham.SingleOrDefault(x => x.Id == maLoaiSanPham);
+            var loaiSPEntity = _context.LoaiSanPham.SingleOrDefault(x => x.Id == id);
             if (loaiSPEntity != null)
             {
                 LoaiSanPhamViewModels loaiSanPham = new LoaiSanPhamViewModels();
@@ -71,7 +71,18 @@ namespace E_commerce_23TH0024.Controllers
             }
             var attribute = _context.ProductAttributes;
             ViewBag.Attribute = attribute;
-            return View("TimKiemNC1", sanPham);
+
+            var sanPhams = _context.SanPham.Where(x => x.IdLoaiSanPham == id)
+                .Select(x => new SanPhamViewModels { 
+                    Id = x.Id, 
+                    TenSP = x.TenSP, 
+                    Anh = x.Anh, 
+                    DonGia = x.DonGia, 
+                    DVT = x.DVT, 
+                    MoTa = x.MoTa,
+                    LoaiSanPham = x.LoaiSanPham
+                }).ToList();
+            return View("TimKiemNC1", sanPhams);
         }
         public ActionResult Details(int? id)
         {

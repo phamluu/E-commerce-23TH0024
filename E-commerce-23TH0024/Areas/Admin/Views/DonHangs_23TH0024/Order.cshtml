@@ -1,8 +1,8 @@
-﻿@using E_commerce_23TH0024.Models.Ecommerce
+﻿@using E_commerce_23TH0024.Models
+@using E_commerce_23TH0024.Models.Ecommerce
 @model DonHang
 @{
     ViewBag.Title = "Đặt hàng";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     string diachi = (Model != null && Model.KhachHang != null) ? Model.KhachHang.DiaChi : "";
 }
 <div class="banner">

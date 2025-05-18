@@ -15,7 +15,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "admin,nhanvien")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class FileTransfer_23TH0024Controller : BaseController
     {
@@ -99,7 +99,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                     TenSP = row["TenSP"].ToString(),
                     DonGia = Convert.ToDecimal(row["DonGia"]),
                     DVT = row["DVT"].ToString(),
-                    IdLoaiSanPham = Convert.ToInt32(row["MaLSP"]),
+                    IdLoaiSanPham = Convert.ToInt32(row["IdLoaiSanPham"]),
                     Anh = row["Anh"].ToString(),
                     MoTa = row["MoTa"].ToString(),
                 };

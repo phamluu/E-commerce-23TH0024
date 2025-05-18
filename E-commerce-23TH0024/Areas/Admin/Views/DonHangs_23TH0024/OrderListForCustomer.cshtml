@@ -1,0 +1,68 @@
+﻿@using E_commerce_23TH0024.Models
+@using E_commerce_23TH0024.Models.Ecommerce
+@model IEnumerable<DonHang>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+}
+
+<div class="home banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+        <div class="container">
+            <h1>Quản lý đơn hàng</h1>
+        </div>
+    </div>
+</div>
+<div class="container customer">
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("~/Views/Shared/_SideBarCustomer.cshtml")
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <tr>
+                    <th>STT</th>
+                    <th>
+                        @Html.DisplayName("Ngày đặt hàng")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Tổng tiền")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Tình trạng")
+                    </th>
+                    <th></th>
+                </tr>
+                @if (Model != null && Model.Count() > 0)
+                {
+                    int stt = 1;
+                    foreach (var item in Model)
+                    {
+                        string ngayDatHang = item.NgayDatHang.HasValue ? item.NgayDatHang.Value.ToString("dd/MM/yyy") : "";
+                        string tinhTrang = item.TinhTrang.HasValue ? "" : "Đã đặt hàng, chưa thanh toán";
+                        <tr>
+                            <td>@stt</td>
+                            <td>
+                                @ngayDatHang
+                            </td>
+                            <td>
+                                @Helper.money(item.TotalAmount)
+                            </td>
+                            <td>
+                                @tinhTrang
+                            </td>
+                            <td>
+                                @Html.ActionLink("Xem", "Checkout", new { id = item.Id })
+                            </td>
+                        </tr>
+                        stt++;
+                    }
+                }
+
+            </table>
+        </div>
+    </div>
+    
+
+</div>

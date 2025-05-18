@@ -19,7 +19,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class AspNetUsers_23TH0024Controller : Controller
     {

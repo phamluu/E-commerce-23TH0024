@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models.Ecommerce;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ShippingRates_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;

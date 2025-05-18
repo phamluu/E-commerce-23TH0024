@@ -13,6 +13,7 @@ using System.Net;
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SanPhams_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -18,7 +18,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class KhachHangs_23TH0024Controller : BaseController
     {
         private readonly ApplicationDbContext db;

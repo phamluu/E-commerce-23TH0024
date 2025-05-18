@@ -1,0 +1,63 @@
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model DonHang
+
+@{
+    ViewBag.Title = "Xóa đơn hàng";
+}
+
+<h4 class="title">Xóa đơn hàng</h4>
+
+<h6 class="alert alert-warning">Bạn có chắc chắn muốn xóa đơn hàng này ?</h6>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label>Ngày đặt hàng</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayDatHang)
+        </dd>
+
+        <dt>
+            <label>Ngày giao hàng</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayGiaoHang)
+        </dd>
+
+        <dt>
+            <label>Tình trạng</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhTrang)
+        </dd>
+
+        <dt>
+            <label>Khách hàng</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhachHang.HoTen)
+        </dd>
+
+       @*  <dt>
+            <label>Nhân viên</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HoTen)
+        </dd> *@
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class="btn btn-list"})
+        </div>
+    }
+</div>

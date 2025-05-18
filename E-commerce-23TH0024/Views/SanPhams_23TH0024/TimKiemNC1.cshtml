@@ -111,18 +111,23 @@
                                 <div class="item">
                                     <div class="name">@item.TenSP</div>
                                     <div class="wrap d-flex justify-content-between">
-                                        <div class="info d-none d-sm-block">
-                                            <p class="cate">@item.LoaiSanPham.TenLSP</p>
-                                        </div>
+                                        @* <div class="info d-none d-sm-block"> *@
+                                        @*     <p class="cate">@item.LoaiSanPham.TenLSP</p> *@
+                                        @* </div> *@
                                         @if (item.Discount != null)
                                         {
                                             <div class="">
-                                                <span class="old-price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", item.DonGia)</span>
-                                                <p class="price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", item.FinalPrice)</p>
+                                                @if(item.DonGia.HasValue){
+                                                    <span class="old-price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", item.DonGia)</span>
+                                                }
+                                                @if(item.FinalPrice.HasValue){
+                                                    <p class="price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", item.FinalPrice)</p>
+                                                }
+                                                
                                             </div>
 
                                         }
-                                        else
+                                        else if (item.DonGia.HasValue)
                                         {
                                             <div class="price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", item.DonGia)</div>
                                         }

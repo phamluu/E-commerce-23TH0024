@@ -15,6 +15,7 @@ using E_commerce_23TH0024.Areas.Admin.Controllers;
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProductVariantAttributes_23TH0024Controller : BaseController
     {
         private readonly ApplicationDbContext db;

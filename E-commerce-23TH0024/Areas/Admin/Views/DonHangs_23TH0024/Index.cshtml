@@ -1,0 +1,60 @@
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model IEnumerable<DonHang>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+}
+
+<h4 class="title">Quản lý đơn hàng</h4>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+@Html.Partial("_AlertMessages")
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Ngày đặt hàng")
+        </th>
+        <th>
+            @Html.DisplayName("Ngày giao hàng")
+        </th>
+        <th>
+            @Html.DisplayName("Tình trạng")
+        </th>
+        <th>
+            @Html.DisplayName("Khách hàng")
+        </th>
+        <th>
+            @Html.DisplayName("Nhân viên")
+        </th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDatHang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiaoHang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TinhTrang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.HoTen)
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.NhanVien.HoTen) *@
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.SoHD }) |*@
+                <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
+                <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
+            </td>
+        </tr>
+    }
+
+</table>

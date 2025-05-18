@@ -1,5 +1,8 @@
 ﻿@using Azure.Core
-@using Microsoft.AspNet.Identity
+@using Microsoft.AspNetCore.Identity
+@using E_commerce_23TH0024.Models.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +38,7 @@
                 </li>
 
 
-               <!-- <li class="dropdown notification-list"> 
+                <li class="dropdown notification-list"> 
                     <a class="nav-link dropdown-toggle waves-light waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <i class="fe-bell noti-icon"></i> 
                         <span class="badge badge-danger rounded-circle noti-icon-badge">5</span>
@@ -86,14 +89,14 @@
                          </a>
 
                      </div>
-                  </li> -->
-                @* @if (Request.IsAuthenticated)
+                  </li> 
+                @if (SignInManager.IsSignedIn(User))
                 {
                     <li class="dropdown notification-list">
                         <a class="nav-link  nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <img src="~/Content/backend/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                             <span class="pro-user-name ml-1">
-                                @User.Identity.GetUserName() <i class="mdi mdi-chevron-down"></i>
+                                @User.Identity.Name <i class="mdi mdi-chevron-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -112,18 +115,20 @@
                             </a>
 
                             <div class="dropdown-divider"></div>
-
-                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout" class="form-inline">
+                                <button type="submit" class="nav-link btn btn-link text-dark"><i class="fe-log-out"></i>Logout</button>
+                            </form>
+                            @* @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item notify-item">
                                     <i class="fe-log-out"></i>
                                     <span>Đăng xuất</span>
                                 </a>
-                            }
+                            } *@
                         </div>
                     </li>
-                } *@
+                }
             </ul>
             <div class="logo-box">
                 <a href='@Url.Action("Index", "DashBoard_23TH0024")' class="logo text-center">

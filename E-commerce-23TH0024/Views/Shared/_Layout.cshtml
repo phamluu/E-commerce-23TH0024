@@ -81,6 +81,9 @@
                     @{
                         //Html.RenderAction("MenuListForGroup", "Menus_23TH0024", new { menuGroup = "main-menu", viewName = "Partial/_MainMenu" });
                     }
+                    
+                        @await Component.InvokeAsync("LoaiSanPham", new { viewname = "LoaiSanPham" })
+                    
                 </div>
                 <div style="position: absolute; right: 0; top: 0; display: flex ">
                     <div class="navbar-brand sticky">

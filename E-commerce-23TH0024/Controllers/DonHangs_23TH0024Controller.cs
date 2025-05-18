@@ -147,14 +147,15 @@ namespace E_commerce_23TH0024.Controllers
 
         
         [HttpPost]
-        public async Task<ActionResult> Order(int MaKH, KhachHang newHH, int shippingMethod)
+        public async Task<ActionResult> Order(int MaKH, string SoDienThoai, string DiaChi, int? shippingMethod)
         {
             DonHang donHang = new DonHang();
             var khachhang = db.KhachHangs.Find(MaKH);
             if (khachhang == null)
             {
                 var newKH = new KhachHang();
-                
+                newKH.SoDienThoai = SoDienThoai;
+                newKH.DiaChi = DiaChi;
                 db.KhachHangs.Add(newKH);
                 db.SaveChanges();
                 MaKH = newKH.Id;
@@ -173,7 +174,7 @@ namespace E_commerce_23TH0024.Controllers
                         IdSanPham = item.Id,
                         SoLuong = item.SoLuong,
                         DonGia = item.DonGia.Value,
-                        DiscountApplied = item.DiscountMax()
+                        //DiscountApplied = item.DiscountMax()
                     };
                     donHang.ChiTietDonHangs.Add(chiTietDonHang);
                     if (chiTietDonHang.DiscountApplied > 0)
@@ -187,13 +188,13 @@ namespace E_commerce_23TH0024.Controllers
                     
                 }
 
-                donHang.ShippingFee = CalculateShippingFee(shippingMethod);
+                //donHang.ShippingFee = CalculateShippingFee(shippingMethod);
                 donHang.TotalProductAmount = Total;
                 donHang.TotalAmount = Total + donHang.VAT + donHang.ShippingFee;
                 db.DonHangs.Add(donHang);
                 await db.SaveChangesAsync();
 
-                //return RedirectToAction("Checkout", new { id = donHang.SoHD });
+                return RedirectToAction("Checkout", new { id = donHang.Id });
             }
             catch (Exception ex) { 
                 Console.WriteLine(ex.Message);
@@ -202,10 +203,10 @@ namespace E_commerce_23TH0024.Controllers
             donHang.KhachHang = khachhang;
             return View(donHang);
         }
-        [Authorize(Roles = "khachhang")]
+        
         public ActionResult Checkout(int id)
         {
-            var donHang = db.DonHangs.Include(d => d.ChiTietDonHangs).FirstOrDefault(d => d.Id == id);
+            var donHang = db.DonHangs.Include(d => d.ChiTietDonHangs).ThenInclude(d => d.SanPham).FirstOrDefault(d => d.Id == id);
             if (donHang == null)
             {
                 return NotFound();

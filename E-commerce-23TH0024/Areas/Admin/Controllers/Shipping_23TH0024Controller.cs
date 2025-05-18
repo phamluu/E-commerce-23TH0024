@@ -17,6 +17,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class Shipping_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext _entity;

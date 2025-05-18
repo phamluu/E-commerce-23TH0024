@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models.Ecommerce;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class LoaiSanPhams_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext _context;

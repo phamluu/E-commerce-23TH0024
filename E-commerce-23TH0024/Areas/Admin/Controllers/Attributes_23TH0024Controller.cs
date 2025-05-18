@@ -8,10 +8,12 @@ using E_commerce_23TH0024.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models.Ecommerce;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class Attributes_23TH0024Controller : Controller
     {
         private ApplicationDbContext db;

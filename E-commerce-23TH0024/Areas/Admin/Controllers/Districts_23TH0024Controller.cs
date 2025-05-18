@@ -13,9 +13,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using E_commerce_23TH0024.Models.Location;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class Districts_23TH0024Controller : BaseController
     {
         private readonly FileTransfer_23TH0024Controller _fileTransfer;
