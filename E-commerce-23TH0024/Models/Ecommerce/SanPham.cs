@@ -27,8 +27,5 @@ public partial class SanPham
     public virtual LoaiSanPham? LoaiSanPham { get; set; }
 
     public virtual ICollection<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
-    public SanPham()
-    {
-        LoaiSanPham = new LoaiSanPham();
-    }
+  
 }

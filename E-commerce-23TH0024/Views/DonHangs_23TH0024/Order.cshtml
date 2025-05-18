@@ -21,9 +21,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="cart-summary">
+                    <h4>Thông tin đặt hàng</h4>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
                     {
-                        <h4>Thông tin đặt hàng</h4>
                         @Html.Hidden("MaKH", Model.KhachHang.Id)
                         <div class="form-group">
                             @Html.DisplayName("Họ tên")
@@ -55,6 +55,14 @@
                             Vui lòng <a href='@Url.Action("Login", "Account")'>đăng nhập</a> tài khoản khách hàng để tiếp tục đặt hàng
                             <p>Nếu bạn chưa có tài khoản. Hãy <a href='@Url.Action("Register", "Account")'>Đăng ký</a></p>
                         </div>
+                        <div class="form-group">
+                            @Html.DisplayName("Điện thoại")
+                            @Html.TextBoxFor(x => x.KhachHang.SoDienThoai, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayName("Địa chỉ")
+                            @Html.TextBoxFor(x => x.KhachHang.DiaChi, new { @class = "form-control" })
+                        </div>
                     }
 
                 </div>
@@ -85,12 +93,9 @@
                 </div>
             </div>
         </div>
-        if (User.Identity.IsAuthenticated && User.IsInRole("khachhang") && !string.IsNullOrEmpty(Model.KhachHang.DiaChi))
-        {
-            <div class="d-flex mb-3" style=" justify-content: right;">
-                <input type="submit" value="Đặt hàng" class="btn btn-default btn-primary" />
-            </div>
-        }
+        <div class="d-flex mb-3" style=" justify-content: right;">
+            <input type="submit" value="Đặt hàng" class="btn btn-default btn-primary" />
+        </div>
     }
 </div>
 

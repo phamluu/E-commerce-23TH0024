@@ -101,6 +101,9 @@ body {
     font-size: 22px;
     padding: 5px 15px;
 }
+.cart img{
+    max-height:150px;
+}
 .title {
     text-transform: uppercase;
     color: #d93a08;

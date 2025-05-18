@@ -83,7 +83,6 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("CustomerTypes");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.CustomerTypeName).IsRequired().HasMaxLength(100);
                 entity.HasMany(e => e.KhachHangs)
                       .WithOne(p => p.CustomerType)
                       .HasForeignKey(e => e.IdCustomerType);
@@ -96,7 +95,6 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("KhachHang");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.HoTen).IsRequired().HasMaxLength(100);
                 entity.HasOne(e => e.CustomerType)
                       .WithMany(p => p.KhachHangs)
                       .HasForeignKey(e => e.IdCustomerType);
@@ -109,7 +107,6 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("DiscountRules");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
                 entity.HasOne(e => e.LoaiSanPham)
                       .WithMany(p => p.DiscountRules)
                       .HasForeignKey(e => e.IdLoaiSanPham);
@@ -122,7 +119,6 @@ namespace E_commerce_23TH0024.Data
                 {
                     entity.ToTable("LoaiSanPham");
                     entity.HasKey(e => e.Id);
-                    entity.Property(e => e.TenLSP).IsRequired().HasMaxLength(100);
                     entity.HasMany(e => e.SanPhams)
                           .WithOne(p => p.LoaiSanPham)
                           .HasForeignKey(e => e.IdLoaiSanPham);
@@ -134,8 +130,7 @@ namespace E_commerce_23TH0024.Data
                 modelBuilder.Entity<SanPham>(entity =>
                 {
                     entity.ToTable("SanPham");
-                    entity.HasKey(e => e.Id);
-                    entity.Property(e => e.TenSP).IsRequired().HasMaxLength(100);
+                    entity.HasKey(e => e.Id);;
                     entity.HasOne(e => e.LoaiSanPham)
                           .WithMany(p => p.SanPhams)
                           .HasForeignKey(e => e.IdLoaiSanPham);
@@ -153,7 +148,6 @@ namespace E_commerce_23TH0024.Data
                 {
                     entity.ToTable("ProductAttributes");
                     entity.HasKey(e => e.Id);
-                    entity.Property(e => e.AttributeName).IsRequired().HasMaxLength(100);
                     entity.HasMany(e => e.AttributeValues)
                           .WithOne(p => p.ProductAttribute)
                           .HasForeignKey(e => e.IdProductAttribute);
@@ -166,7 +160,6 @@ namespace E_commerce_23TH0024.Data
                 {
                     entity.ToTable("AttributeValues");
                     entity.HasKey(e => e.Id);
-                    entity.Property(e => e.Value).IsRequired().HasMaxLength(100);
                     entity.HasOne(e => e.ProductAttribute)
                           .WithMany(p => p.AttributeValues)
                           .HasForeignKey(e => e.IdProductAttribute);

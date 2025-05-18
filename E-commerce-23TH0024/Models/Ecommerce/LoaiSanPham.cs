@@ -1,13 +1,14 @@
 ﻿using E_commerce_23TH0024.Models.SystemSetting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_commerce_23TH0024.Models.Ecommerce;
 
 public partial class LoaiSanPham
 {
     public int Id { get; set; }
-
+    
     public string? TenLSP { get; set; }
 
     public virtual ICollection<DiscountRule> DiscountRules { get; set; } = new List<DiscountRule>();

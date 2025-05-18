@@ -79,7 +79,10 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return BadRequest();
             }
-            SanPham sanPham = _context.SanPham.Find(id);
+            //SanPham sanPham = _context.SanPham.Find(id);
+            SanPham sanPham = _context.SanPham
+            .Include(s => s.LoaiSanPham)
+            .FirstOrDefault(s => s.Id == id);
             var sanPhamViewModel = ObjectMapper.Map<SanPham, SanPhamViewModels>(sanPham);
             if (sanPham == null)
             {

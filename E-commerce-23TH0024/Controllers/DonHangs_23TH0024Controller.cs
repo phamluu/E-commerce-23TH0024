@@ -145,12 +145,20 @@ namespace E_commerce_23TH0024.Controllers
             return View(donHang);
         }
 
-        [Authorize(Roles = "khachhang")]
+        
         [HttpPost]
-        public async Task<ActionResult> Order(int MaKH, int shippingMethod)
+        public async Task<ActionResult> Order(int MaKH, KhachHang newHH, int shippingMethod)
         {
             DonHang donHang = new DonHang();
-            var khachhang = db.KhachHangs.SingleOrDefault(x => x.Id == MaKH);
+            var khachhang = db.KhachHangs.Find(MaKH);
+            if (khachhang == null)
+            {
+                var newKH = new KhachHang();
+                
+                db.KhachHangs.Add(newKH);
+                db.SaveChanges();
+                MaKH = newKH.Id;
+            }
             try
             {
                 donHang.NgayDatHang = DateTime.Now;

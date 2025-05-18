@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
 {
     /// <inheritdoc />
-    public partial class CreateEcommerceTables : Migration
+    public partial class EcommerceTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerTypeName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    CustomerTypeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenLSP = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    TenLSP = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,7 +59,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AttributeName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    AttributeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +72,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HoTen = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    HoTen = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdAspNetUsers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdCustomerType = table.Column<int>(type: "int", nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -124,7 +124,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discount_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MinTotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -158,7 +158,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdLoaiSanPham = table.Column<int>(type: "int", nullable: true),
-                    TenSP = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TenSP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DonGia = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DVT = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -181,7 +181,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdProductAttribute = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Value = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

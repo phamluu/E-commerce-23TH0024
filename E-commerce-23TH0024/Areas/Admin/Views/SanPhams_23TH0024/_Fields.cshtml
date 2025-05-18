@@ -4,24 +4,26 @@
 @if(Model != null){
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
             <div class="form-container">
-                <div class="form-group  mt-2">
-                    <label class="control-label">Hình đại diện</label>
-                    @if (Model.Anh != null)
-                    {
-                        <img src="~/Uploads/@Model.Anh" alt="@Model.TenSP" />
-                     }
-
-                    @Html.HiddenFor(model => model.Anh, new { htmlAttributes = new { @class = "form-control" } })
-                    <input type="file" name="Avatar" />
-                    @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
-
+                <div class="form-group row mt-2">
+                    @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        <textarea id="MoTa" name="MoTa" class="summernote form-control">@Model.MoTa</textarea>
+                        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-
+            
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="form-container">
                 <div class="form-group row mt-2">
                     @Html.LabelFor(model => model.IdLoaiSanPham, "Thuộc loại sản phẩm", htmlAttributes: new { @class = "control-label col-md-4" })
@@ -30,14 +32,19 @@
                         @Html.ValidationMessageFor(model => model.IdLoaiSanPham, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group  mt-2">
+                    <label class="control-label">Hình đại diện</label>
+                    @if (Model.Anh != null)
+                    {
+                        <img src="~/Uploads/@Model.Anh" alt="@Model.TenSP" />
+                    }
 
-                <div class="form-group row mt-2">
-                    @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-                    </div>
+                    @Html.HiddenFor(model => model.Anh, new { htmlAttributes = new { @class = "form-control" } })
+                    <input type="file" name="Avatar" />
+                    @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
+
                 </div>
+                
                 <div class="form-group row mt-2">
                     @Html.LabelFor(model => model.DonGia, "Đơn giá", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
@@ -59,13 +66,7 @@
         </div>
 
     </div>
-    <div class="form-group mt-2">
-        @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-12" })
-        <div class="col-md-12">
-            <textarea id="MoTa" name="MoTa" class="summernote form-control">@Model.MoTa</textarea>
-            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-        </div>
-    </div>
+   
 
     <script>
         $(document).ready(function () {
@@ -87,7 +88,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#MaLSP').select2();
+            $('#IdLoaiSanPham').select2();
         });
     </script>
 }
