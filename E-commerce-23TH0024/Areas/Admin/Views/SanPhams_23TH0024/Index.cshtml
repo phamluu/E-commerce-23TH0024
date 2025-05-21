@@ -12,8 +12,52 @@
         white-space: nowrap;
         margin-right: 5px;
     }
+
+    #grid_filter{
+        display:none;
+    }
 </style>
 <h4 class="title">Sản phẩm</h4>
+
+<style>
+    .filter-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .filter-group label {
+            margin: 0;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .filter-group input {
+            width: 160px;
+        }
+</style>
+
+<div class="filter-container">
+    <div class="filter-group">
+        <label for="search-ten">Tên sản phẩm:</label>
+        <input type="text" id="search-ten" class="form-control">
+    </div>
+    <div class="filter-group">
+        <label for="search-loai">Loại sản phẩm:</label>
+        <input type="text" id="search-loai" class="form-control">
+    </div>
+    <div class="filter-group">
+        <label for="search-gia">Giá:</label>
+        <input type="text" id="search-gia" class="form-control">
+    </div>
+</div>
 
 <div class="mb-3">
     <div class="btn-action">
@@ -34,6 +78,9 @@
 </div>
 
 @Html.Partial("_AlertMessages")
+
+
+
 <div id="gridContent">
     <table id="grid">
         <thead>
@@ -76,5 +123,20 @@
     });
     $(document).ready(function () {
         $('#MaLSP').select2();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#grid').DataTable();
+        $('#search-ten').on('keyup change', function () {
+            table.column(2).search(this.value).draw();
+        });
+        $('#search-loai').on('keyup change', function () {
+            table.column(5).search(this.value).draw();
+        });
+        $('#search-gia').on('keyup change', function () {
+            table.column(3).search(this.value).draw();
+        });
     });
 </script>

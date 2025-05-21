@@ -14,24 +14,34 @@ namespace E_commerce_23TH0024.ViewComponents
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string viewname = "ProductList")
+        public async Task<IViewComponentResult> InvokeAsync(string viewname)
         {
-            var products = await _context.SanPham.Include(sp => sp.LoaiSanPham).ToListAsync();
-            var productViewModels = products.Select(sp => new SanPhamViewModels
+            switch (viewname)
             {
-                Id = sp.Id,
-                TenSP = sp.TenSP,
-                DonGia = sp.DonGia,
-                MoTa = sp.MoTa,
-               Anh = sp.Anh,
-               IdLoaiSanPham = sp.IdLoaiSanPham,
-               DVT = sp.DVT,
-               LoaiSanPham = sp.LoaiSanPham,
-               ProductVariants = sp.ProductVariants,
-            }).ToList();
-            var attribute = _context.ProductAttributes;
-            ViewBag.Attribute = attribute;
-            return View(viewname, productViewModels);
+                case "ProductList":
+                    var products = await _context.SanPham.Include(sp => sp.LoaiSanPham).ToListAsync();
+                    var productViewModels = products.Select(sp => new SanPhamViewModels
+                    {
+                        Id = sp.Id,
+                        TenSP = sp.TenSP,
+                        DonGia = sp.DonGia,
+                        MoTa = sp.MoTa,
+                        Anh = sp.Anh,
+                        IdLoaiSanPham = sp.IdLoaiSanPham,
+                        DVT = sp.DVT,
+                        LoaiSanPham = sp.LoaiSanPham,
+                        ProductVariants = sp.ProductVariants,
+                    }).ToList();
+                    var attribute = _context.ProductAttributes;
+                    ViewBag.Attribute = attribute;
+                    return View(viewname, productViewModels);
+                    
+                default:
+                    viewname = "ProductAttribute";
+                    var attributes = await _context.ProductAttributes.Include(x => x.AttributeValues).ToListAsync();
+                    return View(viewname, attributes);
+            }
+            
         }
     }
 }

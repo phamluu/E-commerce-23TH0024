@@ -239,8 +239,8 @@ namespace E_commerce_23TH0024.Controllers
         public ActionResult Create()
         {
             ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen");
-            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanViens, "Id", "HoTen");
-            ViewBag.IdNhanVienGiao = new SelectList(db.NhanViens, "Id", "HoTen");
+            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen");
+            ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen");
             return View();
         }
 
@@ -257,8 +257,8 @@ namespace E_commerce_23TH0024.Controllers
             }
 
             ViewBag.MaKH = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "Id", "HoTen", donHang.IdNhanVienDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "Id", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.MaNVDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.MaNVGH = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 
@@ -275,8 +275,8 @@ namespace E_commerce_23TH0024.Controllers
                 return NotFound();
             }
             ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
-            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanViens, "Id", "HoTen", donHang.IdNhanVienDuyet);
-            ViewBag.IdNhanVienGiao = new SelectList(db.NhanViens, "Id", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 
@@ -292,8 +292,8 @@ namespace E_commerce_23TH0024.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaKH = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
-            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanViens, "Id", "HoTen", donHang.IdNhanVienDuyet);
-            ViewBag.IdNhanVienGiao = new SelectList(db.NhanViens, "Id", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 

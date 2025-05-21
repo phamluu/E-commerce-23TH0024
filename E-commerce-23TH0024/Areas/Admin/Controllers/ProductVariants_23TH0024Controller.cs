@@ -16,11 +16,12 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class ProductVariants_23TH0024Controller : BaseController
+    public class ProductVariants_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
-        public ProductVariants_23TH0024Controller(ApplicationDbContext context) : base(context)
+        public ProductVariants_23TH0024Controller(ApplicationDbContext context) 
         {
+            db = context;
         }
         // GET: ProductVariants_23TH0024
         public ActionResult Index()
@@ -55,15 +56,18 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         {
             if (ModelState.IsValid)
             {
-                db.ProductVariants.Add(model);
-                db.SaveChanges();
-                foreach (var attribute in attributes)
+                if (attributes != null)
                 {
-                    attribute.IdProductVariant = model.Id;
-                    db.ProductVariantAttributes.Add(attribute); 
+                    db.ProductVariants.Add(model);
+                    db.SaveChanges();
+                    foreach (var attribute in attributes)
+                    {
+                        attribute.IdProductVariant = model.Id;
+                        db.ProductVariantAttributes.Add(attribute);
+                    }
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Biến thể và thuộc tính đã được thêm thành công!" });
                 }
-                db.SaveChanges(); 
-                return Json(new { success = true, message = "Biến thể và thuộc tính đã được thêm thành công!" });
             }
             return Json(new { success = false, message = "Có lỗi xảy ra khi lưu sản phẩm hoặc thuộc tính." });
         }

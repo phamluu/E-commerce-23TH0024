@@ -1,6 +1,7 @@
 ﻿using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -18,43 +19,19 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly SanPhamService _service;
 
-
-        public SanPhams_23TH0024Controller(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
-        {
-            _context = context;
-            _webHostEnvironment = webHostEnvironment;
-        }
-        private IEnumerable<SanPhamViewModels> GetProducts(string TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null,
-            decimal? DonGiaTo = null, int[] Variant = null)
-        {
-            string VariantStr = null;
-            if (Variant != null)
+        public SanPhams_23TH0024Controller(
+                    ApplicationDbContext context, 
+                    IWebHostEnvironment webHostEnvironment,
+                    SanPhamService service
+                )
             {
-                VariantStr = string.Join(",", Variant);
+                _service = service;
+                _context = context;
+                _webHostEnvironment = webHostEnvironment;
             }
-            var product = _context.SanPham
-                //_context.SanPham.FromSqlRaw("EXEC SanPham_TimKiem @TenSP, @MaLSP, @DonGiaFrom, @DonGiaTo, @Variant",
-                //new SqlParameter("@TenSP", (object)TenSP ?? DBNull.Value),
-                //new SqlParameter("@MaLSP", (object)MaLSP ?? DBNull.Value),
-                //new SqlParameter("@DonGiaFrom", (object)DonGiaFrom ?? DBNull.Value),
-                //new SqlParameter("@DonGiaTo", (object)DonGiaTo ?? DBNull.Value),
-                //new SqlParameter("@Variant", (object)VariantStr ?? DBNull.Value)
-                //)
-                .Select(x => new SanPhamViewModels
-                {
-                    Id = x.Id,
-                    TenSP = x.TenSP,
-                    LoaiSanPham = x.LoaiSanPham,
-                    Anh = x.Anh,
-                    DonGia = x.DonGia,
-                    DVT = x.DVT,
-                    MoTa = x.MoTa,
-                }).OrderByDescending(x => x.Id);
-            return product;
-        }
-
-
+       
         [HttpGet]
         public ActionResult TimKiemNC(string TenSP = null, int? IdLoaiSanPham = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null)
         {
@@ -62,7 +39,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             ViewBag.TenSP = TenSP;
             ViewBag.DonGiaFrom = DonGiaFrom;
             ViewBag.DonGiaTo = DonGiaTo;
-            var products = GetProducts(TenSP, IdLoaiSanPham, DonGiaFrom, DonGiaTo).ToList();
+            var products = _service.SanPhamList(TenSP, IdLoaiSanPham, DonGiaFrom, DonGiaTo).ToList();
 
             if (products.Count() == 0)
                 ViewBag.TB = "Không có thông tin tìm kiếm.";
@@ -72,7 +49,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var sanPhams = GetProducts();
+            var sanPhams = _service.SanPhamList();
             ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             return View(sanPhams.ToList());
         }
@@ -128,7 +105,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return new BadRequestResult();
             }
-            SanPham sanPham = _context.SanPham.Find(id);
+            SanPham sanPham = _service.GetSanPham(id.Value);
             if (sanPham == null)
             {
                 return NotFound();

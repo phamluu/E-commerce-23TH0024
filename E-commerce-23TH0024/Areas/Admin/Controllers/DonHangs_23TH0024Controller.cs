@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using E_commerce_23TH0024.Areas.Admin.Controllers;
 using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Service;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
@@ -28,7 +29,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
     public class DonHangs_23TH0024Controller : Controller
     {
         private readonly IHttpContextAccessor _contextAccessor;
-        
+        private readonly DonHangService _service;
         private readonly ApplicationDbContext db;
         private readonly Shipping_23TH0024Controller _shipping;
         public DonHangs_23TH0024Controller(ApplicationDbContext context, IHttpContextAccessor contextAccessor)
@@ -36,6 +37,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             _contextAccessor = contextAccessor;
             db = context;
             _shipping = new Shipping_23TH0024Controller(db);
+            _service = new DonHangService(db);
         }
         public ActionResult OrderListForCustomer()
         {
@@ -209,8 +211,8 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         
         public ActionResult Index()
         {
-            var donHangs = db.DonHangs.Include(d => d.KhachHang).OrderByDescending(x => x.Id);
-            return View(donHangs.ToList());
+            var donHangs = _service.GetDonHangs();
+            return View(donHangs);
         }
 
        
@@ -220,7 +222,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             {
                 return new BadRequestResult();
             }
-            DonHang donHang = db.DonHangs.Find(id);
+            DonHang donHang = _service.GetDonHang(id.Value);
             if (donHang == null)
             {
                 return NotFound();
@@ -232,8 +234,8 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         public ActionResult Create()
         {
             ViewBag.MaKH = new SelectList(db.KhachHangs, "IdKhachHang", "HoTen");
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "IdNhanVien", "HoTen");
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "IdNhanVien", "HoTen");
+            ViewBag.MaNVDuyet = new SelectList(db.NhanVien, "IdNhanVien", "HoTen");
+            ViewBag.MaNVGH = new SelectList(db.NhanVien, "IdNhanVien", "HoTen");
             return View();
         }
 
@@ -250,8 +252,8 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             }
 
             ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.IdKhachHang);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.MaNVDuyet = new SelectList(db.NhanVien, "MaNV", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.MaNVGH = new SelectList(db.NhanVien, "MaNV", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 
@@ -260,16 +262,16 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         {
             if (id == null)
             {
-                return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new BadRequestResult(); 
             }
-            DonHang donHang = db.DonHangs.Find(id);
+            DonHang donHang = _service.GetDonHang(id.Value);
             if (donHang == null)
             {
                 return NotFound();
             }
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.IdKhachHang);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "MaNV", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 
@@ -284,9 +286,9 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "IdKhachHang", "HoTen", donHang.IdKhachHang);
-            ViewBag.MaNVDuyet = new SelectList(db.NhanViens, "IdNhanVien", "HoTen", donHang.IdNhanVienDuyet);
-            ViewBag.MaNVGH = new SelectList(db.NhanViens, "IdNhanVien", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
+            ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
         }
 

@@ -1,6 +1,7 @@
 ﻿using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -16,12 +17,13 @@ namespace E_commerce_23TH0024.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        private readonly SanPhamService _service;
 
         public SanPhams_23TH0024Controller(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _service = new SanPhamService(context);
         }
         private IEnumerable<SanPhamViewModels> GetProducts(string TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null,
             decimal? DonGiaTo = null, int[] Variant = null)
@@ -105,14 +107,14 @@ namespace E_commerce_23TH0024.Controllers
         [HttpGet]
         public ActionResult TimKiemNC1(string TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null, int[] Variant = null)
         {
-            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "MaLSP", "TenLSP");
+            ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             ViewBag.TenSP = TenSP;
             ViewBag.DonGiaFrom = DonGiaFrom;
             ViewBag.DonGiaTo = DonGiaTo;
             ViewBag.Variant = Variant;
             string VariantStr = Variant != null ? string.Join(",", Variant) : "";
-            var product = GetProducts(TenSP, MaLSP, DonGiaFrom, DonGiaTo, Variant).ToList();
-
+            //var product = GetProducts(TenSP, MaLSP, DonGiaFrom, DonGiaTo, Variant).ToList();
+            var product = _service.SanPhamList(TenSP, MaLSP, DonGiaFrom, DonGiaTo, Variant);
             if (product.Count() == 0)
                 ViewBag.TB = "Không có thông tin tìm kiếm.";
             var attribute = _context.ProductAttributes;

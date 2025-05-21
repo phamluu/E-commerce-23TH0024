@@ -57,7 +57,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // GET: AttributeValues_23TH0024/Create
         public ActionResult Create()
         {
-            ViewBag.AttributeID = new SelectList(db.ProductAttributes, "AttributeID", "AttributeName");
+            ViewBag.IdProductAttribute = new SelectList(db.ProductAttributes, "Id", "AttributeName");
             return View();
         }
 
@@ -66,16 +66,17 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ValueID,AttributeID,Value")] AttributeValue attributeValue)
+        public ActionResult Create([Bind("Id,IdProductAttribute,Value")] AttributeValue attributeValue)
         {
             if (ModelState.IsValid)
             {
                 db.AttributeValues.Add(attributeValue);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
             }
-
-            ViewBag.AttributeID = new SelectList(db.ProductAttributes, "AttributeID", "AttributeName", attributeValue.IdProductAttribute);
+            TempData["ErrorMessage"] = "Không thể thêm";
+            ViewBag.IdProductAttribute = new SelectList(db.ProductAttributes, "Id", "AttributeName", attributeValue.IdProductAttribute);
             return View(attributeValue);
         }
 
@@ -91,7 +92,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.AttributeID = new SelectList(db.ProductAttributes, "AttributeID", "AttributeName", attributeValue.IdProductAttribute);
+            ViewBag.IdProductAttribute = new SelectList(db.ProductAttributes, "Id", "AttributeName", attributeValue.IdProductAttribute);
             return View(attributeValue);
         }
 
@@ -100,15 +101,17 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ValueID,AttributeID,Value")] AttributeValue attributeValue)
+        public ActionResult Edit([Bind("Id,IdProductAttribute,Value")] AttributeValue attributeValue)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(attributeValue).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Cập nhật thành công";
                 return RedirectToAction("Index");
             }
-            ViewBag.AttributeID = new SelectList(db.ProductAttributes, "AttributeID", "AttributeName", attributeValue.IdProductAttribute);
+            TempData["ErrorMessage"] = "Cập nhật thất bại";
+            ViewBag.IdProductAttribute = new SelectList(db.ProductAttributes, "Id", "AttributeName", attributeValue.IdProductAttribute);
             return View(attributeValue);
         }
 
@@ -135,6 +138,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             AttributeValue attributeValue = db.AttributeValues.Find(id);
             db.AttributeValues.Remove(attributeValue);
             db.SaveChanges();
+            TempData["SuccessMessage"] = "Xóa thành thành công";
             return RedirectToAction("Index");
         }
 

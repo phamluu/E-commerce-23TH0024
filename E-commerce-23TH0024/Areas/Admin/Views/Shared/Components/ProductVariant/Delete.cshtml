@@ -1,0 +1,48 @@
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model ProductVariant
+
+@{
+    ViewBag.Title = "Xóa biến thể";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h4 class="title">Xóa biến thể</h4>
+
+<h5 class="alert-danger">Bạn có chắc chắn muốn xóa biến thể này?</h5>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Số lượng")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Giá")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Tên sản phẩm")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SanPham.TenSP)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default btn-delete" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
+        </div>
+    }
+</div>

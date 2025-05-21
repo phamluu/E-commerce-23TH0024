@@ -26,7 +26,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // GET: NhanViens_23TH0024
         public ActionResult Index()
         {
-            var nhanviens = db.NhanViens.ToList();
+            var nhanviens = db.NhanVien.ToList();
             var userIds = nhanviens
                 .Where(nv => nv.IdAspNetUsers != null)
                 .Select(nv => nv.IdAspNetUsers)
@@ -59,7 +59,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhanVien nhanVien = db.NhanViens.Find(id);
+            NhanVien nhanVien = db.NhanVien.Find(id);
             if (nhanVien == null)
             {
                 return NotFound();
@@ -83,7 +83,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.NhanViens.Add(nhanVien);
+                db.NhanVien.Add(nhanVien);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -99,7 +99,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhanVien nhanVien = db.NhanViens.Find(id);
+            NhanVien nhanVien = db.NhanVien.Find(id);
             if (nhanVien == null)
             {
                 return NotFound();
@@ -132,7 +132,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return new BadRequestResult();
             }
-            NhanVien nhanVien = db.NhanViens.Find(id);
+            NhanVien nhanVien = db.NhanVien.Find(id);
             if (nhanVien == null)
             {
                 return NotFound();
@@ -145,8 +145,8 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            NhanVien nhanVien = db.NhanViens.Find(id);
-            db.NhanViens.Remove(nhanVien);
+            NhanVien nhanVien = db.NhanVien.Find(id);
+            db.NhanVien.Remove(nhanVien);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

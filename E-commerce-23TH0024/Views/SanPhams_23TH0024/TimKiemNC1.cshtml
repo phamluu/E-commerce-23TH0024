@@ -29,48 +29,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <div class="form-search">
-                <div class="title"><span>Tìm kiếm</span><label><i class="fas fa-chevron-up"></i></label></div>
-                @using (Html.BeginForm("TimKiemNC1", "SanPhams_23TH0024", FormMethod.Get))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        <h6 class="sub-title">Giá</h6>
-                        <label class="d-flex">
-                            Từ <input type="number" name="DonGiaFrom" value="@ViewBag.DonGiaFrom" class="form-control" />
-                            Đến <input type="number" name="DonGiaFrom" value="@ViewBag.DonGiaTo" class="form-control" />
-                        </label>
-                    </div>
-                    if (AttributeList != null && AttributeList.Count() > 0)
-                    {
-                        foreach (var attr in AttributeList)
-                        {
-                            if (attr.AttributeValues != null && attr.AttributeValues.Count() > 0)
-                            {
-                                <div class="form-group @attr.Id">
-                                    <h6>@attr.AttributeName</h6>
-                                    @foreach (var item in attr.AttributeValues)
-                                    {
-                                        if (item.IdProductAttribute == "color")
-                                        {
-                                            <input type="checkbox" id="@item.Value" value="@item.Id" name="Variant">
-                                            <label for="@item.Value" style="background:@item.Value"></label>
-                                        }
-                                        else
-                                        {
-                                            <label class="@item.Value"><input type="checkbox" value="@item.Id" name="Variant" /><span>@item.Value</span></label>
-                                        }
-                                    }
-                                </div>
-                            }
-                        }
-                    }
-
-
-                    <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default bg-success" />
-                    <input type="button" name="Nhapmoi" value="Nhập mới" class="btn btn-default bg-secondary" onclick="location.href='@Url.Action("TimKiemNC1", "SanPhams_23TH0024")'" />
-                }
-            </div>
+            @await Component.InvokeAsync("ProductList", new { viewname = "ProductAttribute" })
         </div>
         <div class="col-md-9">
             <nav class="navbar toolbar">

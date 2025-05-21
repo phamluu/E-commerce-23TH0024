@@ -1,0 +1,47 @@
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model List<ProductAttribute>
+<div class="form-search">
+    <div class="title"><span>Tìm kiếm</span><label><i class="fas fa-chevron-up"></i></label></div>
+    @using (Html.BeginForm("TimKiemNC1", "SanPhams_23TH0024", FormMethod.Get))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <h6 class="sub-title">Giá</h6>
+            <label class="d-flex">
+                Từ <input type="number" name="DonGiaFrom" value="@ViewBag.DonGiaFrom" class="form-control" />
+                Đến <input type="number" name="DonGiaTo" value="@ViewBag.DonGiaTo" class="form-control" />
+            </label>
+        </div>
+        if (Model != null && Model.Count() > 0)
+        {
+            foreach (var attr in Model)
+            {
+                if (attr.AttributeValues != null && attr.AttributeValues.Count() > 0)
+                {
+                    <div class="form-group @attr.Id">
+                        <h6>@attr.AttributeName</h6>
+                        @foreach (var item in attr.AttributeValues)
+                        {
+                            bool isChecked = ViewBag.Variant != null && ((int[])ViewBag.Variant).Contains(item.Id);
+                            if (item.IdProductAttribute == "color")
+                            {
+                                <input type="checkbox" id="@item.Value" value="@item.Id" name="Variant" @(isChecked ? "checked" : "")>
+                                <label for="@item.Value" style="background:@item.Value"></label>
+                            }
+                            else
+                            {
+                                <label class="@item.Value"><input type="checkbox" value="@item.Id" name="Variant" @(isChecked ? "checked" : "") /><span>@item.Value</span></label>
+                            }
+                        }
+                    </div>
+                }
+            }
+        }
+        <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default bg-success" />
+        <input type="button" name="Nhapmoi" value="Nhập mới" class="btn btn-default bg-secondary" onclick="location.href='@Url.Action("TimKiemNC1", "SanPhams_23TH0024")'" />
+    }
+</div>
+
+<script>
+
+</script>

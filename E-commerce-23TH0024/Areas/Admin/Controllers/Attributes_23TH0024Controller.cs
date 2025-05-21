@@ -54,12 +54,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("AttributeID,AttributeName")] ProductAttribute attributes)
+        public ActionResult Create([Bind("Id,AttributeName")] ProductAttribute attributes)
         {
             if (ModelState.IsValid)
             {
                 db.ProductAttributes.Add(attributes);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
             }
 
@@ -92,8 +93,10 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 db.Entry(attributes).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Cập nhật thành công";
                 return RedirectToAction("Index");
             }
+            TempData["ErrorMessage"] = "Cập nhật thất bại";
             return View(attributes);
         }
 
@@ -119,6 +122,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         {
             ProductAttribute attributes = db.ProductAttributes.Find(id);
             db.ProductAttributes.Remove(attributes);
+            TempData["SuccessMessage"] = "Xóa thành công";
             db.SaveChanges();
             return RedirectToAction("Index");
         }

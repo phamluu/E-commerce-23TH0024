@@ -3,14 +3,14 @@
 
 @{
     ViewBag.Title = "Giá trị thuộc tính";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">@ViewBag.Title</h4>
-
-<p>
+@Html.Partial("_HeadActions")
+@Html.Partial("_AlertMessages")
+@* <p>
     @Html.ActionLink("Thêm mới", "Create", "", new {@class = "btn btn-add"})
-</p>
+</p> *@
 <table class="table">
     <tr>
         <th>

@@ -7,6 +7,7 @@ using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Extensions;
 using E_commerce_23TH0024.Lib;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using E_commerce_23TH0024.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -56,6 +57,8 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+// Đăng ký service
+builder.Services.AddAppServices();
 
 var app = builder.Build();
 

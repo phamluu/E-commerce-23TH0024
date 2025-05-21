@@ -36,7 +36,7 @@ namespace E_commerce_23TH0024.Data
         //public DbSet<ErrorViewModel> ErrorViewModel { get; set; }
         public DbSet<KhachHang> KhachHangs { get; set; }
         public DbSet<Menu> Menus { get; set; }
-        public DbSet<NhanVien> NhanViens { get; set; }
+        public DbSet<NhanVien> NhanVien { get; set; }
         public DbSet<NhomMenu> NhomMenus { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }

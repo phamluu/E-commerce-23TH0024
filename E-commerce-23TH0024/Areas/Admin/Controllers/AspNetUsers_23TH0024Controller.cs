@@ -135,7 +135,7 @@ namespace E_commerce_23TH0024.Controllers
                     else if (role.Name == "nhanvien")
                     {
                         var nhanvien = new NhanVien { IdAspNetUsers = user.Id };
-                        db.NhanViens.Add(nhanvien);
+                        db.NhanVien.Add(nhanvien);
                     }
                 }
                 else if (!selected && inRole)
@@ -148,8 +148,8 @@ namespace E_commerce_23TH0024.Controllers
                     }
                     else if (role.Name == "nhanvien")
                     {
-                        var nhanViens = db.NhanViens.Where(x => x.IdAspNetUsers == user.Id);
-                        db.NhanViens.RemoveRange(nhanViens);
+                        var nhanViens = db.NhanVien.Where(x => x.IdAspNetUsers == user.Id);
+                        db.NhanVien.RemoveRange(nhanViens);
                     }
                 }
             }

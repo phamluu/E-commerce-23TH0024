@@ -1,0 +1,27 @@
+﻿@using E_commerce_23TH0024.Models.Ecommerce
+@model IEnumerable<ProductAttribute>
+
+    @*@Html.AntiForgeryToken()*@
+    
+@for (int i = 0; i < Model.Count(); i++)
+{
+    var item = Model.ElementAt(i);
+    <div class="form-group">
+        <label class="font-weight-bold">@item.AttributeName</label>
+
+        @* Gán đúng IdProductAttribute *@
+        @Html.Hidden($"attributes[{i}].IdProductAttribute", item.Id)
+
+        @* Chọn giá trị AttributeValue *@
+        @Html.DropDownList(
+                $"attributes[{i}].IdAttributeValue",
+                new SelectList(item.AttributeValues, "Id", "Value"),
+                "-- chọn --",
+                new { @class = "form-control" }
+                )
+    </div>
+}
+
+
+
+
