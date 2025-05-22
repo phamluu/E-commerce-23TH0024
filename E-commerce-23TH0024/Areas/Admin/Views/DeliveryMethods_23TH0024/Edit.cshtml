@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Cập nhật phương thức giao hàng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Cập nhật phương thức giao hàng</h4>
@@ -18,13 +17,7 @@
 
     @Html.Partial("_Fields", Model)
 
-    <div class="form-group row mt-3">
-        <div class="col-md-2"></div>
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Lưu" class="btn btn-default btn-save" />
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
-        </div>
-    </div>
+    @Html.Partial("_FormActions")
 </div>
 }
 

@@ -1,6 +1,7 @@
-﻿@using E_commerce_23TH0024.Models
+﻿@using E_commerce_23TH0024.Lib
+@using E_commerce_23TH0024.Models
 @using E_commerce_23TH0024.Models.Ecommerce
-@model DonHang
+@model DonHangViewModel
 
 @{
     ViewBag.Title = "Đơn hàng";
@@ -42,20 +43,20 @@
                 </tr>
                 <tr>
                     <td>
-                        <b>@Html.DisplayName("Tình trạng")</b>
+                        <b>@Html.DisplayName("Nhân viên giao hàng")</b>
                     </td>
 
                     <td>
-                        @Html.DisplayFor(model => model.TinhTrang)
+                        @Html.DisplayFor(model => model.NhanVienGiao.SoDienThoai)
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <b>@Html.DisplayName("Khách hàng")</b>
+                        <b>@Html.DisplayName("Tình trạng")</b>
                     </td>
 
                     <td>
-                        @Html.DisplayFor(model => model.KhachHang.HoTen)
+                        @EnumExtensions.GetOrderStatusName(Model.TinhTrang)
                     </td>
                 </tr>
                 @* <tr>
@@ -68,6 +69,39 @@
                     </td>
                 </tr> *@
             </table>
+            
+            <h4>Thông tin khách hàng</h4>
+            <hr />
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>@Html.DisplayName("Tên khách hàng")</b>
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.KhachHang.HoTen)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayName("Sđt khách hàng")</b>
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.KhachHang.SoDienThoai)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayName("Email khách hàng")</b>
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.KhachHang.AspNetUser.Email)
+                    </td>
+                </tr>
+            </table>
+
         </div>
         <div class="col-md-8">
             <div class="box">
@@ -118,7 +152,4 @@
     </div>
     
 </div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.SoHD }) |*@
-    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
-</p>
+

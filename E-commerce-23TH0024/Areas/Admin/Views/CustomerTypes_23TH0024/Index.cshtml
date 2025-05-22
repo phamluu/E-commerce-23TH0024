@@ -3,41 +3,41 @@
 
 @{
     ViewBag.Title = "Loại khách hàng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     int i = 1;
 }
 
-<h4 class="title">Loại khách hàng</h4>
+<h4 class="title">@ViewBag.Title</h4>
 
 <p>
-    @Html.ActionLink("Thêm mới", "Create", "", new {@class = "btn btn-add"})
+    @Html.Partial("_HeadActions")
 </p>
-<div id="gridContent">
-    <table class="table table-borderd table-hover">
-        <tr class="grid-header">
-            <th>STT</th>
-            <th>
-                @Html.DisplayName("Tên loại khách hàng")
-            </th>
-            <th>Chức năng</th>
-        </tr>
+@Html.Partial("_AlertMessages")
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@i</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerTypeName)
-                </td>
-                <td>
-                    <a href='@Url.Action("Edit", new {id=item.Id})' class="btn edit-btn"><i class="fa fa-edit"></i></a>
-                    <a href='@Url.Action("Details", new {id=item.Id})' class="btn detail-btn"><i class="fa fa-eye"></i></a>
-                    <a href='@Url.Action("Delete", new {id=item.Id})' class="btn delete-btn"><i class="fa fa-trash"></i></a>
-                </td>
+    <table id="grid">
+        <thead>
+            <tr class="grid-header">
+                <th>STT</th>
+                <th>
+                    @Html.DisplayName("Tên loại khách hàng")
+                </th>
+                <th>Chức năng</th>
             </tr>
-            i++;
-        }
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerTypeName)
+                    </td>
+                    <td>
+                        @Html.Partial("_TableActions", item.Id)
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
     </table>
-</div>
+
 

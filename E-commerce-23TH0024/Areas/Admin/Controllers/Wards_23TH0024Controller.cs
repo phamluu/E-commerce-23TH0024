@@ -165,7 +165,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Quận/ huyện");
-                worksheet.Cells[1, 1].Value = "WardID";
+                worksheet.Cells[1, 1].Value = "Id";
                 worksheet.Cells[1, 2].Value = "WardName";
                 int row = 2;
                 foreach (var ward in wards)
@@ -183,14 +183,14 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Index()
         {
             var wards = db.Wards.Include(w => w.District);
             return View(wards.ToList());
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -205,17 +205,17 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(ward);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+       
         public ActionResult Create()
         {
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName");
+            ViewBag.IdDistrict = new SelectList(db.Districts, "Id", "DistrictName");
             return View();
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,WardName,DistrictID")] Ward ward)
+        public ActionResult Create([Bind("Id,WardName,IdDistrict")] Ward ward)
         {
             if (ModelState.IsValid)
             {
@@ -228,7 +228,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(ward);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+       
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -240,14 +240,14 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.IdDistrict);
+            ViewBag.IdDistrict = new SelectList(db.Districts, "IdDistrict", "DistrictName", ward.IdDistrict);
             return View(ward);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("WardID,WardName,DistrictID")] Ward ward)
+        public ActionResult Edit([Bind("Id,WardName,IdDistrict")] Ward ward)
         {
             if (ModelState.IsValid)
             {
@@ -255,11 +255,11 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", ward.IdDistrict);
+            ViewBag.IdDistrict = new SelectList(db.Districts, "Id", "DistrictName", ward.IdDistrict);
             return View(ward);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+       
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -274,7 +274,6 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(ward);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -284,7 +283,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

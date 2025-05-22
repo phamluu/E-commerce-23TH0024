@@ -48,7 +48,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         }
         private int ThongKeKhachHang()
         {
-            var khachhangs = _db.KhachHangs.Count();
+            var khachhangs = _db.KhachHang.Count();
             return khachhangs;
         }
     }

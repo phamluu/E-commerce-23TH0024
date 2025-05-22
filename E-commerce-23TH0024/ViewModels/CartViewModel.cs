@@ -1,4 +1,5 @@
 ﻿using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,8 @@ namespace E_commerce_23TH0024.Models
     public class DonHangViewModel:DonHang
     {
         public decimal? TotalProductAmount { get; set; }
+        public NhanVien NhanVienGiao { get; set; }
+        public NhanVien NhanVienDuyet { get; set; }
     }
     public class CartItem:SanPhamViewModels 
     {

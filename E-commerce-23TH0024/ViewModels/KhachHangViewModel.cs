@@ -3,10 +3,8 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Models
 {
-    public class KhachHangViewModel
+    public class KhachHangViewModel:KhachHang
     {
-        public KhachHang KhachHang { get; set; }
         public ApplicationUser AspNetUser { get; set; }
-        public string? UserName { get; set; }
     }
 }

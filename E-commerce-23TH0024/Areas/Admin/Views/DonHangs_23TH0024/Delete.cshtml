@@ -52,12 +52,5 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Xóa" class="btn btn-default" /> |
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class="btn btn-list"})
-        </div>
-    }
+   @Html.Partial("_FormDelete")
 </div>

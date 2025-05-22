@@ -3,10 +3,9 @@
 
 @{
     ViewBag.Title = "Cập nhật chương trình giảm giá";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h4 class="title">Cập nhật chương trình giảm giá</h4>
+<h4 class="title">@ViewBag.Title</h4>
 
 @using (Html.BeginForm())
 {
@@ -18,18 +17,12 @@
 
     @Html.Partial("_Fields", Model)
 
-    <div class="form-group row mt-3">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-            <input type="submit" value="Lưu" class="btn btn-default btn-save" />
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
-        </div>
-    </div>
+        @Html.Partial("_FormActions")
 </div>
 }
 <script>
     $(document).ready(function () {
-        $('#ProductGroupID').select2();
-        $('#CustomerTypeID').select2();
+         $('#IdLoaiSanPham').select2();
+        $('#IdCustomerType').select2();
     });
 </script>

@@ -91,7 +91,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Tỉnh/ thành phố");
-                worksheet.Cells[1, 1].Value = "CityID";
+                worksheet.Cells[1, 1].Value = "Id";
                 worksheet.Cells[1, 2].Value = "CityName";
                 int row = 2;
                 foreach (var city in cities)
@@ -109,13 +109,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Index()
         {
             return View(db.Cities.ToList());
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+       
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -130,13 +130,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(city);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Id,CityName")] City city)
@@ -151,7 +151,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(city);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -166,10 +166,10 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(city);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("CityID,CityName")] City city)
+        public ActionResult Edit([Bind("Id,CityName")] City city)
         {
             if (ModelState.IsValid)
             {
@@ -180,7 +180,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(city);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -195,7 +195,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(city);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -205,7 +205,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

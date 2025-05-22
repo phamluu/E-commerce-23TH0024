@@ -130,7 +130,7 @@ namespace E_commerce_23TH0024.Controllers
                     if (role.Name == "khachhang")
                     {
                         var khachhang = new KhachHang { IdAspNetUsers = user.Id };
-                        db.KhachHangs.Add(khachhang);
+                        db.KhachHang.Add(khachhang);
                     }
                     else if (role.Name == "nhanvien")
                     {
@@ -143,8 +143,8 @@ namespace E_commerce_23TH0024.Controllers
                     await _userManager.RemoveFromRoleAsync(user, role.Name);
                     if (role.Name == "khachhang")
                     {
-                        var khachHangs = db.KhachHangs.Where(x => x.IdAspNetUsers == user.Id);
-                        db.KhachHangs.RemoveRange(khachHangs);
+                        var khachHangs = db.KhachHang.Where(x => x.IdAspNetUsers == user.Id);
+                        db.KhachHang.RemoveRange(khachHangs);
                     }
                     else if (role.Name == "nhanvien")
                     {

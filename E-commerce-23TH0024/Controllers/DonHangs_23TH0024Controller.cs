@@ -39,7 +39,7 @@ namespace E_commerce_23TH0024.Controllers
         {
             string UserID = User.Identity.GetUserId();
            
-                var kh = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers == UserID);
+                var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers == UserID);
                 if (kh != null)
                 {
                     var donhangs = db.DonHangs.FromSqlRaw("EXEC GetDonHangs @UserID, @SoDienThoai, @Email",
@@ -85,7 +85,7 @@ namespace E_commerce_23TH0024.Controllers
             double lat = 12.2797806597436;
             double lng = 109.199100989104;
             string UserID = User.Identity.GetUserId();
-            var kh = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
+            var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
             if (kh == null)
             {
                 return 0;
@@ -125,7 +125,7 @@ namespace E_commerce_23TH0024.Controllers
             if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
             {
                 var UserID = User.Identity.GetUserId();
-                var khachhang = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
+                var khachhang = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
                 if (khachhang == null)
                 {
                     //return RedirectToAction("Login", "Account");
@@ -150,13 +150,13 @@ namespace E_commerce_23TH0024.Controllers
         public async Task<ActionResult> Order(int MaKH, string SoDienThoai, string DiaChi, int? shippingMethod)
         {
             DonHang donHang = new DonHang();
-            var khachhang = db.KhachHangs.Find(MaKH);
+            var khachhang = db.KhachHang.Find(MaKH);
             if (khachhang == null)
             {
                 var newKH = new KhachHang();
                 newKH.SoDienThoai = SoDienThoai;
                 newKH.DiaChi = DiaChi;
-                db.KhachHangs.Add(newKH);
+                db.KhachHang.Add(newKH);
                 db.SaveChanges();
                 MaKH = newKH.Id;
             }
@@ -238,7 +238,7 @@ namespace E_commerce_23TH0024.Controllers
         [Authorize(Roles = "admin,nhanvien")]
         public ActionResult Create()
         {
-            ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen");
+            ViewBag.IdKhachHang = new SelectList(db.KhachHang, "Id", "HoTen");
             ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen");
             ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen");
             return View();
@@ -256,7 +256,7 @@ namespace E_commerce_23TH0024.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.MaKH = new SelectList(db.KhachHang, "Id", "HoTen", donHang.IdKhachHang);
             ViewBag.MaNVDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
             ViewBag.MaNVGH = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
@@ -274,7 +274,7 @@ namespace E_commerce_23TH0024.Controllers
             {
                 return NotFound();
             }
-            ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.IdKhachHang = new SelectList(db.KhachHang, "Id", "HoTen", donHang.IdKhachHang);
             ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
             ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
@@ -291,7 +291,7 @@ namespace E_commerce_23TH0024.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.MaKH = new SelectList(db.KhachHang, "Id", "HoTen", donHang.IdKhachHang);
             ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
             ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);

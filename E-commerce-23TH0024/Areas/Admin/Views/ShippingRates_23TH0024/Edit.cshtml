@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Cập nhật bảng giá";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 
@@ -17,19 +16,12 @@
     @Html.HiddenFor(model => model.Id)
 
     @Html.Partial("_Fields", Model)
-    <div class="form-group row mt-3">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-            <input type="submit" value="Save" class="btn btn-default btn-save" />
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
-
-        </div>
-    </div>
+    @Html.Partial("_FormActions")
 </div>
 }
 
 <script>
 $(document).ready(function() {
-        $('#Region').select2();
+        $('#IdCity').select2();
 });
 </script>

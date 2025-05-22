@@ -13,6 +13,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class DiscountRules_23TH0024Controller : Controller
     {
@@ -49,15 +50,12 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-
-        [Authorize(Roles = "admin,nhanvien")]
         public ActionResult Index()
         {
             var discountRules = db.DiscountRules.Include(d => d.LoaiSanPham).OrderByDescending(x => x.Created_at);
             return View(discountRules.ToList());
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -72,7 +70,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(discountRule);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Create()
         {
             ViewBag.IdLoaiSanPham = new SelectList(db.LoaiSanPham, "Id", "TenLSP");
@@ -80,7 +78,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Id,Name,Discount_Type,Description,MinTotalPrice,DiscountAmount," +
@@ -99,7 +97,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(discountRule);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -116,7 +114,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(discountRule);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind("Id,Name,Discount_Type,Description,MinTotalPrice,DiscountAmount,DiscountPercent,IdLoaiSanPham,IdCustomerType,StartDate,EndDate")] DiscountRule discountRule)
@@ -133,7 +131,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(discountRule);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -148,7 +146,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(discountRule);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

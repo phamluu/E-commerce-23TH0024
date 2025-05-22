@@ -8,13 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using E_commerce_23TH0024.Data;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models.Ecommerce;
+using Microsoft.AspNetCore.Authorization;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CustomerTypes_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
-
+        public CustomerTypes_23TH0024Controller(ApplicationDbContext context)
+        {
+            db = context;
+        }
         // GET: CustomerTypes_23TH0024
         public ActionResult Index()
         {
@@ -53,9 +59,10 @@ namespace E_commerce_23TH0024.Controllers
             {
                 db.CustomerTypes.Add(customerType);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
             }
-
+            TempData["ErrorMessage"] = "Không thể thêm";
             return View(customerType);
         }
 
@@ -79,14 +86,16 @@ namespace E_commerce_23TH0024.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("CustomerTypeID,CustomerTypeName")] CustomerType customerType)
+        public ActionResult Edit([Bind("Id,CustomerTypeName")] CustomerType customerType)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(customerType).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Cập nhật thành công";
                 return RedirectToAction("Index");
             }
+            TempData["ErrorMessage"] = "Cập nhật thất bại";
             return View(customerType);
         }
 
@@ -113,6 +122,7 @@ namespace E_commerce_23TH0024.Controllers
             CustomerType customerType = db.CustomerTypes.Find(id);
             db.CustomerTypes.Remove(customerType);
             db.SaveChanges();
+            TempData["SuccessMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
         }
 

@@ -21,6 +21,6 @@ public partial class NhanVien
     //public virtual ICollection<DonHang> DonHangNhanVienGiao { get; set; } = new List<DonHang>();
     //[InverseProperty("NhanVienDuyet")]
     //public virtual ICollection<DonHang> DonHangNhanVienDuyet { get; set; } = new List<DonHang>();
-    [NotMapped]
+    
     public virtual ApplicationUser? AspNetUser { get; set; }
 }

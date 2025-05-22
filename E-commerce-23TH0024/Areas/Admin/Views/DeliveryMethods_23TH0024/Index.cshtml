@@ -3,58 +3,60 @@
 
 @{
     ViewBag.Title = "Phương thức giao hàng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Phương thức giao hàng</h4>
 
 <p>
-    @Html.ActionLink("Thêm phương thức", "Create", "", new {@class = "btn btn-add"})
+   @Html.Partial("_HeadActions")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Tên phương thức")
-        </th>
-        <th>
-            @Html.DisplayName("Mô tả")
-        </th>
-        <th>
-            @Html.DisplayName("Cost")
-        </th>
-        <th>
-            @Html.DisplayName("Thời gian giao hàng")
-        </th>
-        <th>
-            @Html.DisplayName("Trạng thái")
-        </th>
-        <th>Chức năng</th>
-    </tr>
+<table id="grid">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Tên phương thức")
+            </th>
+            <th>
+                @Html.DisplayName("Mô tả")
+            </th>
+            <th>
+                @Html.DisplayName("Cost")
+            </th>
+            <th>
+                @Html.DisplayName("Thời gian giao hàng")
+            </th>
+            <th>
+                @Html.DisplayName("Trạng thái")
+            </th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string status = item.ActiveStatus == true ? "Hoạt động" : "Vô hiệu hóa";
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MethodName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryTime)
+                </td>
+                <td>
+                    @status
+                </td>
+                <td>
+                    @Html.Partial("_TableActions", item.Id)
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    string status = item.ActiveStatus == true ? "Hoạt động" : "Vô hiệu hóa";
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MethodName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeliveryTime)
-        </td>
-        <td>
-            @status
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", new { id = item.Id})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
-            <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
-            <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
-        </td>
-    </tr>
-}
+    </tbody>
 
 </table>

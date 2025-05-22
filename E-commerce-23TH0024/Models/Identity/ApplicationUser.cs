@@ -7,6 +7,6 @@ namespace E_commerce_23TH0024.Models.Identity
     public class ApplicationUser: IdentityUser
     {
         //public virtual ICollection<KhachHang>? KhachHang { get; set; }
-        //public virtual ICollection<NhanVien>? NhanVien { get; set; }
+        public virtual NhanVien? NhanVien { get; set; }
     }
 }

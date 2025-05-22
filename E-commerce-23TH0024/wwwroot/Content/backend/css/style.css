@@ -244,3 +244,28 @@ img {
 .font-weight-bold{
     font-weight:bold;
 }
+
+/*search*/
+
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .filter-group label {
+        margin: 0;
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .filter-group input {
+        width: 160px;
+    }

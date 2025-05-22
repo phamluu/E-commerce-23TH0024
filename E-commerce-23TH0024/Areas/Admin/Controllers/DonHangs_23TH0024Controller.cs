@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using E_commerce_23TH0024.Areas.Admin.Controllers;
 using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Service;
+using E_commerce_23TH0024.Lib.Enums;
+using E_commerce_23TH0024.Lib;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
@@ -43,7 +45,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         {
             string UserID = User.Identity.GetUserId();
            
-                var kh = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers == UserID);
+                var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers == UserID);
                 if (kh != null)
                 {
                     var donhangs = db.DonHangs.FromSqlRaw("EXEC GetDonHangs @UserID, @SoDienThoai, @Email",
@@ -89,7 +91,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             double lat = 12.2797806597436;
             double lng = 109.199100989104;
             string UserID = User.Identity.GetUserId();
-            var kh = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
+            var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
             if (kh == null)
             {
                 return 0;
@@ -129,7 +131,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
             {
                 var UserID = User.Identity.GetUserId();
-                var khachhang = db.KhachHangs.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
+                var khachhang = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
                 if (khachhang == null)
                 {
                     //return RedirectToAction("Login", "Account");
@@ -154,7 +156,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         public async Task<ActionResult> Order(int MaKH, int shippingMethod)
         {
             DonHang donHang = new DonHang();
-            var khachhang = db.KhachHangs.SingleOrDefault(x => x.Id == MaKH);
+            var khachhang = db.KhachHang.SingleOrDefault(x => x.Id == MaKH);
             try
             {
                 donHang.NgayDatHang = DateTime.Now;
@@ -222,7 +224,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             {
                 return new BadRequestResult();
             }
-            DonHang donHang = _service.GetDonHang(id.Value);
+            DonHangViewModel donHang = _service.GetDonHangViewModel(id.Value);
             if (donHang == null)
             {
                 return NotFound();
@@ -233,7 +235,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
         
         public ActionResult Create()
         {
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "IdKhachHang", "HoTen");
+            ViewBag.MaKH = new SelectList(db.KhachHang, "IdKhachHang", "HoTen");
             ViewBag.MaNVDuyet = new SelectList(db.NhanVien, "IdNhanVien", "HoTen");
             ViewBag.MaNVGH = new SelectList(db.NhanVien, "IdNhanVien", "HoTen");
             return View();
@@ -251,7 +253,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaKH = new SelectList(db.KhachHangs, "MaKH", "HoTen", donHang.IdKhachHang);
+            ViewBag.MaKH = new SelectList(db.KhachHang, "MaKH", "HoTen", donHang.IdKhachHang);
             ViewBag.MaNVDuyet = new SelectList(db.NhanVien, "MaNV", "HoTen", donHang.IdNhanVienDuyet);
             ViewBag.MaNVGH = new SelectList(db.NhanVien, "MaNV", "HoTen", donHang.IdNhanVienGiao);
             return View(donHang);
@@ -269,26 +271,42 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             {
                 return NotFound();
             }
-            ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.IdKhachHang = new SelectList(db.KhachHang, "Id", "HoTen", donHang.IdKhachHang);
             ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
             ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.TinhTrang = new SelectList(
+                                    Enum.GetValues(typeof(OrderStatus))
+                                        .Cast<OrderStatus>()
+                                        .Select(e => new { Id = (int)e, Name = e.GetDisplayName() }),
+                                    "Id",
+                                    "Name",
+                                    donHang.TinhTrang
+                                );
             return View(donHang);
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("SoHD,NgayDatHang,NgayGiaoHang,MaKH,MaNVDuyet,MaNVGH,TinhTrang")] DonHang donHang)
+        public ActionResult Edit([Bind("Id,NgayDatHang,NgayGiaoHang,IdKhachHang,IdNhanVienDuyet,IdNhanVienGiao,TinhTrang")] DonHang donHang)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(donHang).State = EntityState.Modified;
+                _service.UpdateDonHang(donHang);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdKhachHang = new SelectList(db.KhachHangs, "Id", "HoTen", donHang.IdKhachHang);
+            ViewBag.IdKhachHang = new SelectList(db.KhachHang, "Id", "HoTen", donHang.IdKhachHang);
             ViewBag.IdNhanVienDuyet = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienDuyet);
             ViewBag.IdNhanVienGiao = new SelectList(db.NhanVien, "Id", "HoTen", donHang.IdNhanVienGiao);
+            ViewBag.TinhTrang = new SelectList(
+                    Enum.GetValues(typeof(OrderStatus))
+                        .Cast<OrderStatus>()
+                        .Select(e => new { Id = (int)e, Name = e.ToString() }),
+                    "Id",
+                    "Name",
+                    donHang.TinhTrang
+                );
             return View(donHang);
         }
 

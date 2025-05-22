@@ -2,8 +2,7 @@
 @model CustomerType
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Cập nhật loại khách hàng";
 }
 
 @using (Html.BeginForm())
@@ -11,7 +10,7 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4 class="title">Loại khách hàng</h4>
+    <h4 class="title">@ViewBag.Title</h4>
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
 
@@ -23,13 +22,8 @@
         </div>
     </div>
 
-    <div class="form-group row mt-3">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-            <input type="submit" value="Lưu" class="btn btn-default btn-save" />
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
-        </div>
-    </div>
+   
 </div>
+    @Html.Partial("_FormActions")
 }
 

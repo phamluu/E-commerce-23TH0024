@@ -208,7 +208,7 @@
 //            //    {
 //            //        UserID = user.UserID
 //            //    };
-//            //    db.KhachHangs.Add(khachhang);
+//            //    db.KhachHang.Add(khachhang);
 //            //    await db.SaveChangesAsync();
 //            //    ClaimsIdentity identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
 //            //    identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
@@ -232,7 +232,7 @@
 //                    {
 //                        UserID = user.Id,
 //                    };
-//                    db.KhachHangs.Add(khachhang);
+//                    db.KhachHang.Add(khachhang);
 //                    db.SaveChangesAsync();
 //                }
 //                else

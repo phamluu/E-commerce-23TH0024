@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Danh sách phường xã";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Danh sách phường/ xã</h4>
@@ -13,37 +12,41 @@
     @Html.ActionLink("ExportExcel", "ExportExcel", "", new { @class = "btn btn-exportexcel" })
     @Html.ActionLink("ImportExce tỉnh, huyện, xã", "ImportAll", "", new { @class = "btn btn-importexcel" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Thành phố")
-        </th>
-        <th>
-            @Html.DisplayName("Quận/ huyện")
-        </th>
-        <th>
-            @Html.DisplayName("Phường/ xã")
-        </th>
-        <th>Chức năng</th>
-    </tr>
+<table id="grid">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Thành phố")
+            </th>
+            <th>
+                @Html.DisplayName("Quận/ huyện")
+            </th>
+            <th>
+                @Html.DisplayName("Phường/ xã")
+            </th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.District.City.CityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.District.DistrictName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WardName)
+                </td>
+                <td>
+                    @Html.Partial("_TableActions", item.Id)
+                </td>
+            </tr>
+        }
+    </tbody>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.District.City.CityName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.District.DistrictName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WardName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+
 
 </table>

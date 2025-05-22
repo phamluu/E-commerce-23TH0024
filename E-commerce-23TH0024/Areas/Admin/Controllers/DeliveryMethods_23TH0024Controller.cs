@@ -14,6 +14,7 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class DeliveryMethods_23TH0024Controller : Controller
     {
@@ -77,13 +78,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             }
             db.SaveChanges();
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Index()
         {
             return View(db.DeliveryMethods.ToList());
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -98,16 +99,16 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(deliveryMethod);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ShippingMethodID,MethodName,Description,Cost,DeliveryTime,ActiveStatus")] DeliveryMethod deliveryMethod)
+        public ActionResult Create([Bind("Id,MethodName,Description,Cost,DeliveryTime,ActiveStatus")] DeliveryMethod deliveryMethod)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +120,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(deliveryMethod);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -134,10 +135,10 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(deliveryMethod);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ShippingMethodID,MethodName,Description,Cost,DeliveryTime,ActiveStatus")] DeliveryMethod deliveryMethod)
+        public ActionResult Edit([Bind("Id,MethodName,Description,Cost,DeliveryTime,ActiveStatus")] DeliveryMethod deliveryMethod)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +149,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(deliveryMethod);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -163,7 +164,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(deliveryMethod);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -173,7 +174,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

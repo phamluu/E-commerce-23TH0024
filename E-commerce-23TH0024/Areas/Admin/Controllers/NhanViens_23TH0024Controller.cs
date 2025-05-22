@@ -12,43 +12,35 @@ using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models.Users;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Identity;
-
+using E_commerce_23TH0024.Service;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using E_commerce_23TH0024.Lib.Enums;
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class NhanViens_23TH0024Controller : BaseController
+    public class NhanViens_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
-        public NhanViens_23TH0024Controller(ApplicationDbContext context) : base(context)
+        private readonly UserService _service;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public NhanViens_23TH0024Controller(
+                                ApplicationDbContext context,
+                                UserManager<ApplicationUser> userManager,
+                                UserService service
+                ) 
         {
+            db = context;
+            _service = new UserService(context);
+            _userManager = userManager;
         }
         // GET: NhanViens_23TH0024
         public ActionResult Index()
         {
-            var nhanviens = db.NhanVien.ToList();
-            var userIds = nhanviens
-                .Where(nv => nv.IdAspNetUsers != null)
-                .Select(nv => nv.IdAspNetUsers)
-                .Distinct()
-                .ToList();
-
-            var users = db.Users
-                .Where(u => userIds.Contains(u.Id))
-                .ToDictionary(u => u.Id, u => u);
-
-            var viewModel = nhanviens.Select(nv => new NhanVienViewModel
-            {
-                NhanVien = nv,
-                AspNetUser = nv.IdAspNetUsers != null && users.ContainsKey(nv.IdAspNetUsers)
-                    ? users[nv.IdAspNetUsers]
-                    : null,
-                UserName = nv.IdAspNetUsers != null && users.ContainsKey(nv.IdAspNetUsers)
-                    ? users[nv.IdAspNetUsers].UserName
-                    : null
-            }).ToList();
-
-            return View(viewModel);
+            var nhanviens = _service.GetNhanViens();
+            return View(nhanviens);
         }
 
 
@@ -70,7 +62,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // GET: NhanViens_23TH0024/Create
         public ActionResult Create()
         {
-            ViewBag.UserID = new SelectList(db.Users, "Id", "UserName");
+            ViewBag.IdAspNetUsers = new SelectList(db.Users, "Id", "UserName");
             return View();
         }
 
@@ -79,18 +71,75 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("MaNV,HoTen,SoDienThoai,DiaChi,UserID")] NhanVien nhanVien)
+        public async Task<ActionResult> CreateAsync(
+                [Bind("Id,HoTen,SoDienThoai,DiaChi,IdAspNetUsers")] NhanVien nhanVien, string Email, string Password)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.NhanVien.Add(nhanVien);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.IdAspNetUsers = new SelectList(db.Users, "Id", "UserName", nhanVien.IdAspNetUsers);
+                return View(nhanVien);
+            }
+
+            var checkResult = _service.CheckNhanVien(Email);
+
+            switch (checkResult.Item1)
+            {
+                case CheckNhanVienStatus.LaNhanVien:
+                    ModelState.AddModelError("Email", "Email đã tồn tại và thuộc về nhân viên.");
+                    TempData["ErrorMessage"] = $"{Email} đã là nhân viên.";
+                    break;
+
+                case CheckNhanVienStatus.ChuaCoTaiKhoan:
+                    var newUser = new ApplicationUser
+                    {
+                        UserName = Email,
+                        Email = Email,
+                        PhoneNumber = nhanVien.SoDienThoai
+                    };
+
+                    var createResult = await _userManager.CreateAsync(newUser, Password);
+                    if (createResult.Succeeded)
+                    {
+                        nhanVien.IdAspNetUsers = newUser.Id;
+                        db.NhanVien.Add(nhanVien);
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Thêm nhân viên thành công.";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var error in createResult.Errors)
+                            ModelState.AddModelError("", error.Description);
+
+                        TempData["ErrorMessage"] = "Không thể tạo tài khoản người dùng.";
+                    }
+                    break;
+
+                case CheckNhanVienStatus.CoTaiKhoanChuaPhaiNhanVien:
+                    var existingUser = await _userManager.FindByEmailAsync(Email);
+                    if (existingUser != null)
+                    {
+                        nhanVien.IdAspNetUsers = existingUser.Id;
+                        db.NhanVien.Add(nhanVien);
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Thêm nhân viên thành công.";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Không tìm thấy tài khoản người dùng.";
+                    }
+                    break;
+
+                default:
+                    TempData["ErrorMessage"] = "Trạng thái không xác định.";
+                    break;
             }
 
             ViewBag.IdAspNetUsers = new SelectList(db.Users, "Id", "UserName", nhanVien.IdAspNetUsers);
             return View(nhanVien);
         }
+
 
         // GET: NhanViens_23TH0024/Edit/5
         public ActionResult Edit(int? id)
@@ -99,12 +148,11 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhanVien nhanVien = db.NhanVien.Find(id);
+            NhanVien nhanVien = _service.GetNhanVien(id.Value);
             if (nhanVien == null)
             {
                 return NotFound();
             }
-            ViewBag.IdAspNetUsers = new SelectList(db.Users, "Id", "UserName", nhanVien.IdAspNetUsers);
             return View(nhanVien);
         }
 
@@ -113,15 +161,22 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Id,HoTen,SoDienThoai,DiaChi,IdAspNetUsers")] NhanVien nhanVien)
+        public ActionResult Edit([Bind("Id,HoTen,SoDienThoai,DiaChi")] NhanVien nhanVien)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(nhanVien).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool result = _service.UpdateNhanVien(nhanVien);
+                if (result)
+                {
+                    TempData["SuccessMessage"] = "Cập nhật nhân viên thành công.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Cập nhật nhân viên không thành công.";
+                }
+                
             }
-            ViewBag.UserID = new SelectList(db.Users, "Id", "UserName", nhanVien.IdAspNetUsers);
             return View(nhanVien);
         }
 
@@ -148,6 +203,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             NhanVien nhanVien = db.NhanVien.Find(id);
             db.NhanVien.Remove(nhanVien);
             db.SaveChanges();
+            TempData["SuccessMessage"] = "Xóa nhân viên thành công.";
             return RedirectToAction("Index");
         }
 

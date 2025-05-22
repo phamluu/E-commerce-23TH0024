@@ -1,4 +1,5 @@
-﻿using E_commerce_23TH0024.Service;
+﻿using E_commerce_23TH0024.Models.Users;
+using E_commerce_23TH0024.Service;
 
 namespace E_commerce_23TH0024.Extensions
 {
@@ -8,6 +9,7 @@ namespace E_commerce_23TH0024.Extensions
         {
             services.AddScoped<SanPhamService>();
             services.AddScoped<DonHangService>();
+            services.AddScoped<UserService>();
             return services;
         }
     }

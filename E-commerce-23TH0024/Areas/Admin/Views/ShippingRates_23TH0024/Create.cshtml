@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Thêm vận chuyển";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 @using (Html.BeginForm()) 
@@ -15,17 +14,11 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     
     @Html.Partial("_Fields")
-    <div class="form-group row mt-3">
-        <div class="col-md-2"></div>
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Thêm mới" class="btn btn-default btn-save" />
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
-        </div>
-    </div>
+        @Html.Partial("_FormActions")
 </div>
 }
 
 <script>
 $(document).ready(function() {
-        $('#Region').select2();
+        $('#IdCity').select2();
     });</script>

@@ -1,39 +1,79 @@
-﻿@* @model IEnumerable<E_commerce_23TH0024.Models.KhachHang>
+﻿@model IEnumerable<E_commerce_23TH0024.Models.KhachHangViewModel>
 
 @{
     ViewBag.Title = "Quản lý khách hàng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    var grid = new WebGrid(Model, canPage: true, defaultSort: "UserID", canSort: true, rowsPerPage: 10);
 }
-
+<style>
+    #grid_filter{
+        display: none;
+    }
+</style>
 <h4 class="title">Quản lý khách hàng</h4>
 
-<div id="gridContent">
-    @ViewBag.TB
-    @grid.GetHtml(
-    tableStyle: "table table-borderd table-hover",
-    headerStyle: "grid-header",
-    footerStyle: "grid-footer",
-    fillEmptyRows: false,
-    mode: WebGridPagerModes.Numeric,
-    alternatingRowStyle: "alternatingRowStyle",
-    columns: new[]
-    {
-         grid.Column("STT",format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
-         grid.Column("HoTen","Họ tên"),
-         grid.Column("AspNetUser.UserName","Tên đăng nhập"),
-         grid.Column("Loại khách hàng", format: item => item.CustomerType == null ? "" : item.CustomerType.CustomerTypeName),
-         grid.Column("SoDienThoai","Số điện thoại"),
-         grid.Column("DiaChi","Địa chỉ"),
-         grid.Column("Latitude"),
-         grid.Column("Longitude"),
-         //grid.Column("City.CityName","Tỉnh"),
-         grid.Column("Chức năng", format: @<text>
-    <a href="@Url.Action("Edit", new { id = item.MaKH})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
-    <a href="@Url.Action("Details",new { id = item.MaKH})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
-    <a href="@Url.Action("Delete", new { id = item.MaKH})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
-        </text>),
-})
+<div class="filter-container">
+    <div class="filter-group">
+        <label for="search-ten">Họ tên:</label>
+        <input type="text" id="search-ten" class="form-control">
+    </div>
+    <div class="filter-group">
+        <label for="search-ten">Tên đăng nhập:</label>
+        <input type="text" id="search-email" class="form-control">
+    </div>
+    <div class="filter-group">
+        <label for="search-loai">Số điện thoại:</label>
+        <input type="text" id="search-phone" class="form-control">
+    </div>
 </div>
+<table id="grid">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Họ tên</th>
+            <th>Tên đăng nhập</th>
+            <th>Loại khách hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null && Model.Count() > 0){
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.HoTen</td>
+                    <td>@item.AspNetUser?.UserName</td>
+                    <td>@item.CustomerType?.CustomerTypeName</td>
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.DiaChi</td>
+                    <td>@item.Latitude</td>
+                    <td>@item.Longitude</td>
+                    <td>
+                        @Html.Partial("_TableActions", item.Id)
+                    </td>
+                </tr>
+            }
+        }
+        
+    </tbody>
+</table>
 
- *@
+
+
+<script>
+    $(document).ready(function () {
+        var table = $('#grid').DataTable();
+        $('#search-ten').on('keyup change', function () {
+            table.column(1).search(this.value).draw();
+        });
+        $('#search-email').on('keyup change', function () {
+            table.column(2).search(this.value).draw();
+        });
+        $('#search-phone').on('keyup change', function () {
+            table.column(4).search(this.value).draw();
+        });
+    });
+</script>

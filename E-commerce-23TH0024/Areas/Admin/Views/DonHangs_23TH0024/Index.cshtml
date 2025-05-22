@@ -1,15 +1,27 @@
-﻿@using E_commerce_23TH0024.Models.Ecommerce
+﻿@using E_commerce_23TH0024.Lib
+@using E_commerce_23TH0024.Lib.Enums
+@using E_commerce_23TH0024.Models.Ecommerce
+@using System.ComponentModel.DataAnnotations
 @model IEnumerable<DonHang>
 
 @{
     ViewBag.Title = "Quản lý đơn hàng";
 }
-
+<style>
+    #grid_filter{display:none;}
+</style>
 <h4 class="title">Quản lý đơn hàng</h4>
 
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+<div class="filter-container">
+    <div class="filter-group">
+        <label for="search-ten">Số điện thoại:</label>
+        <input type="text" id="search-phone" class="form-control">
+    </div>
+    <div class="filter-group">
+        <label for="search-loai">Tình trạng:</label>
+        <input type="text" id="search-status" class="form-control">
+    </div>
+</div>
 @Html.Partial("_AlertMessages")
 <table id="grid">
     <thead>
@@ -26,9 +38,6 @@
             <th>
                 @Html.DisplayName("Khách hàng")
             </th>
-            <th>
-                @Html.DisplayName("Nhân viên")
-            </th>
             <th>Chức năng</th>
         </tr>
 
@@ -44,23 +53,27 @@
                     @Html.DisplayFor(modelItem => item.NgayGiaoHang)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                    @EnumExtensions.GetOrderStatusName(item.TinhTrang)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KhachHang.HoTen)
-                </td>
-                <td>
-                    @* @Html.DisplayFor(modelItem => item.NhanVien.HoTen) *@
+                    @Html.DisplayFor(modelItem => item.KhachHang.SoDienThoai)
                 </td>
                 <td>
                     @Html.Partial("_TableActions", item.Id)
-                    @* @Html.ActionLink("Edit", "Edit", new { id=item.Id }) | *@
-                    @* <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a> *@
-                    @* <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a> *@
                 </td>
             </tr>
         }
     </tbody>
-    
-
 </table>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#grid').DataTable();
+        $('#search-phone').on('keyup change', function () {
+            table.column(3).search(this.value).draw();
+        });
+        $('#search-status').on('keyup change', function () {
+            table.column(2).search(this.value).draw();
+        });
+    });
+</script>

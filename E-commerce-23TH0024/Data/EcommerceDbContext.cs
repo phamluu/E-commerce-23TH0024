@@ -14,7 +14,7 @@ namespace E_commerce_23TH0024.Data
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<ShippingRate> ShippingRates { get; set; }
         public DbSet<CustomerType> CustomerTypes { get; set; }
-        public DbSet<KhachHang> KhachHangs { get; set; }
+        public DbSet<KhachHang> KhachHang { get; set; }
         public DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }

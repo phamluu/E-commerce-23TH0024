@@ -49,13 +49,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // GET: ShippingRates_23TH0024/Create
         public ActionResult Create()
         {
-            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName");
-            ViewBag.Region = new SelectList(db.Cities, "CityID", "CityName");
+            ViewBag.IdDeliveryMethod = new SelectList(db.DeliveryMethods, "Id", "MethodName");
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("RateID,ShippingMethodID,FromDistance,ToDistance,FixedPrice,PricePerKm,Region,WeightLitmit,CreateAt")] ShippingRate shippingRate)
+        public ActionResult Create([Bind("Id,IdDeliveryMethod,FromDistance,ToDistance,FixedPrice,PricePerKm,IdCity,WeightLitmit,CreateAt")] ShippingRate shippingRate)
         {
             if (ModelState.IsValid)
             {
@@ -63,8 +63,8 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Region = new SelectList(db.Cities, "Id", "CityName", shippingRate.IdCity);
-            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.IdDeliveryMethod);
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName", shippingRate.IdCity);
+            ViewBag.IdDeliveryMethod = new SelectList(db.DeliveryMethods, "Id", "MethodName", shippingRate.IdDeliveryMethod);
             return View(shippingRate);
         }
         public ActionResult Edit(int? id)
@@ -79,13 +79,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName", shippingRate.IdCity);
-            ViewBag.ShippingMethodID = new SelectList(db.DeliveryMethods, "ShippingMethodID", "MethodName", shippingRate.IdDeliveryMethod);
+            ViewBag.IdDeliveryMethod = new SelectList(db.DeliveryMethods, "Id", "MethodName", shippingRate.IdDeliveryMethod);
             return View(shippingRate);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("RateID,ShippingMethodID,FromDistance,ToDistance,FixedPrice,PricePerKm,Region,WeightLitmit,CreateAt")] ShippingRate shippingRate)
+        public ActionResult Edit([Bind("Id,IdDeliveryMethod,FromDistance,ToDistance,FixedPrice,PricePerKm,IdCity,WeightLitmit,CreateAt")] ShippingRate shippingRate)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCity = new SelectList(db.Cities, "CityID", "CityName", shippingRate.IdCity);
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName", shippingRate.IdCity);
             ViewBag.IdDeliveryMethod = new SelectList(db.DeliveryMethods, "Id", "MethodName", shippingRate.IdDeliveryMethod);
             return View(shippingRate);
         }

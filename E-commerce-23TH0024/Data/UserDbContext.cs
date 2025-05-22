@@ -26,7 +26,8 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("NhanVien");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.HoTen).IsRequired().HasMaxLength(100);
+                entity.HasOne(e => e.AspNetUser).WithOne(u => u.NhanVien)
+                .HasForeignKey<NhanVien>(e => e.IdAspNetUsers);
             });
             base.OnModelCreating(modelBuilder);
         }

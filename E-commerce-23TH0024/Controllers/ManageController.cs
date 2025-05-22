@@ -64,7 +64,7 @@
 //                : "";
 
 //            var userId = User.Identity.GetUserId();
-//            var Customer = db.KhachHangs.SingleOrDefault(x => x.UserID.ToString() == userId);
+//            var Customer = db.KhachHang.SingleOrDefault(x => x.UserID.ToString() == userId);
 //            var model = new IndexViewModel
 //            {
 //                HasPassword = HasPassword(),

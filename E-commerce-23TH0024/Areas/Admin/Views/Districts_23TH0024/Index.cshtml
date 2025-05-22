@@ -2,42 +2,43 @@
 
 @{
     ViewBag.Title = "Danh sách quận/ huyện";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h4 class="title">Danh sách quận/ huyện</h4>
+<h4 class="title">@ViewBag.Title</h4>
 
 <p>
     @Html.ActionLink("Thêm mới", "Create", "", new { @class = "btn btn-add" })
     @Html.ActionLink("ImportExcel", "ImportExcel", "", new { @class = "btn btn-importexcel" })
     @Html.ActionLink("ImportExcel", "ImportExcel", "", new { @class = "btn btn-importexcel" })
 </p>
-<table class="table">
-    <tr>
-        <th> @Html.DisplayName("ID")</th>
-        <th>
-            @Html.DisplayName("Quận huyện")
-        </th>
-        <th>
-            @Html.DisplayName("Thành phố")
-        </th>
-        <th></th>
-    </tr>
+<table id="grid">
+    <thead>
+        <tr>
+            <th> @Html.DisplayName("Id")</th>
+            <th>
+                @Html.DisplayName("Quận huyện")
+            </th>
+            <th>
+                @Html.DisplayName("Thành phố")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DistrictName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City.CityName)
+                </td>
+                <td>
+                   @Html.Partial("_TableActions", item.Id)
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DistrictName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City.CityName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    </tbody>
+    
 </table>

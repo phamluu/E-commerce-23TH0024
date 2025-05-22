@@ -34,7 +34,7 @@ namespace E_commerce_23TH0024.Data
         public DbSet<District> Districts { get; set; }
         public DbSet<DonHang> DonHangs { get; set; }
         //public DbSet<ErrorViewModel> ErrorViewModel { get; set; }
-        public DbSet<KhachHang> KhachHangs { get; set; }
+        public DbSet<KhachHang> KhachHang { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<NhanVien> NhanVien { get; set; }
         public DbSet<NhomMenu> NhomMenus { get; set; }
@@ -47,12 +47,14 @@ namespace E_commerce_23TH0024.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<AspNetUsers>()
-            //    .HasMany(u => u.AspNetUserLogins) 
-            //    .WithOne(ul => ul.User)
-            //    .HasForeignKey(ul => ul.UserId); 
-            //modelBuilder.Entity<AspNetUserLogin>()
-            //    .HasKey(ul => new { ul.LoginProvider, ul.ProviderKey });
+
+            modelBuilder.Entity<NhanVien>(entity =>
+            {
+                entity.ToTable("NhanVien");
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.AspNetUser).WithOne(u => u.NhanVien)
+                .HasForeignKey<NhanVien>(e => e.IdAspNetUsers);
+            });
 
             modelBuilder.Entity<DonHang>(entity =>
             {

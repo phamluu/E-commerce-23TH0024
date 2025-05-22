@@ -12,7 +12,7 @@
         <div class="form-group row mt-2">
             @Html.LabelFor(model => model.IdLoaiSanPham, "Loại sản phẩm", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.DropDownList("ProductGroupID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("IdLoaiSanPham", null, "Chọn loại sản phẩm", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdLoaiSanPham, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="form-group row mt-2">
             @Html.LabelFor(model => model.IdCustomerType, "Loại khách hàng", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.DropDownList("CustomerTypeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("IdCustomerType", null, "Chọn loại khách hàng", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdCustomerType, "", new { @class = "text-danger" })
             </div>
         </div>

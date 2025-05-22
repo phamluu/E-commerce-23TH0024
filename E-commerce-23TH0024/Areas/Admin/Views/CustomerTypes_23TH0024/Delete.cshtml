@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Xóa loại khách hàng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Xóa loại khách hàng @Model.CustomerTypeName</h4>
@@ -12,12 +11,5 @@
 <div>
     @Html.Partial("_ViewFields")
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Xóa" class="btn btn-default btn-delete" /> |
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
-        </div>
-    }
+    @Html.Partial("_FormDelete")
 </div>

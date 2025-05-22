@@ -91,13 +91,13 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return fee;
         }
         // Tra cứu phí ship hàng
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult ShippingFee()
         {
             ViewBag.shippingMethod = new SelectList(_entity.DeliveryMethods, "Id", "MethodName");
             return View();
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         public async Task<ActionResult> ShippingFee(ShippingViewModel shipping)
         {
@@ -109,7 +109,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                     return View(shipping);
                 }
             }
-            ViewBag.shippingMethod = new SelectList(_entity.DeliveryMethods, "ShippingMethodID", "MethodName", shipping.shippingMethod);
+            ViewBag.shippingMethod = new SelectList(_entity.DeliveryMethods, "Id", "MethodName", shipping.shippingMethod);
 
             var (lat1, lng1) = await GetCoordinatesFromAddressAsync(shipping.addressFrom);
             var (lat2, lng2) = await GetCoordinatesFromAddressAsync(shipping.addressTo);

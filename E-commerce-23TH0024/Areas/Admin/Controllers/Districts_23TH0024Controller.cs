@@ -75,7 +75,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 var distric = new District
                 {
                     DistrictName = row["DistricName"].ToString(),
-                    Id = int.Parse(row["DistrictID"].ToString()),
+                    Id = int.Parse(row["Id"].ToString()),
                 };
                 db.Districts.Add(distric);
             }
@@ -134,7 +134,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // GET: Districts_23TH0024/Create
         public ActionResult Create()
         {
-            ViewBag.CityID = new SelectList(db.Cities, "Id", "CityName");
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName");
             return View();
         }
 
@@ -143,7 +143,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("DistrictID,DistrictName,CityID")] District district)
+        public ActionResult Create([Bind("Id,DistrictName,IdCity")] District district)
         {
             if (ModelState.IsValid)
             {
@@ -168,7 +168,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName", district.IdCity);
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName", district.IdCity);
             return View(district);
         }
 
@@ -185,7 +185,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityID = new SelectList(db.Cities, "IdCity", "CityName", district.IdCity);
+            ViewBag.IdCity = new SelectList(db.Cities, "Id", "CityName", district.IdCity);
             return View(district);
         }
 
