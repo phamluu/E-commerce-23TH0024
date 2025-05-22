@@ -6,12 +6,32 @@
 
 <h4 class="title">Danh sách phường/ xã</h4>
 
-<p>
-    @Html.ActionLink("Thêm mới", "Create", "", new { @class = "btn btn-add" })
-    @Html.ActionLink("ImportExcel", "ImportExcel", "", new { @class = "btn btn-importexcel" })
-    @Html.ActionLink("ExportExcel", "ExportExcel", "", new { @class = "btn btn-exportexcel" })
-    @Html.ActionLink("ImportExce tỉnh, huyện, xã", "ImportAll", "", new { @class = "btn btn-importexcel" })
-</p>
+<p> 
+    @Html.ActionLink(
+            linkText: "Thêm mới",
+            actionName: "Create",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-default btn-primary" }
+            )
+    @Html.ActionLink(
+            linkText: "Thêm mới",
+            actionName: "ImportExcel",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-importexcel" }
+            )
+    @Html.ActionLink(
+            linkText: "ExportExcel",
+            actionName: "ExportExcel",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-exportexcel" }
+            )
+    @Html.ActionLink(
+            linkText: "ImportExce tỉnh, huyện, xã",
+            actionName: "ImportAll",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-exportexcel" }
+            )
+ </p>
 <table id="grid">
     <thead>
         <tr>

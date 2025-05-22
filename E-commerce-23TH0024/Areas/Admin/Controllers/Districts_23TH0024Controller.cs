@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class Districts_23TH0024Controller : BaseController
     {

@@ -140,82 +140,108 @@ namespace E_commerce_23TH0024.Data
                       .WithMany(p => p.DiscountRules)
                       .HasForeignKey(e => e.IdCustomerType);
             });
+            
+            modelBuilder.Entity<LoaiSanPham>(entity =>
             {
-                modelBuilder.Entity<LoaiSanPham>(entity =>
-                {
-                    entity.ToTable("LoaiSanPham");
-                    entity.HasKey(e => e.Id);
-                    entity.HasMany(e => e.SanPhams)
-                          .WithOne(p => p.LoaiSanPham)
-                          .HasForeignKey(e => e.IdLoaiSanPham);
-                    entity.HasMany(e => e.DiscountRules)
-                          .WithOne(p => p.LoaiSanPham)
-                          .HasForeignKey(e => e.IdLoaiSanPham);
-                });
+                entity.ToTable("LoaiSanPham");
+                entity.HasKey(e => e.Id);
+                entity.HasMany(e => e.SanPhams)
+                        .WithOne(p => p.LoaiSanPham)
+                        .HasForeignKey(e => e.IdLoaiSanPham);
+                entity.HasMany(e => e.DiscountRules)
+                        .WithOne(p => p.LoaiSanPham)
+                        .HasForeignKey(e => e.IdLoaiSanPham);
+            });
 
-                modelBuilder.Entity<SanPham>(entity =>
-                {
-                    entity.ToTable("SanPham");
-                    entity.HasKey(e => e.Id); ;
-                    entity.HasOne(e => e.LoaiSanPham)
-                          .WithMany(p => p.SanPhams)
-                          .HasForeignKey(e => e.IdLoaiSanPham);
-                    entity.HasMany(e => e.ProductVariants)
-                          .WithOne(p => p.SanPham)
-                          .HasForeignKey(e => e.IdSanPham);
-                    entity.HasMany(e => e.ChiTietDonHangs)
-                          .WithOne(p => p.SanPham)
-                          .HasForeignKey(e => e.IdSanPham);
+            modelBuilder.Entity<SanPham>(entity =>
+            {
+                entity.ToTable("SanPham");
+                entity.HasKey(e => e.Id); ;
+                entity.HasOne(e => e.LoaiSanPham)
+                        .WithMany(p => p.SanPhams)
+                        .HasForeignKey(e => e.IdLoaiSanPham);
+                entity.HasMany(e => e.ProductVariants)
+                        .WithOne(p => p.SanPham)
+                        .HasForeignKey(e => e.IdSanPham);
+                entity.HasMany(e => e.ChiTietDonHangs)
+                        .WithOne(p => p.SanPham)
+                        .HasForeignKey(e => e.IdSanPham);
 
 
-                });
+            });
 
-                modelBuilder.Entity<ProductAttribute>(entity =>
-                {
-                    entity.ToTable("ProductAttributes");
-                    entity.HasKey(e => e.Id);
-                    entity.HasMany(e => e.AttributeValues)
-                          .WithOne(p => p.ProductAttribute)
-                          .HasForeignKey(e => e.IdProductAttribute);
-                    entity.HasMany(e => e.ProductVariantAttributes)
-                          .WithOne(p => p.ProductAttribute)
-                          .HasForeignKey(e => e.IdProductAttribute);
-                });
+            modelBuilder.Entity<ProductAttribute>(entity =>
+            {
+                entity.ToTable("ProductAttributes");
+                entity.HasKey(e => e.Id);
+                entity.HasMany(e => e.AttributeValues)
+                        .WithOne(p => p.ProductAttribute)
+                        .HasForeignKey(e => e.IdProductAttribute);
+                entity.HasMany(e => e.ProductVariantAttributes)
+                        .WithOne(p => p.ProductAttribute)
+                        .HasForeignKey(e => e.IdProductAttribute);
+            });
 
-                modelBuilder.Entity<AttributeValue>(entity =>
-                {
-                    entity.ToTable("AttributeValues");
-                    entity.HasKey(e => e.Id);
-                    entity.HasOne(e => e.ProductAttribute)
-                          .WithMany(p => p.AttributeValues)
-                          .HasForeignKey(e => e.IdProductAttribute);
-                });
-                modelBuilder.Entity<ProductVariant>(entity =>
-                {
-                    entity.ToTable("ProductVariants");
-                    entity.HasKey(e => e.Id);
-                    entity.HasOne(e => e.SanPham)
-                          .WithMany(p => p.ProductVariants)
-                          .HasForeignKey(e => e.IdSanPham);
-                    entity.HasMany(e => e.ProductVariantAttributes)
-                          .WithOne(p => p.ProductVariant)
-                          .HasForeignKey(e => e.IdProductVariant);
-                });
-                modelBuilder.Entity<ProductVariantAttribute>(entity =>
-                {
-                    entity.ToTable("ProductVariantAttributes");
-                    entity.HasKey(e => e.Id);
-                    entity.HasOne(e => e.ProductVariant)
-                          .WithMany(p => p.ProductVariantAttributes)
-                          .HasForeignKey(e => e.IdProductVariant);
-                    entity.HasOne(e => e.ProductAttribute)
-                            .WithMany(p => p.ProductVariantAttributes)
-                          .HasForeignKey(e => e.IdProductAttribute);
-                    entity.HasOne(e => e.AttributeValue)
-                          .WithMany(p => p.ProductVariantAttributes)
-                          .HasForeignKey(e => e.IdAttributeValue);
-                });
-            }
+            modelBuilder.Entity<AttributeValue>(entity =>
+            {
+                entity.ToTable("AttributeValues");
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.ProductAttribute)
+                        .WithMany(p => p.AttributeValues)
+                        .HasForeignKey(e => e.IdProductAttribute);
+            });
+            modelBuilder.Entity<ProductVariant>(entity =>
+            {
+                entity.ToTable("ProductVariants");
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.SanPham)
+                        .WithMany(p => p.ProductVariants)
+                        .HasForeignKey(e => e.IdSanPham);
+                entity.HasMany(e => e.ProductVariantAttributes)
+                        .WithOne(p => p.ProductVariant)
+                        .HasForeignKey(e => e.IdProductVariant);
+            });
+            modelBuilder.Entity<ProductVariantAttribute>(entity =>
+            {
+                entity.ToTable("ProductVariantAttributes");
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.ProductVariant)
+                        .WithMany(p => p.ProductVariantAttributes)
+                        .HasForeignKey(e => e.IdProductVariant);
+                entity.HasOne(e => e.ProductAttribute)
+                        .WithMany(p => p.ProductVariantAttributes)
+                        .HasForeignKey(e => e.IdProductAttribute);
+                entity.HasOne(e => e.AttributeValue)
+                        .WithMany(p => p.ProductVariantAttributes)
+                        .HasForeignKey(e => e.IdAttributeValue);
+            });
+
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.ToTable("Cities");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.CityName).IsRequired().HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<District>(entity =>
+            {
+                entity.ToTable("Districts");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.DistrictName).IsRequired().HasMaxLength(100);
+                entity.HasOne(e => e.City)
+                      .WithMany(p => p.Districts)
+                      .HasForeignKey(e => e.IdCity);
+            });
+
+            modelBuilder.Entity<Ward>(entity =>
+            {
+                entity.ToTable("Wards");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.WardName).IsRequired().HasMaxLength(100);
+                entity.HasOne(e => e.District)
+                      .WithMany(d => d.Wards)
+                      .HasForeignKey(e => e.IdDistrict);
+            });
         }
         //public DbSet<E_commerce_23TH0024.Models.LoaiSanPhamViewModels> LoaiSanPhamViewModels { get; set; } = default!;
     }
