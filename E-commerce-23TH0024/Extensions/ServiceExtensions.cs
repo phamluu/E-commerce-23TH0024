@@ -10,6 +10,7 @@ namespace E_commerce_23TH0024.Extensions
             services.AddScoped<SanPhamService>();
             services.AddScoped<DonHangService>();
             services.AddScoped<UserService>();
+            services.AddScoped<MenuService>();
             return services;
         }
     }

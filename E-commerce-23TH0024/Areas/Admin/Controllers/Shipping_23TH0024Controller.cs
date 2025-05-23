@@ -1,10 +1,8 @@
 ﻿using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Owin.BuilderProperties;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Routing;
@@ -20,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using E_commerce_23TH0024.Areas.Admin.Controllers;
 using E_commerce_23TH0024.Models.Ecommerce;
+using System.Security.Claims;
 namespace E_commerce_23TH0024.Controllers
 {
 
@@ -37,9 +37,9 @@ namespace E_commerce_23TH0024.Controllers
         }
         public ActionResult OrderListForCustomer()
         {
-            string UserID = User.Identity.GetUserId();
-           
-                var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers == UserID);
+            string UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers == UserID);
                 if (kh != null)
                 {
                     var donhangs = db.DonHangs.FromSqlRaw("EXEC GetDonHangs @UserID, @SoDienThoai, @Email",
@@ -84,7 +84,7 @@ namespace E_commerce_23TH0024.Controllers
         {
             double lat = 12.2797806597436;
             double lng = 109.199100989104;
-            string UserID = User.Identity.GetUserId();
+            string UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var kh = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
             if (kh == null)
             {
@@ -121,10 +121,10 @@ namespace E_commerce_23TH0024.Controllers
             donHang.TotalProductAmount =cart.Total.Value;
 
             var DeliveryMethods = db.DeliveryMethods.Where(x => x.ActiveStatus == true);
-            ViewBag.shippingMethod = new SelectList(DeliveryMethods, "ShippingMethodID", "MethodName");
+            ViewBag.shippingMethod = new SelectList(DeliveryMethods, "Id", "MethodName");
             if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
             {
-                var UserID = User.Identity.GetUserId();
+                var UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var khachhang = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID);
                 if (khachhang == null)
                 {

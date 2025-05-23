@@ -24,7 +24,7 @@
                     <h4>Thông tin đặt hàng</h4>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("khachhang"))
                     {
-                        @Html.Hidden("MaKH", Model.KhachHang.Id)
+                        @Html.Hidden("Id", Model.KhachHang.Id)
                         <div class="form-group">
                             @Html.DisplayName("Họ tên")
                             @Html.TextBoxFor(x => x.KhachHang.HoTen, new { @class = "form-control", @readonly = "readonly" })

@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using System.Web;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Owin.BuilderProperties;
 using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Service;
+using System.Security.Claims;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
@@ -36,14 +35,14 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         [Authorize]
         public ActionResult ViewProfile()
         {
-            var UserID = User.Identity.GetUserId();
+            var UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var data = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID.ToString());
             return View(data);
         }
         [Authorize]
         public ActionResult UpdateProfile()
         {
-            var UserID = User.Identity.GetUserId();
+            var UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var data = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID.ToString());
             if (data != null)
             {
@@ -60,7 +59,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var UserID = User.Identity.GetUserId();
+                var UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var data = db.KhachHang.SingleOrDefault(x => x.IdAspNetUsers.ToString() == UserID.ToString());
                 if (data != null)
                 {

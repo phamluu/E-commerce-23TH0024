@@ -1,0 +1,35 @@
+﻿@using E_commerce_23TH0024.Models
+@model IEnumerable<MenuViewModels>
+
+@{
+    ViewBag.Title = "Danh sách menu";
+}
+
+<h4 class="title">@ViewBag.Title</h4>
+
+<p>
+    @Html.Partial("_HeadActions")
+</p>
+@Html.Partial("_AlertMessages")
+
+<table id="grid">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Menu</th>
+            <th>Nhóm Menu</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model){
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.LoaiSanPham?.TenLSP</td>
+                <td>@item.NhomMenu?.TenNhomMenu</td>
+                <td>@Html.Partial("_TableActions", item.Id)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

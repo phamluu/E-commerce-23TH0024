@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Web;
-using Microsoft.AspNet.Identity;
 using static E_commerce_23TH0024.Lib.UserHub;
 using Microsoft.AspNetCore.SignalR;
 

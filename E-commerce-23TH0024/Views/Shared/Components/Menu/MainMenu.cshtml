@@ -1,0 +1,12 @@
+﻿@model IEnumerable<E_commerce_23TH0024.Models.MenuViewModels>
+
+@{
+    Layout = null;
+}
+
+<ul class="navbar-nav flex-grow-1">
+    @foreach (var item in Model)
+    {
+        <li><a href='/@item.Url' class="nav-link">@item.MenuName</a></li>
+    }
+</ul>

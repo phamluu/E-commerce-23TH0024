@@ -1,10 +1,10 @@
 ﻿@using E_commerce_23TH0024.Models.SystemSetting
 @model Menu
 <div class="form-group">
-    @Html.LabelFor(model => model.NhomMenu, "Nhóm Menu", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.IdNhomMenu, "Nhóm Menu", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownList("NhomMenu", null, htmlAttributes: new { @class = "form-control multiselect" })
-        @Html.ValidationMessageFor(model => model.NhomMenu, "", new { @class = "text-danger" })
+        @Html.DropDownList("IdNhomMenu", null, htmlAttributes: new { @class = "form-control multiselect" })
+        @Html.ValidationMessageFor(model => model.IdNhomMenu, "", new { @class = "text-danger" })
     </div>
 </div>
 

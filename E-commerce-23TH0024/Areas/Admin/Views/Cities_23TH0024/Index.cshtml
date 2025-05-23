@@ -7,9 +7,24 @@
 <h4 class="title">@ViewBag.Title</h4>
 
 <p>
-    @Html.ActionLink("Thêm mới", "Create", "", new { @class = "btn btn-add" })
-    @Html.ActionLink("ImportExcel", "ImportExcel", "", new { @class = "btn btn-importexcel" })
-    @Html.ActionLink("ExportExcel", "ExportExcel", "", new { @class = "btn btn-exportexcel" })
+    @Html.ActionLink(
+            linkText: "Thêm mới",
+            actionName: "Create",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-default btn-primary" }
+            )
+    @Html.ActionLink(
+            linkText: "ImportExcel",
+            actionName: "ImportExcel",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-importexcel" }
+            )
+    @Html.ActionLink(
+            linkText: "ExportExcel",
+            actionName: "ExportExcel",
+            routeValues: null,
+            htmlAttributes: new { @class = "btn btn-exportexcel" }
+            )
 </p>
 <table id="grid">
     <thead>

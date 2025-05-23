@@ -12,16 +12,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models.SystemSetting;
 using E_commerce_23TH0024.Models.SystemSetting;
+using E_commerce_23TH0024.Service;
 
-namespace E_commerce_23TH0024.Controllers
+namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class Menus_23TH0024Controller : Controller
     {
         private readonly ApplicationDbContext db;
-
+        private readonly MenuService _service;
+        public Menus_23TH0024Controller(ApplicationDbContext context)
+        {
+            db = context;
+            _service = new MenuService(db);
+        }
         public ActionResult MenuListForGroup(string menuGroup, string viewName)
         {
-            var menus = db.Menus.Include(m => m.NhomMenu).Where(m => m.IdNhomMenu == menuGroup)
+            var menus = db.Menu.Include(m => m.NhomMenu).Where(m => m.IdNhomMenu == menuGroup)
                 .Select(x => new MenuViewModels
                 {
                     LoaiMenu = x.LoaiMenu,
@@ -31,21 +39,20 @@ namespace E_commerce_23TH0024.Controllers
                 });
             return View(viewName, menus.ToList());
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Index()
         {
-            var menus = db.Menus.Include(m => m.NhomMenu);
+            var menus = _service.GetMenus();
             return View(menus.ToList());
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Menu menu = db.Menus.Find(id);
+            Menu menu = db.Menu.Find(id);
             if (menu == null)
             {
                 return NotFound();
@@ -53,11 +60,11 @@ namespace E_commerce_23TH0024.Controllers
             return View(menu);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+       
         public ActionResult Create()
         {
-            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "MaLSP", "TenLSP");
-            ViewBag.NhomMenu = new SelectList(db.NhomMenus, "MaNhomMenu", "TenNhomMenu");
+            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "Id", "TenLSP");
+            ViewBag.IdNhomMenu = new SelectList(db.NhomMenu, "Id", "TenNhomMenu");
             var loaiMenuList = Enum.GetValues(typeof(EnumLoaiMenu))
                             .Cast<EnumLoaiMenu>()
                             .Select(e => new
@@ -72,26 +79,26 @@ namespace E_commerce_23TH0024.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("MaMenu,NhomMenu,LoaiMenu,MaLoaiMenu")] Menu menu)
+        public ActionResult Create([Bind("Id,IdNhomMenu,LoaiMenu,MaLoaiMenu")] Menu menu)
         {
             if (ModelState.IsValid)
             {
-                db.Menus.Add(menu);
+                db.Menu.Add(menu);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "MaLSP", "TenLSP", menu.MaLoaiMenu);
-            ViewBag.NhomMenu = new SelectList(db.NhomMenus, "MaNhomMenu", "TenNhomMenu", menu.NhomMenu);
+            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "Id", "TenLSP", menu.MaLoaiMenu);
+            ViewBag.IdNhomMenu = new SelectList(db.NhomMenu, "Id", "TenNhomMenu", menu.IdNhomMenu);
             var loaiMenuList = Enum.GetValues(typeof(EnumLoaiMenu))
                             .Cast<EnumLoaiMenu>()
                             .Select(e => new
                             {
                                 Value = (int)e,
-                                Text = e.ToString() 
+                                Text = e.ToString()
                             })
                             .ToList();
 
@@ -101,25 +108,25 @@ namespace E_commerce_23TH0024.Controllers
             return View(menu);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Menu menu = db.Menus.Find(id);
+            Menu menu = db.Menu.Find(id);
             if (menu == null)
             {
                 return NotFound();
             }
-            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "MaLSP", "TenLSP", menu.MaLoaiMenu);
-            ViewBag.NhomMenu = new SelectList(db.NhomMenus, "MaNhomMenu", "TenNhomMenu", menu.NhomMenu);
+            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "Id", "TenLSP", menu.MaLoaiMenu);
+            ViewBag.NhomMenu = new SelectList(db.NhomMenu, "Id", "TenNhomMenu", menu.NhomMenu);
             var loaiMenuList = Enum.GetValues(typeof(EnumLoaiMenu))
                             .Cast<EnumLoaiMenu>()
                             .Select(e => new
                             {
-                                Value = ((int)e),
+                                Value = (int)e,
                                 Text = e.ToString()
                             })
                             .ToList();
@@ -127,10 +134,10 @@ namespace E_commerce_23TH0024.Controllers
             return View(menu);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("MaMenu,NhomMenu,LoaiMenu,MaLoaiMenu")] Menu menu)
+        public ActionResult Edit([Bind("Id,IdNhomMenu,LoaiMenu,MaLoaiMenu")] Menu menu)
         {
             if (ModelState.IsValid)
             {
@@ -138,19 +145,19 @@ namespace E_commerce_23TH0024.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "MaLSP", "TenLSP", menu.MaLoaiMenu);
-            ViewBag.NhomMenu = new SelectList(db.NhomMenus, "MaNhomMenu", "TenNhomMenu", menu.NhomMenu);
+            ViewBag.MaLoaiMenu = new SelectList(db.LoaiSanPham, "Id", "TenLSP", menu.MaLoaiMenu);
+            ViewBag.NhomMenu = new SelectList(db.NhomMenu, "MaNhomMenu", "TenNhomMenu", menu.NhomMenu);
             return View(menu);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new BadRequestResult(); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Menu menu = db.Menus.Find(id);
+            Menu menu = db.Menu.Find(id);
             if (menu == null)
             {
                 return NotFound();
@@ -158,23 +165,23 @@ namespace E_commerce_23TH0024.Controllers
             return View(menu);
         }
 
-        [Authorize(Roles = "admin,nhanvien")]
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Menu menu = db.Menus.Find(id);
+            Menu menu = db.Menu.Find(id);
             if (menu == null)
             {
                 TempData["ErrorMessage"] = "Không tìm thấy menu để xóa!";
                 return RedirectToAction("Index");
             }
-            db.Menus.Remove(menu);
+            db.Menu.Remove(menu);
             db.SaveChanges();
             TempData["SuccessMessage"] = "Xóa menu thành công!";
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "admin,nhanvien")]
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

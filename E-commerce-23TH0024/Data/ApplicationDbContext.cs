@@ -35,9 +35,9 @@ namespace E_commerce_23TH0024.Data
         public DbSet<DonHang> DonHangs { get; set; }
         //public DbSet<ErrorViewModel> ErrorViewModel { get; set; }
         public DbSet<KhachHang> KhachHang { get; set; }
-        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Menu> Menu { get; set; }
         public DbSet<NhanVien> NhanVien { get; set; }
-        public DbSet<NhomMenu> NhomMenus { get; set; }
+        public DbSet<NhomMenu> NhomMenu { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<ProductVariantAttribute> ProductVariantAttributes { get; set; }
@@ -241,6 +241,31 @@ namespace E_commerce_23TH0024.Data
                 entity.HasOne(e => e.District)
                       .WithMany(d => d.Wards)
                       .HasForeignKey(e => e.IdDistrict);
+            });
+
+            modelBuilder.Entity<NhomMenu>(entity =>
+            {
+                entity.ToTable("NhomMenu");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.TenNhomMenu).IsRequired().HasMaxLength(100);
+                entity.HasMany(e => e.Menus);
+            });
+
+            modelBuilder.Entity<Menu>(entity =>
+            {
+                entity.ToTable("Menu");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.LoaiMenu).IsRequired();
+                entity.Property(e => e.MaLoaiMenu).IsRequired();
+                entity.HasOne(e => e.NhomMenu)
+                      .WithMany(p => p.Menus)
+                      .HasForeignKey(e => e.IdNhomMenu);
+            });
+
+            modelBuilder.Entity<Configuration>(entity =>
+            {
+                entity.ToTable("Configuration");
+                entity.HasKey(e => e.Id);
             });
         }
         //public DbSet<E_commerce_23TH0024.Models.LoaiSanPhamViewModels> LoaiSanPhamViewModels { get; set; } = default!;
