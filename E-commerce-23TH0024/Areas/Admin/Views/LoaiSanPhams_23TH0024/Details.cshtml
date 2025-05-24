@@ -9,7 +9,7 @@
 
 <div>
     <h4 class="title">Thông tin loại sản phẩm</h4>
-    @Html.Partial("_ViewFields")
+    <partial name="_ViewFields" />
 </div>
 <p>
     @Html.ActionLink("Lưu", "Edit", new { id = Model.Id }, new {@class = "btn btn-default"}) |

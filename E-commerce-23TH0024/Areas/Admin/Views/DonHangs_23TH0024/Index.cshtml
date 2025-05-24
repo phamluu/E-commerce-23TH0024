@@ -22,7 +22,7 @@
         <input type="text" id="search-status" class="form-control">
     </div>
 </div>
-@Html.Partial("_AlertMessages")
+<partial name="_AlertMessages" />
 <table id="grid">
     <thead>
         <tr>
@@ -56,10 +56,10 @@
                     @EnumExtensions.GetOrderStatusName(item.TinhTrang)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.KhachHang.SoDienThoai)
+                    @(item.KhachHang?.SoDienThoai ?? "Không xác định")
                 </td>
                 <td>
-                    @Html.Partial("_TableActions", item.Id)
+                    <partial name="_TableActions" model=item.Id />
                 </td>
             </tr>
         }

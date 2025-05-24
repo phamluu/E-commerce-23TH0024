@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Xem chi tiết";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Xem Chi tiết</h4>
@@ -43,11 +42,11 @@
                 <a href='@Url.Action("CreatePassWord", "AspNetUsers_23TH0024", new {UserId = Model.Id})'>Tạo mật khẩu mới</a>
             </div>
         </div>
-        @Html.Partial("_ViewFields")
+        <partial name="_ViewFields" />
         
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class="btn btn-edit"}) |
-    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
-</p>
+@* <p> *@
+@*     @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class="btn btn-edit"}) | *@
+@*     @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"}) *@
+@* </p> *@

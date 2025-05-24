@@ -52,7 +52,7 @@
                     <td>@item.Latitude</td>
                     <td>@item.Longitude</td>
                     <td>
-                        @Html.Partial("_TableActions", item.Id)
+                        <partial name="_TableActions" model=item.Id />
                     </td>
                 </tr>
             }

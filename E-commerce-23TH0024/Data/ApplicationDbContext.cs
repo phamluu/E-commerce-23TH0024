@@ -60,6 +60,10 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("DonHang");
                 entity.HasKey(e => e.Id);
+                entity.Property(p => p.TotalProductAmount).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.TotalAmount).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.TotalProductAmount).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.VAT).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.DeliveryMethod)
                       .WithMany(p => p.DonHangs)
                       .HasForeignKey(e => e.IdDeliveryMethod);
@@ -76,6 +80,8 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("ChiTietDonHang");
                 entity.HasKey(e => e.Id);
+                entity.Property(p => p.DonGia).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.DiscountApplied).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.DonHang)
                       .WithMany(p => p.ChiTietDonHangs)
                       .HasForeignKey(e => e.IdDonHang);
@@ -101,6 +107,9 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("ShippingRates");
                 entity.HasKey(e => e.Id);
+                entity.Property(p => p.FixedPrice).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.PricePerKm).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.WeightLitmit).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.DeliveryMethod)
                       .WithMany(p => p.ShippingRates)
                       .HasForeignKey(e => e.IdDeliveryMethod);
@@ -133,6 +142,8 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("DiscountRules");
                 entity.HasKey(e => e.Id);
+                entity.Property(p => p.DiscountAmount).HasColumnType("decimal(18,2)");
+                entity.Property(p => p.MinTotalPrice).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.LoaiSanPham)
                       .WithMany(p => p.DiscountRules)
                       .HasForeignKey(e => e.IdLoaiSanPham);
@@ -156,7 +167,8 @@ namespace E_commerce_23TH0024.Data
             modelBuilder.Entity<SanPham>(entity =>
             {
                 entity.ToTable("SanPham");
-                entity.HasKey(e => e.Id); ;
+                entity.HasKey(e => e.Id);
+                entity.Property(p => p.DonGia).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.LoaiSanPham)
                         .WithMany(p => p.SanPhams)
                         .HasForeignKey(e => e.IdLoaiSanPham);
@@ -194,6 +206,7 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("ProductVariants");
                 entity.HasKey(e => e.Id);
+                entity.Property(p => p.Price).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.SanPham)
                         .WithMany(p => p.ProductVariants)
                         .HasForeignKey(e => e.IdSanPham);

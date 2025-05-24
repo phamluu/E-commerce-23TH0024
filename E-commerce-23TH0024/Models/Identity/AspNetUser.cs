@@ -11,27 +11,27 @@ public partial class AspNetUsers : ApplicationUser
     public string Id { get; set; } = null!;
 
 
-    public string? Email { get; set; }
+    public override  string? Email { get; set; }
 
-    public string UserName { get; set; } = null!;
+    public override  string UserName { get; set; } = null!;
 
-    public bool EmailConfirmed { get; set; }
+    public override bool EmailConfirmed { get; set; }
 
-    public string? PasswordHash { get; set; }
+    public override string? PasswordHash { get; set; }
 
-    public string? SecurityStamp { get; set; }
+    public override  string? SecurityStamp { get; set; }
 
-    public string? PhoneNumber { get; set; }
+    public override string? PhoneNumber { get; set; }
 
-    public bool PhoneNumberConfirmed { get; set; }
+    public override  bool PhoneNumberConfirmed { get; set; }
 
-    public bool TwoFactorEnabled { get; set; }
+    public override bool TwoFactorEnabled { get; set; }
 
     //public DateTime? LockoutEndDateUtc { get; set; }
 
-    public bool LockoutEnabled { get; set; }
+    public override  bool LockoutEnabled { get; set; }
 
-    public int AccessFailedCount { get; set; }
+    public override int AccessFailedCount { get; set; }
     public string Discriminator { get; set; }
     public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; } = new List<AspNetUserClaim>();
 

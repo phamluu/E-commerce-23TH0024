@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Data;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using E_commerce_23TH0024.Models.SystemSetting;
 using E_commerce_23TH0024.Models.SystemSetting;
 using E_commerce_23TH0024.Service;
 

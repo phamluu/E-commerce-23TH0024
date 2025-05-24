@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using E_commerce_23TH0024.Models;
-using E_commerce_23TH0024.Data;
+﻿using E_commerce_23TH0024.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,13 +13,11 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class KhachHangs_23TH0024Controller : BaseController
     {
-        private readonly ApplicationDbContext db;
         private readonly UserService _service;
         private readonly Shipping_23TH0024Controller _location;
         public KhachHangs_23TH0024Controller(ApplicationDbContext context) : base(context)
         {
             _location = new Shipping_23TH0024Controller(db);
-            db = context;
             _service = new UserService(db);
         }
 

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Data;
 using Microsoft.AspNetCore.Mvc;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Authorization;

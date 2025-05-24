@@ -37,12 +37,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AspNetUser.UserName)
+            @Model.AspNetUser?.UserName ?? "Không xác định";
         </dd>
 
     </dl>
 </div>
-<p>
+@* <p>
     @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class = "btn btn-edit"}) |
     @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
-</p>
+</p> *@

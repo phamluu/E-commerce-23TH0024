@@ -10,9 +10,9 @@ namespace E_commerce_23TH0024.Models
 {
     public class DonHangViewModel:DonHang
     {
-        public decimal? TotalProductAmount { get; set; }
-        public NhanVien NhanVienGiao { get; set; }
-        public NhanVien NhanVienDuyet { get; set; }
+        public  decimal? TotalProductAmount { get; set; }
+        public NhanVien? NhanVienGiao { get; set; }
+        public NhanVien? NhanVienDuyet { get; set; }
     }
     public class CartItem:SanPhamViewModels 
     {
@@ -80,12 +80,12 @@ namespace E_commerce_23TH0024.Models
 
     public class ShippingViewModel
     {
-      public  string addressFrom { get; set; }
-      public  string addressTo { get; set; }
+      public  string? addressFrom { get; set; }
+      public  string? addressTo { get; set; }
       public decimal weight { get; set; }
       public int shippingMethod {  get; set; }
       public decimal? shippingFee { get; set; }
       public double Distance { get; set; }
-       public ShippingRate ShippingRate { get; set; }
+       public ShippingRate? ShippingRate { get; set; }
     }
 }

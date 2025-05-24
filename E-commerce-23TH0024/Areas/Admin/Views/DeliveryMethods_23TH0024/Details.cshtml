@@ -7,9 +7,9 @@
 
 <div>
     <h4 class="title">@Model.MethodName</h4>
-    @Html.Partial("_ViewFields")
+    <partial name="_ViewFields" />
 </div>
-<p>
+@* <p>
     @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class="btn btn-save"}) |
     @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
-</p>
+</p> *@

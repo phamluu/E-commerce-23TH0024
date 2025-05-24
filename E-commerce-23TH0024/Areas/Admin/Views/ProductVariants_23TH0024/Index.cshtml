@@ -3,42 +3,45 @@
 
 @{
     ViewBag.Title = "Biến thể sản phẩm";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Biến thể sản phẩm</h4>
 
 <p>
-    @Html.ActionLink("Thêm mới", "Create", "", new {@class = "btn btn-add"})
+    <partial name="_HeadActions" />
+    <partial name="_AlertMessages" />
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Sản phẩm")
-        </th>
-        <th>
-            @Html.DisplayName("Biến thể")
-        </th>
-        <th>
-            @Html.DisplayName("Số lượng")
-        </th>
-        <th>
-            @Html.DisplayName("Giá")
-        </th>
+<table id="grid">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Sản phẩm")
+            </th>
+            <th>
+                @Html.DisplayName("Biến thể")
+            </th>
+            <th>
+                @Html.DisplayName("Số lượng")
+            </th>
+            <th>
+                @Html.DisplayName("Giá")
+            </th>
 
-        <th></th>
-    </tr>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+            @item.SanPham?.TenSP ?? ""
         </td>
         <td>
             @foreach (var attr in item.ProductVariantAttributes)
                 {
-                <b>@attr.ProductAttribute.AttributeName: </b>
-                <span>@attr.AttributeValue.Value</span>
+                <b>@(attr.ProductAttribute?.AttributeName ?? ""): </b>
+                <span>@(attr.AttributeValue?.Value ?? "")</span>
                 }
         </td>
         <td>
@@ -49,9 +52,7 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <partial name="_TableActions" model=item.Id />
         </td>
     </tr>
 }

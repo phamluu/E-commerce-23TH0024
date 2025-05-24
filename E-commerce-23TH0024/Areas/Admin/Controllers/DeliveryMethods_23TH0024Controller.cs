@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using E_commerce_23TH0024.Data;
 using Microsoft.EntityFrameworkCore;

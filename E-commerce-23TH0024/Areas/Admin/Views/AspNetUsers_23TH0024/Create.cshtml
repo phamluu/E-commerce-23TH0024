@@ -13,7 +13,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.Partial("_Fields")
+        <partial name="_Fields" />
 
         <div class="form-group row mt-2">
             @Html.LabelFor(model => model.Password, "Mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })

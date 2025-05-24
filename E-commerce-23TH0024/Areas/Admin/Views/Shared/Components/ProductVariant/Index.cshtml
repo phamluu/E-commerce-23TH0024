@@ -3,57 +3,62 @@
 
 @{
     ViewBag.Title = "Biến thể sản phẩm";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Biến thể sản phẩm</h4>
 
 <p>
-    @Html.ActionLink("Thêm mới", "Create", "", new {@class = "btn btn-add"})
+    <partial name="_HeadActions" />
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Sản phẩm")
-        </th>
-        <th>
-            @Html.DisplayName("Biến thể")
-        </th>
-        <th>
-            @Html.DisplayName("Số lượng")
-        </th>
-        <th>
-            @Html.DisplayName("Giá")
-        </th>
+<table id="grid">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Sản phẩm")
+            </th>
+            <th>
+                @Html.DisplayName("Biến thể")
+            </th>
+            <th>
+                @Html.DisplayName("Số lượng")
+            </th>
+            <th>
+                @Html.DisplayName("Giá")
+            </th>
 
-        <th></th>
-    </tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null && Model.Count() > 0){
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(item.SanPham?.TenSP ?? "")
+                    </td>
+                    <td>
+                        @foreach (var attr in item.ProductVariantAttributes)
+                        {
+                            <b>@(attr.ProductAttribute?.AttributeName): </b>
+                            <span>@(attr.AttributeValue?.Value)</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SanPham.TenSP)
-        </td>
-        <td>
-            @foreach (var attr in item.ProductVariantAttributes)
-                {
-                <b>@attr.ProductAttribute.AttributeName: </b>
-                <span>@attr.AttributeValue.Value</span>
-                }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StockQuantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
+                    <td>
+                        <partial name="_TableActions" model=item.Id />
+                    </td>
+                </tr>
+            }
+        }
+        
+    </tbody>
 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
 
 </table>

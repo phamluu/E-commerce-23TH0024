@@ -14,8 +14,8 @@
     <h4 class="title">Thêm Loại Sản phẩm</h4>
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     
-    @Html.Partial("_Fields", Model)
-    @Html.Partial("_FormActions")
+    <partial name="_Fields" model=Model />
+    <partial name="_FormActions" />
 </div>
 }
 

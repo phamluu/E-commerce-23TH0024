@@ -1,15 +1,13 @@
-﻿@using System;
-@using System.Globalization;
-@using E_commerce_23TH0024.Models;
-@using E_commerce_23TH0024.Models.Ecommerce;
-
+﻿@using System.Globalization
+@using E_commerce_23TH0024.Models
+@using E_commerce_23TH0024.Models.Ecommerce
 
 @model E_commerce_23TH0024.Models.SanPhamViewModels
 
 @{
     ViewBag.Title = Model.TenSP;
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="banner">
     <div class="banner-overlay"></div>
     <div class="banner-content">
@@ -18,94 +16,120 @@
         </div>
     </div>
 </div>
-<div class="detail container">
-    <div class="breadcrumb mt-2">
-        <ul>
-            <li><a href="/">Trang chủ</a></li>
-            <li>/ <a href="/@Helper.RemoveVietnameseAccent(Model.LoaiSanPham.TenLSP)-@Model.IdLoaiSanPham">@Model.LoaiSanPham.TenLSP</a></li>
-            <li>/ <span>@Model.TenSP</span></li>
-        </ul>
-    </div>
-    <dl class="dl-horizontal">
-        <div class="row">
-            <div class="col-md-4">
-                <img src="~/Uploads/@Model.Anh" />
-            </div>
-            <div class="col-md-8">
-                <h4>Tên sản phẩm: @Html.DisplayFor(model => model.TenSP)</h4>
-                <div>
-                    Đơn giá:
-                    <div>
-                        @if (Model.Discount != null)
-                        {
-                            <span class="old-price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", Model.DonGia)</span>
-                            <span class="price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", Model.FinalPrice)</span>
-                            if (!string.IsNullOrEmpty(Model.Discount.Name))
-                            {
-                                <p class="mt-2">@Model.Discount.Name</p>
-                            }
-                            if (!string.IsNullOrEmpty(Model.Discount.Description))
-                            {
-                                <p style="color: #cf5a14;" class="mb-2">@Model.Discount.Description</p>
-                            }
-                        }
-                        else
-                        {
-                            <span class="price">@string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", Model.DonGia)</span>
-                        }
-                    </div>
-                </div>
-                <p>Đơn vị tính: @Html.DisplayFor(model => model.DVT) </p>
-                <p>Loại sản phẩm: @Html.DisplayFor(model => model.LoaiSanPham.TenLSP)</p>
-                <div class="attr">
-                    @if (Model.ProductVariants != null && Model.ProductVariants.Count() > 0)
-                    {
-                        List<ProductAttribute> lstAttr = Model.ProductVariants.SelectMany(x => x.ProductVariantAttributes).Select(a => a.ProductAttribute).Distinct().ToList();
-                        foreach (var item in lstAttr)
-                        {
-                            var lstValue = item.AttributeValues;
-                            <div class="@item.Id">
-                                <div style="float:left;">@item.AttributeName:</div>
-                                @foreach (var v in lstValue)
-                                {
-                                    if (item.Id == "color")
-                                    {
-                                        <input type="checkbox" id="@v.Value" value="@v.Id" name="Variant">
-                                        <label for="@v.Value" style="background:@v.Value"></label>
-                                    }
-                                    else
-                                    {
-                                        <label><input type="radio" value="@v.Id" name="Variant" />@v.Value</label>
-                                    }
-                                }
-                            </div>
-                            <div class="clearfix"></div>
-                        }
-                    }
-                </div>
-                <div class="action mt-3">
-                    @using (Html.BeginForm("AddToCart", "Cart_23TH0024", FormMethod.Post, new { id = "ajaxForm", @class = "ajaxForm" }))
-                    {
-                        @*@Html.AntiForgeryToken()*@
-                        @Html.Hidden("productId", Model.Id)
-                        @Html.Hidden("quantity", 1)
-                        <input class="btn addToCart" name="addToCart" type="submit" value="Thêm vào giỏ hàng" />
-                        <input class="btn buyNow" name="buyNow" type="submit" value="Mua ngay" />
-                    }
 
+<div class="detail container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">
+                <a href="/@Helper.RemoveVietnameseAccent(Model.LoaiSanPham?.TenLSP ?? "")-@Model.IdLoaiSanPham">
+                    @Model.LoaiSanPham?.TenLSP
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.TenSP</li>
+        </ol>
+    </nav>
 
-                    <div id="result"></div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="~/Uploads/@Model.Anh" class="img-fluid img-thumbnail" alt="@Model.TenSP" />
         </div>
 
-        @if (!string.IsNullOrEmpty(Model.MoTa))
-        {
-            <dt class="mt-3">Mô tả:</dt>
-            <dd>
-                @Html.Raw(Model.MoTa)
-            </dd>
-        }
-    </dl>
-</div>
+        <div class="col-md-7">
+            <h4>@Model.TenSP</h4>
 
+            <div class="price-block mt-2">
+                <strong>Đơn giá:</strong>
+                @if (Model.Discount != null)
+                {
+                    <div>
+                        <span class="text-muted text-decoration-line-through">
+                            @string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", Model.DonGia)
+                        </span>
+                        <span class="text-danger fw-bold">
+                            @string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", Model.FinalPrice)
+                        </span>
+
+                        @if (!string.IsNullOrEmpty(Model.Discount.Name))
+                        {
+                            <p class="mt-2 text-success">@Model.Discount.Name</p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.Discount.Description))
+                        {
+                            <p class="text-warning">@Model.Discount.Description</p>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-primary fw-bold">
+                        @string.Format(new CultureInfo("vi-VN"), "{0:N0} ₫", Model.DonGia)
+                    </div>
+                }
+            </div>
+
+            <p><strong>Đơn vị tính:</strong> @Model.DVT</p>
+            <p><strong>Loại sản phẩm:</strong> @Model.LoaiSanPham?.TenLSP ?? "Không xác định"</p>
+
+            @* Thuộc tính sản phẩm *@
+            <div class="attr mt-3">
+                @if (Model.ProductVariants?.Any() == true)
+                {
+                    var lstAttr = Model.ProductVariants
+                    .SelectMany(x => x.ProductVariantAttributes)
+                    .Select(a => a.ProductAttribute)
+                    .Distinct()
+                    .ToList();
+
+                    foreach (var attr in lstAttr)
+                    {
+                        <div class="mb-2">
+                            <label class="fw-bold d-block">@attr.AttributeName:</label>
+                            @foreach (var value in attr.AttributeValues)
+                            {
+                                if (attr.Id == "color")
+                                {
+                                    <label class="me-2">
+                                        <input type="checkbox" name="Variant" value="@value.Id" id="@value.Value" />
+                                        <span style="display:inline-block;width:20px;height:20px;border:1px solid #ccc;background:@value.Value"></span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="me-2">
+                                        <input type="radio" name="Variant" value="@value.Id" />
+                                        @value.Value
+                                    </label>
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="action mt-4">
+                @using (Html.BeginForm("AddToCart", "Cart_23TH0024", FormMethod.Post, new { id = "ajaxForm", @class = "ajaxForm" }))
+                {
+                    @Html.Hidden("productId", Model.Id)
+                    @Html.Hidden("quantity", 1)
+
+                    <input type="submit" class="btn btn-success me-2" name="addToCart" value="Thêm vào giỏ hàng" />
+                    <input type="submit" class="btn btn-warning" name="buyNow" value="Mua ngay" />
+                }
+
+                <div id="result" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.MoTa))
+    {
+        <div class="mt-4">
+            <h5>Mô tả sản phẩm</h5>
+            <div class="border p-3">
+                @Html.Raw(Model.MoTa)
+            </div>
+        </div>
+    }
+</div>

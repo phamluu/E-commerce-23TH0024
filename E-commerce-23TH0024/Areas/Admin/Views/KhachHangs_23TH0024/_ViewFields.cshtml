@@ -30,7 +30,8 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.AspNetUser.UserName)
+        
+        @Model.AspNetUser?.UserName ?? "Không xác định";
     </dd>
 
 </dl>

@@ -9,11 +9,11 @@
 <h4 class="title">@ViewBag.Title</h4>
 
 <p>
-    @Html.Partial("_HeadActions")
+    <partial name="_HeadActions" />
     <!--<a class="btn btn-delete" href="javascript:void(0);"
        onclick="if(confirm('Bạn có chắc chắn muốn xóa tất cả?')) { window.location.href='@Url.Action("DeleteAll")'; }">Xóa tất cả</a>-->
 </p>
-@Html.Partial("_AlertMessages")
+<partial name="_AlertMessages" />
 <div id="gridContent">
     <table id="grid">
         <thead>
@@ -40,33 +40,36 @@
             </tr>
             </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LoaiSanPham.TenLSP)
-                    </td>
-                    <td>
-                        @Helper.money(item.DiscountAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DiscountPercent)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>
+            @if(Model != null && Model.Count() > 0){
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @(item.LoaiSanPham?.TenLSP ?? "Không xác định")
+                        </td>
+                        <td>
+                            @Helper.money(item.DiscountAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DiscountPercent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
 
-                    <td>
-                        @Html.Partial("_TableActions", item.Id)
-                    </td>
-                </tr>
+                        <td>
+                            <partial name="_TableActions" model=item.Id />
+                        </td>
+                    </tr>
+                }
             }
+            
         </tbody>
     </table>
 </div>

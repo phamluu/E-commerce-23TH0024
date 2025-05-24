@@ -18,16 +18,10 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ProductAttribute.AttributeName)
-        </dt>
+            @(Model?.ProductAttribute?.AttributeName ?? "Không xác định")
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductAttribute.AttributeName)
-        </dd>
+        </dt>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class="btn btn-list"})
-</p>
+

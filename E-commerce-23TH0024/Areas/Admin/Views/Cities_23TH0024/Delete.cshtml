@@ -8,7 +8,7 @@
 
 <h6 class="alert alert-warning">Bạn có chắc chắn muốn xóa @Model.CityName</h6>
 <div>
-    @Html.Partial("_ViewFields")
+    <partial name="_ViewFields" model="Model" />
 
-    @Html.Partial("_FormDelete")
+    <partial name="_FormDelete" />
 </div>

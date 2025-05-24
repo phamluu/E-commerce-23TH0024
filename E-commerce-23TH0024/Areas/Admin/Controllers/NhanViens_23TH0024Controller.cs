@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Web;
-using E_commerce_23TH0024.Data;
+﻿using E_commerce_23TH0024.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models.Users;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Service;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using E_commerce_23TH0024.Lib.Enums;
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {

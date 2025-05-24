@@ -9,7 +9,7 @@ namespace E_commerce_23TH0024.Service
         public MenuService(ApplicationDbContext context) : base(context)
         {
         }
-        public IEnumerable<MenuViewModels> GetMenus(string IdNhomMenu = null)
+        public IEnumerable<MenuViewModels> GetMenus(string? IdNhomMenu = null)
         {
             var menus = from menu in _context.Menu.Include(m => m.NhomMenu)
                         join loai in _context.LoaiSanPham

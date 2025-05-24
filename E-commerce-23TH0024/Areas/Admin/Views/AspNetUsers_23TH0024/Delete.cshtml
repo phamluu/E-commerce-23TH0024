@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Xóa người dùng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Xóa người dùng</h4>
@@ -26,7 +25,7 @@
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
-        @Html.Partial("_ViewFields")
+        <partial name="_ViewFields" />
 
     </dl>
 

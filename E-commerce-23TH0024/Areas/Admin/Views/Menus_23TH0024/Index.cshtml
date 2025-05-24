@@ -8,9 +8,9 @@
 <h4 class="title">@ViewBag.Title</h4>
 
 <p>
-    @Html.Partial("_HeadActions")
+    <partial name="_HeadActions" />
 </p>
-@Html.Partial("_AlertMessages")
+<partial name="_AlertMessages" />
 
 <table id="grid">
     <thead>
@@ -27,7 +27,7 @@
                 <td>@item.Id</td>
                 <td>@item.LoaiSanPham?.TenLSP</td>
                 <td>@item.NhomMenu?.TenNhomMenu</td>
-                <td>@Html.Partial("_TableActions", item.Id)</td>
+                <td><partial name="_TableActions" model=item.Id /></td>
             </tr>
         }
     </tbody>

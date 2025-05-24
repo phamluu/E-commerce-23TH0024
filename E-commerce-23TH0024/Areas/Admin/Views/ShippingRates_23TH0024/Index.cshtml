@@ -9,7 +9,7 @@
 <h4 class="title">@ViewBag.Title</h4>
 
 <p>
-    @Html.Partial("_HeadActions")
+    <partial name="_HeadActions" />
 </p>
 
     <table id="grid">
@@ -47,9 +47,7 @@
                         @Helper.money(item.PricePerKm)
                     </td>
                     <td>
-                        <a href="@Url.Action("Edit", new { id = item.Id})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
-                        <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
-                        <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
+                        <partial name="_TableActions" model=item.Id />
                     </td>
                 </tr>
             }

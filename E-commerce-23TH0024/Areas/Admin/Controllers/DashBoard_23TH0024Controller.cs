@@ -1,9 +1,5 @@
 ﻿using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 namespace E_commerce_23TH0024.Areas.Admin.Controllers

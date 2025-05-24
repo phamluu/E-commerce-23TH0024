@@ -3,15 +3,15 @@
 
 @{
     ViewBag.Title = "Thông tin khách hàng";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div>
     <h4 class="title">Thông tin khách hàng</h4>
     
-    @Html.Partial("_ViewFields")
+    <partial name="_ViewFields" />
 </div>
-<p>
+@* <p>
     @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class ="btn btn-edit"}) |
     @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class ="btn btn-list"})
 </p>
+ *@

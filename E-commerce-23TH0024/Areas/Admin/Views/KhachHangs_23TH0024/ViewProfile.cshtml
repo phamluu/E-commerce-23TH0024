@@ -3,14 +3,13 @@
 
 @{
     ViewBag.Title = "Xem hồ sơ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <div class="container customer">
     <div class="row">
         <div class="col-md-3">
-            @Html.Partial("~/Views/Shared/_SideBarCustomer.cshtml")
+            <partial name="~/Views/Shared/_SideBarCustomer.cshtml" />
         </div>
         <div class="col-md-8">
             <h4 class="title">Xem hồ sơ</h4>
@@ -28,7 +27,7 @@
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.AspNetUser.UserName)
+                    Model.AspNetUser?.UserName ?? "Không xác định";
                 </dd>
                 <dt>
                     @Html.DisplayName("Số điện thoại")
@@ -75,7 +74,7 @@
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.CustomerType.CustomerTypeName)
+                    @Model.CustomerType?.CustomerTypeName ?? "Không xác định";
                 </dd>
 
                @*  <dt>

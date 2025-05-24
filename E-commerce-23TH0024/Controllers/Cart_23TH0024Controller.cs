@@ -1,12 +1,6 @@
 ﻿using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_commerce_23TH0024.Controllers

@@ -1,19 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using E_commerce_23TH0024.Models.Identity;
 using System.Data;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Models.Users;
 using E_commerce_23TH0024.Models.Ecommerce;
 
@@ -26,7 +18,6 @@ namespace E_commerce_23TH0024.Controllers
         private ApplicationDbContext db;
         private RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationDbContext _context;
         public AspNetUsers_23TH0024Controller(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
@@ -36,7 +27,7 @@ namespace E_commerce_23TH0024.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var users = _userManager.Users.ToList();
             var roles = _roleManager.Roles.ToList();
@@ -46,7 +37,7 @@ namespace E_commerce_23TH0024.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                Roles = (List<string>)_userManager.GetRolesAsync(user).Result
+                Roles =  (List<string>)_userManager.GetRolesAsync(user).Result
             }).ToList();
 
             return View(model);
@@ -164,7 +155,7 @@ namespace E_commerce_23TH0024.Controllers
         {
             if (id == null)
             {
-                return new BadRequestResult(); 
+                return  BadRequest();
             }
             ApplicationUser aspNetUser = db.Users.Find(id);
             //AspNetUsers aspNetUser = db.AspNetUsers.Find(id);

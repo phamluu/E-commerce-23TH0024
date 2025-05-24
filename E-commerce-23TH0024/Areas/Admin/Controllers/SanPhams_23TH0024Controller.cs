@@ -1,15 +1,10 @@
 ﻿using E_commerce_23TH0024.Data;
-using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
@@ -33,7 +28,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             }
        
         [HttpGet]
-        public ActionResult TimKiemNC(string TenSP = null, int? IdLoaiSanPham = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null)
+        public ActionResult TimKiemNC(string? TenSP = null, int? IdLoaiSanPham = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null)
         {
             ViewBag.IdLoaiSanPham = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             ViewBag.TenSP = TenSP;
@@ -140,7 +135,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,IdLoaiSanPham,TenSP,MoTa,DonGia,DVT,Anh")] SanPham sanPham, IFormFile Avatar = null)
+        public async Task<ActionResult> Edit([Bind("Id,IdLoaiSanPham,TenSP,MoTa,DonGia,DVT,Anh")] SanPham sanPham, IFormFile? Avatar = null)
         {
             if (ModelState.IsValid)
             {
@@ -173,7 +168,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return new BadRequestResult();
+                return  BadRequest();
             }
             SanPham sanPham = _context.SanPham.Find(id);
             if (sanPham == null)

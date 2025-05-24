@@ -15,7 +15,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        @Html.Partial("_Fields", Model)
+        <partial name="_Fields" model=Model />
 
         <div class="mt-2">
             <h5 class="sub-header"><span>Biến thể sản phẩm</span> <label><i class="fas fa-chevron-up"></i></label></h5>
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        @Html.Partial("_FormActions")
+        <partial name="_FormActions" />
     </div>
 }
 

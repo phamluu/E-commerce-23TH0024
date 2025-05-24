@@ -9,7 +9,7 @@ namespace E_commerce_23TH0024.Models
 {
     public class MenuViewModels:Menu
     {
-        public LoaiSanPham LoaiSanPham { get; set; }
+        public LoaiSanPham? LoaiSanPham { get; set; }
         public string MenuName
         {
             get
@@ -17,7 +17,7 @@ namespace E_commerce_23TH0024.Models
                 switch (LoaiMenu)
                 {
                     case (int?)EnumLoaiMenu.LoaiSanPham:
-                        return this.LoaiSanPham.TenLSP;
+                        return LoaiSanPham != null ? this.LoaiSanPham.TenLSP : string.Empty;
                     default:
                         return string.Empty;
                 }
@@ -30,7 +30,7 @@ namespace E_commerce_23TH0024.Models
                 switch (LoaiMenu)
                 {
                     case (int?)EnumLoaiMenu.LoaiSanPham:
-                        return Helper.RemoveVietnameseAccent(LoaiSanPham.TenLSP) + "-" + LoaiSanPham.Id;
+                        return LoaiSanPham != null ? Helper.RemoveVietnameseAccent(LoaiSanPham?.TenLSP) + "-" + LoaiSanPham.Id : string.Empty;
                     default:
                         return string.Empty;
                 }

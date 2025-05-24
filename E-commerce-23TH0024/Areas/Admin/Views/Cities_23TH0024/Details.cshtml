@@ -7,9 +7,6 @@
 <h4 class="title">Xóa @Model.CityName</h4>
 
 <div>
-    @Html.Partial("_ViewFields")
+    <partial name="_ViewFields" />
 </div>
-<p>
-    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class = "btn btn-edit"}) |
-    @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class="btn btn-list"})
-</p>
+

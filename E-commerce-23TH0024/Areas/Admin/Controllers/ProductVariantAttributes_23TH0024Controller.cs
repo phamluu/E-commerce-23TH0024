@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Data;
 using E_commerce_23TH0024.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +13,6 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
     [Authorize(Roles = "Admin")]
     public class ProductVariantAttributes_23TH0024Controller : BaseController
     {
-        private readonly ApplicationDbContext db;
         public ProductVariantAttributes_23TH0024Controller(ApplicationDbContext context) : base(context)
         {
         }

@@ -39,10 +39,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AspNetUser.UserName)
+            @Model.AspNetUser?.UserName ?? "Không xác định";
         </dd>
 
     </dl>
 
-    @Html.Partial("_FormDelete")
+    <partial name="_FormDelete" />
 </div>

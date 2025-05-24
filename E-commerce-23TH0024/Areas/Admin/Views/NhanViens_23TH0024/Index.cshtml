@@ -9,9 +9,9 @@
 <h4 class="title">Quản lý nhân viên</h4>
 
 <p>
-    @Html.Partial("_HeadActions")
+    <partial name="_HeadActions" />
 </p>
-@Html.Partial("_AlertMessages")
+<partial name="_AlertMessages" />
 <table id="grid">
     <thead>
         <tr>
@@ -36,7 +36,7 @@
                     <td>@item.SoDienThoai</td>
                     <td>@item.DiaChi</td>
                     <td>
-                        @Html.Partial("_TableActions", item.Id)
+                        <partial name="_TableActions" model=item.Id />
                     </td>
                 </tr>
             }

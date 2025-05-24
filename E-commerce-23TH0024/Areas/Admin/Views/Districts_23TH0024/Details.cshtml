@@ -6,29 +6,31 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>District</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DistrictName)
-        </dt>
+@if(Model != null){
+    <div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DistrictName)
-        </dd>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DistrictName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.City.CityName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DistrictName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.City.CityName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.City.CityName)
+            </dt>
 
-    </dl>
-</div>
-<p>
+            <dd>
+                @(Model.City?.CityName ?? "Không xác định")
+            </dd>
+
+        </dl>
+    </div>
+    @* <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p> *@
+}
+

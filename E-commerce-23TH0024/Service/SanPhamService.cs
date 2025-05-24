@@ -1,7 +1,6 @@
 ﻿using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Ecommerce;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_23TH0024.Service
@@ -12,11 +11,11 @@ namespace E_commerce_23TH0024.Service
         {
         }
         public IEnumerable<SanPhamViewModels> SanPhamList(
-            string TenSP = null,
+            string? TenSP = null,
             int? MaLSP = null,
             decimal? DonGiaFrom = null,
             decimal? DonGiaTo = null,
-            int[] Variant = null)
+            int[]? Variant = null)
         {
             var query = _context.SanPham.Include(x => x.ProductVariants).AsQueryable();
 

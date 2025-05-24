@@ -53,7 +53,7 @@
     </div>
 </div>
 
-@Html.Partial("_AlertMessages")
+<partial name="_AlertMessages" />
 
 
 
@@ -78,7 +78,7 @@
                     <td>@item.DVT</td>
                     <td>@item.LoaiSanPham?.TenLSP</td>
                     <td>
-                        @Html.Partial("_TableActions", item.Id)
+                        <partial name="_TableActions" model=item.Id />
                     </td>
                 </tr>
             }

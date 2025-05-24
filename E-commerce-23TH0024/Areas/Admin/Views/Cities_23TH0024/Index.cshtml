@@ -39,20 +39,23 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CityName)
-                </td>
-                <td>
-                    @Html.Partial("_TableActions", item.Id)
-                </td>
-            </tr>
-        }
+            @if(Model != null && Model.Count() > 0){
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CityName)
+                            </td>
+                            <td>
+                                <partial name="_TableActions" model=item.Id />
+                            </td>
+                        </tr>
+                    }
+            }
+        
             </tbody>
     
 

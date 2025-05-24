@@ -4,12 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web;
 using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
@@ -22,7 +16,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         private readonly IHttpContextAccessor _contextAccessor;
         private const string GoogleGeocodeApiKey = "AIzaSyALhO10CboVceYQvAGiSrsIinAaEnJ49aU";
 
-        public Shipping_23TH0024Controller(ApplicationDbContext entity, IHttpContextAccessor contextAccessor = null)
+        public Shipping_23TH0024Controller(ApplicationDbContext entity, IHttpContextAccessor ? contextAccessor = null)
         {
             _entity = entity;
             _contextAccessor = contextAccessor;

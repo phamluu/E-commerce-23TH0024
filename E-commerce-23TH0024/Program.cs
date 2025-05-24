@@ -1,7 +1,6 @@
 using E_commerce_23TH0024.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Data.SqlClient;
 using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Extensions;
@@ -53,13 +52,22 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 builder.Services.AddHttpContextAccessor(); // bổ sung
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+builder.Services.AddControllersWithViews();
+
+//if (builder.Environment.IsDevelopment())
+//{
+//    builder.Services
+//        .AddControllersWithViews()
+//        .AddRazorRuntimeCompilation();
+//}
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Đăng ký service
 builder.Services.AddAppServices();
-
+// Lưu key
+builder.Services.ConfigureDataProtection(builder.Environment);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -95,4 +103,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapCustomRoutes();
 });
 
+app.MapRazorPages(); // Dùng gọi Page Identity mặc định
 app.Run();

@@ -8,7 +8,7 @@
 <h4 class="title">Phương thức giao hàng</h4>
 
 <p>
-   @Html.Partial("_HeadActions")
+   <partial name="_HeadActions" />
 </p>
 <table id="grid">
     <thead>
@@ -52,7 +52,7 @@
                     @status
                 </td>
                 <td>
-                    @Html.Partial("_TableActions", item.Id)
+                    <partial name="_TableActions" model=item.Id />
                 </td>
             </tr>
         }

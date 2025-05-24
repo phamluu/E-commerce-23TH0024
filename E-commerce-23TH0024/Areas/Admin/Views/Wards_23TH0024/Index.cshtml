@@ -52,16 +52,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.District.City.CityName)
+                    @item.District?.City?.CityName
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.District.DistrictName)
+                    @item.District?.DistrictName ?? ""
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.WardName)
                 </td>
                 <td>
-                    @Html.Partial("_TableActions", item.Id)
+                    <partial name="_TableActions" model=item.Id />
                 </td>
             </tr>
         }

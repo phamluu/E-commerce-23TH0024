@@ -3,13 +3,12 @@
 
 @{
     ViewBag.Title = "UpdateProfile";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container customer">
     <div class="row">
         <div class="col-md-4">
-            @Html.Partial("~/Views/Shared/_SideBarCustomer.cshtml")
+            <partial name="~/Views/Shared/_SideBarCustomer.cshtml" />
         </div>
         <div class="col-md-8">
             @using (Html.BeginForm())
@@ -84,7 +83,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#CityID').select2(); 
+        $('#IdCity').select2(); 
     });
 </script>
    

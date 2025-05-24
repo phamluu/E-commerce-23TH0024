@@ -47,7 +47,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(model => model.NhanVienGiao.SoDienThoai)
+                         @(Model.NhanVienGiao?.SoDienThoai ?? "Không xác định")
                     </td>
                 </tr>
                 <tr>
@@ -79,7 +79,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(model => model.KhachHang.HoTen)
+                         @(Model.KhachHang?.HoTen ?? "Không xác định")
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(model => model.KhachHang.SoDienThoai)
+                         @(Model.KhachHang?.SoDienThoai ?? "Không xác định")
                     </td>
                 </tr>
                 <tr>
@@ -97,7 +97,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(model => model.KhachHang.AspNetUser.Email)
+                         @(Model.KhachHang?.AspNetUser?.Email ?? "Không xác định")
                     </td>
                 </tr>
             </table>
@@ -118,8 +118,8 @@
                             foreach (var item in Model.ChiTietDonHangs)
                             {
                                 <tr>
-                                    <td>@item.SanPham.TenSP</td>
-                                    <td>@Helper.money(item.SanPham.DonGia)</td>
+                                    <td>@item.SanPham?.TenSP</td>
+                                    <td>@Helper.money(item.SanPham?.DonGia)</td>
                                     <td>@item.SoLuong</td>
                                 </tr>
                             }

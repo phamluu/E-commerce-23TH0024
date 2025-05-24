@@ -11,12 +11,12 @@
     
     <div class="form-horizontal">
         <h4 class="title">Cập nhật sản phẩm</h4>
-        @Html.Partial("_FormActions")
-        @Html.Partial("_AlertMessages")
+        <partial name="_FormActions" />
+        <partial name="_AlertMessages" />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        @Html.Partial("_Fields", Model)
+        <partial name="_Fields" model=Model />
 
         <div class="mt-2">
             <h5 class="sub-header"><span>Biến thể sản phẩm</span> <label><i class="fas fa-chevron-up"></i></label></h5>
@@ -43,11 +43,11 @@
                                         {
                                             if (att.ProductAttribute != null && att.AttributeValue != null)
                                             {
-                                                lstAttr.Add(att.ProductAttribute.AttributeName + ": " + att.AttributeValue.Value);
+                                                lstAttr.Add(att.ProductAttribute?.AttributeName + ": " + att.AttributeValue?.Value);
                                             }
                                             else if (att.AttributeValue != null)
                                             {
-                                                lstAttr.Add(att.AttributeValue.Value);
+                                                lstAttr.Add(att.AttributeValue?.Value ?? "");
                                             }
                                         }
                                         <span>@string.Join(",", lstAttr)</span>

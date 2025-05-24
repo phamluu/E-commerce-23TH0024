@@ -51,10 +51,11 @@
 
     <dt>
         @Html.DisplayNameFor(model => model.DeliveryMethod.MethodName)
+       
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.DeliveryMethod.MethodName)
+        @(Model.DeliveryMethod?.MethodName ?? "")
     </dd>
 
 </dl>

@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Xóa giá trị biến thể";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4 class="title">Xóa giá trị biến thể</h4>
@@ -15,14 +14,14 @@
             @Html.DisplayName("Biến thể")
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ProductVariant.Id)
+            @Model.ProductVariant?.Id ?? ""
         </dd>
         <dt>
             @Html.DisplayName("Tên thuộc tính")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AttributeValue.Value)
+            @Model.AttributeValue?.Value ?? "Không có giá trị";
         </dd>
 
         <dt>
@@ -30,17 +29,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductAttribute.AttributeName)
+            @Model.ProductAttribute?.AttributeValues ?? "Không có giá trị";
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default btn-delete" /> |
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"})
-        </div>
-    }
+    <partial name="_FormDelete" />
 </div>

@@ -47,10 +47,10 @@
                     @Html.DisplayFor(modelItem => item.DistrictName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City.CityName)
+                    @(item.City?.CityName ?? "Không xác định")
                 </td>
                 <td>
-                   @Html.Partial("_TableActions", item.Id)
+                   <partial name="_TableActions" model=item.Id />
             </tr>
         }
 

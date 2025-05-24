@@ -12,8 +12,8 @@
                 {
             <div class="form-group">
                 <label class="font-weight-bold">@item.AttributeName</label>
-                @Html.Hidden("attributes[" + i + "].AttributeID", item.Id)
-                @Html.DropDownList("attributes[" + i + "].AttributeValueID", new SelectList(item.AttributeValues, "ValueID", "Value"), new { @class = "form-control" })
+                @Html.Hidden("attributes[" + i + "].Id", item.Id)
+                @Html.DropDownList("attributes[" + i + "].AttributeValueID", new SelectList(item.AttributeValues, "Id", "Value"), new { @class = "form-control" })
 
             </div>
             i++;

@@ -9,9 +9,9 @@
 <h4 class="title">@ViewBag.Title</h4>
 
 <p>
-    @Html.Partial("_HeadActions")
+    <partial name="_HeadActions" />
 </p>
-@Html.Partial("_AlertMessages")
+<partial name="_AlertMessages" />
 
     <table id="grid">
         <thead>
@@ -32,7 +32,7 @@
                         @Html.DisplayFor(modelItem => item.CustomerTypeName)
                     </td>
                     <td>
-                        @Html.Partial("_TableActions", item.Id)
+                        <partial name="_TableActions" model=item.Id />
                     </td>
                 </tr>
                 i++;

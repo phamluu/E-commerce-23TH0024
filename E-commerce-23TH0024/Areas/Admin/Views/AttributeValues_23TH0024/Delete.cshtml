@@ -21,14 +21,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ProductAttribute.AttributeName)
+            @(Model?.ProductAttribute?.AttributeName ?? "Không xác định")
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductAttribute.AttributeName)
-        </dd>
 
     </dl>
 
-    @Html.Partial("_FormDelete")
+    <partial name="_FormDelete"/>
 </div>

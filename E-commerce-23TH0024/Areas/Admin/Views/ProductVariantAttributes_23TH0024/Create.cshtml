@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Thêm giá trị biến thể";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 
@@ -17,40 +16,35 @@
     <div class="form-group mt-2">
         @Html.LabelFor(model => model.IdProductVariant, "Biến thể", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("VariantID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("IdProductVariant", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdProductVariant, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group mt-2">
         @Html.LabelFor(model => model.IdProductAttribute, "Thuộc tính", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("AttributeID", null,"Chọn thuộc tính", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("IdProductAttribute", null, "Chọn thuộc tính", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.IdProductAttribute, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group mt-2">
-        @Html.LabelFor(model => model.IdAttributeValue, "Giá trị thuộc tính", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdAttributeValue, "Giá trị thuộc tính", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("AttributeValueID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IdProductAttribute, "", new { @class = "text-danger" })
+                @Html.DropDownList("IdAttributeValue", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdAttributeValue, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group mt-3">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Lưu" class="btn btn-default btn-save" />
-            @Html.ActionLink("Quay lại danh sách", "Index", "", new { @class = "btn btn-list" })
-        </div>
-    </div>
 </div>
+    <partial name="_FormActions" />
 }
 
 <script>
     $(document).ready(function () {
         var attributeValueDropdown = $("#AttributeValueID");
         attributeValueDropdown.empty();
-            $("#AttributeID").change(function () {
+            $("#IdProductAttribute").change(function () {
                 var attributeId = $(this).val();
                 if (attributeId) {
                     $.ajax({
@@ -69,7 +63,7 @@
                         }
                     });
                 } else {
-                    $("#AttributeValueID").empty();
+                    $("#IdAttributeValue").empty();
                 }
             });
         });

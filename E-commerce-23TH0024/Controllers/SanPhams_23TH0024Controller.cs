@@ -2,14 +2,10 @@
 using E_commerce_23TH0024.Models;
 using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Service;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace E_commerce_23TH0024.Controllers
 {
@@ -25,20 +21,20 @@ namespace E_commerce_23TH0024.Controllers
             _webHostEnvironment = webHostEnvironment;
             _service = new SanPhamService(context);
         }
-        private IEnumerable<SanPhamViewModels> GetProducts(string TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null,
-            decimal? DonGiaTo = null, int[] Variant = null)
+        private IEnumerable<SanPhamViewModels> GetProducts(string? TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null,
+            decimal? DonGiaTo = null, int[]? Variant = null)
         {
-            string VariantStr = null;
+            string? VariantStr = null;
             if (Variant != null)
             {
                 VariantStr = string.Join(",", Variant);
             }
             var product = _context.SanPham.FromSqlRaw("EXEC SanPham_TimKiem @TenSP, @MaLSP, @DonGiaFrom, @DonGiaTo, @Variant",
-                new SqlParameter("@TenSP", (object)TenSP ?? DBNull.Value),
-                new SqlParameter("@MaLSP", (object)MaLSP ?? DBNull.Value),
-                new SqlParameter("@DonGiaFrom", (object)DonGiaFrom ?? DBNull.Value),
-                new SqlParameter("@DonGiaTo", (object)DonGiaTo ?? DBNull.Value),
-                new SqlParameter("@Variant", (object)VariantStr ?? DBNull.Value)
+                new SqlParameter("@TenSP", (object?)TenSP ?? DBNull.Value),
+                new SqlParameter("@MaLSP", (object?)MaLSP ?? DBNull.Value),
+                new SqlParameter("@DonGiaFrom", (object?)DonGiaFrom ?? DBNull.Value),
+                new SqlParameter("@DonGiaTo", (object?)DonGiaTo ?? DBNull.Value),
+                new SqlParameter("@Variant", (object?)VariantStr ?? DBNull.Value)
                 ).Select(x => new SanPhamViewModels
                 {
                     Id = x.Id,
@@ -105,7 +101,7 @@ namespace E_commerce_23TH0024.Controllers
         }
 
         [HttpGet]
-        public ActionResult TimKiemNC1(string TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null, int[] Variant = null)
+        public ActionResult TimKiemNC1(string? TenSP = null, int? MaLSP = null, decimal? DonGiaFrom = null, decimal? DonGiaTo = null, int[] Variant = null)
         {
             ViewBag.MaLSP = new SelectList(_context.LoaiSanPham, "Id", "TenLSP");
             ViewBag.TenSP = TenSP;

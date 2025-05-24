@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.KhachHang.HoTen)
+            @(Model.KhachHang?.HoTen ?? "Không xác định")
         </dd>
 
        @*  <dt>
@@ -52,5 +52,5 @@
 
     </dl>
 
-   @Html.Partial("_FormDelete")
+   <partial name="_FormDelete" />
 </div>
