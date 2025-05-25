@@ -13,15 +13,16 @@
         @await Component.InvokeAsync("ProductList", new { viewname = "ProductAttribute" })
     </div>
     <div class="col-md-9">
-        <nav class="navbar toolbar">
+        <nav class="navbar toolbar d-flex justify-content-between">
+            <h3 class="title"><span>Tất cả sản phẩm</span></h3>
             <ul>
-                @*<li>
+                <li>
                     <select id="sort-products" onchange="sortProducts()">
                         <option value="name">Sắp xếp theo sản phẩm mới nhất</option>
                         <option value="price">Sắp xếp theo giá tăng</option>
                         <option value="price">Sắp xếp theo giá giảm</option>>
                     </select>
-                </li>*@
+                </li>
                 <li><button onclick="changeView('grid')" id="grid-view-btn"><i class="fas fa-th"></i></button></li>
                 <li><button onclick="changeView('list')" id="list-view-btn"><i class="fas fa-list"></i></button></li>
             </ul>
@@ -31,7 +32,7 @@
                 @foreach (var item in Model)
                 {
                     <div class="col-md-3 col-6">
-                        <div class="product">
+                        <div class="product image-hover-zoom">
                             <a href='/@item.Url'>
                                 <img src="~/Uploads/@item.Anh" alt="@item.TenSP" loading="lazy" />
                                 @if (item.Discount != null)
@@ -48,7 +49,7 @@
                                     </div>
                                 }
                             </a>
-                            <div class="item">
+                            <div class="item ">
                                 <div class="name">@item.TenSP</div>
                                 <div class="wrap d-flex justify-content-between">
                                     @* <div class="info d-none d-sm-block">
@@ -83,7 +84,7 @@
                     <div class="product-single">
                         <div class="row">
                             <div class="col-md-4 col-4">
-                                <a href='/@item.Url'>
+                                <a href='/@item.Url' class=" image-hover-zoom">
                                     <img src="~/Uploads/@item.Anh" alt="@item.TenSP" loading="lazy" />
                                 </a>
                             </div>

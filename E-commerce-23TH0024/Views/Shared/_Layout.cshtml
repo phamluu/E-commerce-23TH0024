@@ -8,43 +8,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/E_commerce_23TH0024.styles.css" asp-append-version="true" /> 
-    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> *@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     @* @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery") *@
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
-            <div class="container" style="position:relative">
-                @Html.ActionLink("Thiệp cưới", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <header class=" shadow-sm">
+       
+            <nav class="navbar navbar-expand-lg navbar-dark container py-2">
+                <!-- Logo -->
+                <a class="navbar-brand fw-bold" href="@Url.Action("Index", "Home")">
+                    <img src="~/Images/logo.png" alt="Logo" class="logo" width="50" height="35"/>
+                </a>
+            <a href='@Url.Action("Index","Cart_23TH0024")' class="cart text-white position-relative me-2">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    0
+                </span>
+            </a>
+                <!-- Toggler button for mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    @{
-                        //Html.RenderAction("MenuListForGroup", "Menus_23TH0024", new { menuGroup = "main-menu", viewName = "Partial/_MainMenu" });
-                    }
-                        @await Component.InvokeAsync("Menu", new {IdNhomMenu = "main-menu", viewname = "MainMenu" })
-                    
-                </div>
-                <div style="position: absolute; right: 0; top: 0; display: flex ">
-                    <div class="navbar-brand sticky">
-                        <a href='@Url.Action("Index","Cart_23TH0024")' class="shopping-cart">
-                            <span>0</span>
-                            <i class="fas fa-shopping-cart"></i>
-                        </a>
+                <!-- Menu + Right Content -->
+                <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+                    <!-- Main Menu -->
+                    <div class="navbar-nav">
+                        @await Component.InvokeAsync("Menu", new { IdNhomMenu = "main-menu", viewname = "MainMenu" })
                     </div>
-                    <partial name="_LoginPartial" />
-                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+
+                    <!-- Cart + Login -->
+                    <div class="d-flex align-items-center gap-3">
+                       
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        
     </header>
+
 
     <main>
         @RenderBody()
@@ -63,12 +71,31 @@
    @*  @Scripts.Render("~/bundles/bootstrap") *@
     @RenderSection("scripts", required: false)
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="~/Scripts/CustomScript.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="https://chatbot.inanhonglen.com/static/chat.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/Scripts/custom_signalR.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var title = document.querySelectorAll(".title");
+            title.forEach(function(el, i) {
+                el.setAttribute("data-aos", "fade-up");
+                el.setAttribute("data-aos-delay", i * 100);
+            });
 
+            var items = document.querySelectorAll(".product");
+            items.forEach(function(el, i) {
+                el.setAttribute("data-aos", "fade");
+                el.setAttribute("data-aos-delay", i * 100);
+            });
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+        });
+    </script>
 </body>
 
 </html>

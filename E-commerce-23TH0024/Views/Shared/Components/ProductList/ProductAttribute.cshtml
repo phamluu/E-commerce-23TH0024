@@ -6,10 +6,10 @@
     {
         @Html.AntiForgeryToken()
         <div class="form-group">
-            <h6 class="sub-title">Giá</h6>
-            <label class="d-flex">
-                Từ <input type="number" name="DonGiaFrom" value="@ViewBag.DonGiaFrom" class="form-control" />
-                Đến <input type="number" name="DonGiaTo" value="@ViewBag.DonGiaTo" class="form-control" />
+            <h6 class="sub-title"><span>Khoảng giá</span></h6>
+            <label class="search-price">
+                <span>Từ</span> <input type="number" name="DonGiaFrom" value="@ViewBag.DonGiaFrom" class="form-control" />
+                <span>Đến</span> <input type="number" name="DonGiaTo" value="@ViewBag.DonGiaTo" class="form-control" />
             </label>
         </div>
         if (Model != null && Model.Count() > 0)
@@ -19,7 +19,7 @@
                 if (attr.AttributeValues != null && attr.AttributeValues.Count() > 0)
                 {
                     <div class="form-group @attr.Id">
-                        <h6>@attr.AttributeName</h6>
+                        <h6 class="sub-title"><span>@attr.AttributeName</span></h6>
                         @foreach (var item in attr.AttributeValues)
                         {
                             bool isChecked = ViewBag.Variant != null && ((int[])ViewBag.Variant).Contains(item.Id);

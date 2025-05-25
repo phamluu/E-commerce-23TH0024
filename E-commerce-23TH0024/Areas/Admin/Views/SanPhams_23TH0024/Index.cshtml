@@ -19,6 +19,23 @@
 </style>
 <h4 class="title">Sản phẩm</h4>
 
+<div class="mb-3">
+    <div class="btn-action">
+        <a href="@Url.Action("Create")" class="btn btn-default btn-add">Thêm mới</a>
+        <a href="@Url.Action("ImportExcel", "FileTransfer_23TH0024")" class="btn btn-default btn-importexcel">ImportExcel</a>
+        <a href="@Url.Action("ImportExcel_Custom", "FileTransfer_23TH0024")" class="btn btn-default btn-importzip">Import tùy chỉnh</a>
+        <a href="@Url.Action("ExportExcel", "FileTransfer_23TH0024")" class="btn btn-default btn-exportexcel">ExportExcel</a>
+        <button class="btn btn-primary dropdown-toggle btn-delete" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Xóa
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Xóa chọn</a>
+            <a class="dropdown-item" href="#">Xóa tùy chỉnh</a>
+            <a class="dropdown-item" href="javascript:void(0);" onclick="if(confirm('Bạn có chắc chắn muốn xóa tất cả?')) { window.location.href='@Url.Action("DeleteAll")'; }">Xóa tất cả</a>
+        </div>
+    </div>
+</div>
 
 <div class="filter-container">
     <div class="filter-group">
@@ -35,23 +52,7 @@
     </div>
 </div>
 
-<div class="mb-3">
-    <div class="btn-action">
-        <a href="@Url.Action("Create")" class="btn btn-default btn-add">Thêm mới</a>    
-        <a href="@Url.Action("ImportExcel", "FileTransfer_23TH0024")" class="btn btn-default btn-importexcel">ImportExcel</a>
-        <a href="@Url.Action("ImportExcel_Custom", "FileTransfer_23TH0024")" class="btn btn-default btn-importzip">Import tùy chỉnh</a>
-        <a href="@Url.Action("ExportExcel", "FileTransfer_23TH0024")" class="btn btn-default btn-exportexcel">ExportExcel</a>   
-        <button class="btn btn-primary dropdown-toggle btn-delete" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Xóa
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Xóa chọn</a>
-            <a class="dropdown-item" href="#">Xóa tùy chỉnh</a>
-            <a class="dropdown-item" href="javascript:void(0);" onclick="if(confirm('Bạn có chắc chắn muốn xóa tất cả?')) { window.location.href='@Url.Action("DeleteAll")'; }">Xóa tất cả</a>
-        </div>
-    </div>
-</div>
+
 
 <partial name="_AlertMessages" />
 

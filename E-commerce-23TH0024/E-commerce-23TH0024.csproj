@@ -49,7 +49,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Views\FileTransfer\" />
-    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\bootstrap\" />

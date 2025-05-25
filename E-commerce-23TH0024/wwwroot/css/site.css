@@ -1,6 +1,10 @@
 html {
   font-size: 14px;
 }
+.row > * {
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
 @media (min-width: 768px) {
   html {

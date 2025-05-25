@@ -65,7 +65,8 @@ builder.Services.AddAppServices();
 // Lưu key
 builder.Services.ConfigureDataProtection(builder.Environment);
 var app = builder.Build();
-
+// Thêm middleware phục vụ file tĩnh
+app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
