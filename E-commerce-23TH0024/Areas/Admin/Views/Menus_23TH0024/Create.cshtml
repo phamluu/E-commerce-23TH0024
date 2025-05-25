@@ -12,8 +12,8 @@
     <div class="form-horizontal">
         <h4 class="title">Thêm menu</h4>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <partial name="_Fields" />
+
+        <partial name="_Fields" model="Model" />
 
         <partial name="_FormActions" />
     </div>

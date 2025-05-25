@@ -53,14 +53,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.AddHttpContextAccessor(); // bổ sung
 builder.Services.AddRazorPages();
 
-builder.Services.AddControllersWithViews();
-
-//if (builder.Environment.IsDevelopment())
-//{
-//    builder.Services
-//        .AddControllersWithViews()
-//        .AddRazorRuntimeCompilation();
-//}
+// Tạm thời biên dịch Views 
+builder.Services
+        .AddControllersWithViews()
+        .AddRazorRuntimeCompilation();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 

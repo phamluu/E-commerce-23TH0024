@@ -7,7 +7,10 @@
 
 <h4 class="title">Danh sách thuộc tính</h4>
 
-<partial name="_HeadActions" />
+@{
+    await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/_HeadActions.cshtml");
+}
+
 <partial name="_AlertMessages" />
 <table id="grid">
     <thead>
