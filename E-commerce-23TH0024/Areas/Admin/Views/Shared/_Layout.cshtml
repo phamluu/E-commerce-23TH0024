@@ -154,7 +154,8 @@
 
         <div class="left-side-menu">
             <div class="slimscroll-menu">
-                <partial name="_SideBar" />
+                @await Html.PartialAsync("~/Areas/Admin/Views/Shared/_SideBar.cshtml")
+
                 <div class="clearfix"></div>
             </div>
         </div>

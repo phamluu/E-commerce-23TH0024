@@ -6,8 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-E_commerce_23TH0024-5f3f7f33-5c18-4618-9fa0-fca5443e3d86</UserSecretsId>
     <RootNamespace>E_commerce_23TH0024</RootNamespace>
-    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
-  </PropertyGroup>
+
+
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<SelfContained>true</SelfContained>
+	<PreserveCompilationContext>true</PreserveCompilationContext>
+  	
+	<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+  	<CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
+
+</PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="bin\**" />
@@ -80,6 +88,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+
   </ItemGroup>
 
 </Project>
