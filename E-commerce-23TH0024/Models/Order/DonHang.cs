@@ -1,10 +1,4 @@
-﻿
-using E_commerce_23TH0024.Models.Users;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace E_commerce_23TH0024.Models.Ecommerce;
+﻿namespace E_commerce_23TH0024.Models.Order;
 
 public partial class DonHang
 {
@@ -20,13 +14,10 @@ public partial class DonHang
 
     public int? IdNhanVienDuyet { get; set; }
 
-    public int? TinhTrang { get; set; }
-
+    public int? TinhTrang { get; set; } // 0: chua duyet, 1: da duyet
     public decimal VAT { get; set; }
 
     public decimal TotalAmount { get; set; }
-
-    public int? PaymentMethod { get; set; }
 
     public decimal ShippingFee { get; set; }
 
@@ -37,7 +28,7 @@ public partial class DonHang
     public int? IdDiscountRule { get; set; }
 
     public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
-
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
     public virtual DiscountRule? DiscountRule { get; set; }
 
     public virtual KhachHang? KhachHang { get; set; }

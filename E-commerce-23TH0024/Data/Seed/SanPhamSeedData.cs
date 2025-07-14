@@ -7,26 +7,25 @@ namespace E_commerce_23TH0024.Data.Seed
     {
         public static void Seed(ModelBuilder modelBuilder)
         {
-            var products = new List<SanPham>();
+            // Seed LoaiSanPham
+            modelBuilder.Entity<LoaiSanPham>().HasData(
+                new LoaiSanPham { Id = 1, TenLSP = "Thiệp cưới cao cấp" },
+                new LoaiSanPham { Id = 2, TenLSP = "Thiệp cưới giá rẻ" }
+            );
 
-            for (int i = 6; i <= 16; i++)
-            {
-                string tenSP = "HL0" + i.ToString();
-                string anh = "HL" + i.ToString() + ".jpg";
-
-                products.Add(new SanPham
+            // Seed SanPham
+            modelBuilder.Entity<SanPham>().HasData(
+                new SanPham
                 {
-                    Id = i, 
+                    Id = 1,
                     IdLoaiSanPham = 1,
-                    TenSP = tenSP,
-                    Anh = anh,
-                    DonGia = 100000 + i * 1000,
+                    TenSP = "HL01",
+                    Anh = "HL01.jpg",
+                    DonGia = 110000,
                     DVT = "Cái",
-                    MoTa = "Mô tả sản phẩm " + tenSP
-                });
-            }
-
-            modelBuilder.Entity<SanPham>().HasData(products.ToArray());
+                    MoTa = "Thiệp cưới HL01"
+                }
+            );
         }
     }
 }

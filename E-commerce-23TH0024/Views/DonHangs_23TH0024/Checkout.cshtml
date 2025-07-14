@@ -1,5 +1,7 @@
 ﻿@using E_commerce_23TH0024.Models.Ecommerce
-@model DonHang
+@using E_commerce_23TH0024.Models.Order
+@using E_commerce_23TH0024.ViewModels
+@model DonHangViewModel
 @{
     ViewBag.Title = "Thanh toán";
 }
@@ -25,9 +27,9 @@
                     <th>Số lượng</th>
                     <th>Giá</th>
                 </tr>
-                @if (Model.ChiTietDonHangs != null)
+                @if (Model.ChiTietDonHangVM != null)
                     {
-                        foreach (var item in Model.ChiTietDonHangs)
+                        foreach (var item in Model.ChiTietDonHangVM)
                         {
                             <tr>
                                 <td>@item.SanPham.TenSP</td>
@@ -54,15 +56,24 @@
 
     <div class="payment-method">
         <h4 class="title">Phương Thức Thanh Toán:</h4>
+         
         <ul>
-            <li><strong>Thanh toán khi nhận hàng (COD):</strong> Bạn thanh toán tiền mặt khi nhận hàng.</li>
+            <li><strong>Ví điện tử (Momo, ZaloPay, VNPAY, etc.):</strong> 
+            <div class="body-content">
+                <img src="@ViewBag.QRCodeImage" alt="QR MoMo" style="width: 300px;" />
+                <p>Hoặc <a href="@ViewBag.MoMoDeepLink">mở app MoMo</a></p>
+            </div>
+            </li>
+            <li><strong>Thanh toán qua QR Code:</strong> Quét mã QR để thanh toán nhanh chóng qua các nền tảng thanh toán trực tuyến.
+                <div class="body-content" style="display:none">
+                    <img src="@ViewBag.VietQrCode" alt="QR MoMo" style="width: 300px;" />
+                </div>    
+            </li>
             <li>
                 <strong>Chuyển khoản ngân hàng:</strong> Chuyển khoản trực tiếp vào tài khoản ngân hàng của chúng tôi.
                 <div class="body-content" style="display:none;"></div>
             </li>
-            <li><strong>Thẻ tín dụng / Thẻ ghi nợ:</strong> Sử dụng thẻ tín dụng hoặc thẻ ghi nợ để thanh toán trực tuyến qua cổng thanh toán.</li>
-            <li><strong>Ví điện tử (Momo, ZaloPay, VNPAY, etc.):</strong> Sử dụng các ví điện tử như Momo, ZaloPay, VNPAY để thanh toán nhanh chóng và tiện lợi.</li>
-            <li><strong>Thanh toán qua QR Code:</strong> Quét mã QR để thanh toán nhanh chóng qua các nền tảng thanh toán trực tuyến.</li>
+            <li><strong>Thanh toán khi nhận hàng (COD):</strong> Bạn thanh toán tiền mặt khi nhận hàng.</li>
         </ul>
     </div>
 

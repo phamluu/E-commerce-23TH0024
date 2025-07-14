@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Models.Order;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
@@ -47,7 +47,7 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var discountRules = db.DiscountRules.Include(d => d.LoaiSanPham).OrderByDescending(x => x.Created_at);
+            var discountRules = db.DiscountRules.OrderByDescending(x => x.Created_at);
             return View(discountRules.ToList());
         }
 

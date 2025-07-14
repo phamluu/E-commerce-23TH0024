@@ -1,6 +1,8 @@
 ﻿@using E_commerce_23TH0024.Models
 @using E_commerce_23TH0024.Models.Ecommerce
-@model DonHang
+@using E_commerce_23TH0024.Models.Order
+@using E_commerce_23TH0024.ViewModels
+@model DonHangViewModel
 @{
     ViewBag.Title = "Thanh toán";
 }
@@ -26,9 +28,9 @@
                     <th>Số lượng</th>
                     <th>Giá</th>
                 </tr>
-                @if (Model.ChiTietDonHangs != null)
+                @if (Model.ChiTietDonHangVM != null)
                     {
-                        foreach (var item in Model.ChiTietDonHangs)
+                        foreach (var item in Model.ChiTietDonHangVM)
                         {
                             <tr>
                                 <td>@item.SanPham.TenSP</td>

@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce_23TH0024.Data.Migrations.User
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250517215710_CreateUserTables")]
-    partial class CreateUserTables
+    [Migration("20250712180219_UpdateUserSchema")]
+    partial class UpdateUserSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -102,17 +102,19 @@ namespace E_commerce_23TH0024.Data.Migrations.User
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HoTen")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdAspNetUsers")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SoDienThoai")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdAspNetUsers")
+                        .IsUnique()
+                        .HasFilter("[IdAspNetUsers] IS NOT NULL");
 
                     b.ToTable("NhanVien", (string)null);
                 });
@@ -250,6 +252,15 @@ namespace E_commerce_23TH0024.Data.Migrations.User
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Users.NhanVien", b =>
+                {
+                    b.HasOne("E_commerce_23TH0024.Models.Identity.ApplicationUser", "AspNetUser")
+                        .WithOne("NhanVien")
+                        .HasForeignKey("E_commerce_23TH0024.Models.Users.NhanVien", "IdAspNetUsers");
+
+                    b.Navigation("AspNetUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -299,6 +310,11 @@ namespace E_commerce_23TH0024.Data.Migrations.User
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Identity.ApplicationUser", b =>
+                {
+                    b.Navigation("NhanVien");
                 });
 #pragma warning restore 612, 618
         }

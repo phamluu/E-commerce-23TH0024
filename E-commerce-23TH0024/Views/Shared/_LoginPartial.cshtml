@@ -6,17 +6,16 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        string url = "";
-        if (User.IsInRole("Admin"))
-        {
-            url = "/Admin/DashBoard_23TH0024";
-        }
-        else
-        {
-            url = "/Account/Manage/Index";
-        }
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="@url" title="Manage"><i class="fa fa-user"></i></a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="nav-link text-dark" asp-area="Admin" asp-action="Index" asp-controller="DashBoard_23TH0024"  title="Manage"><i class="fa fa-user"></i></a>
+            }
+            else
+            {
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fa fa-user"></i></a>
+            }
+
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

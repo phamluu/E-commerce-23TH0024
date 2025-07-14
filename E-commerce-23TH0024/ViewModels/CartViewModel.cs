@@ -1,4 +1,4 @@
-﻿using E_commerce_23TH0024.Models.Ecommerce;
+﻿using E_commerce_23TH0024.Models.Order;
 using E_commerce_23TH0024.Models.Users;
 using System;
 using System.Collections.Generic;
@@ -8,12 +8,7 @@ using System.Web;
 
 namespace E_commerce_23TH0024.Models
 {
-    public class DonHangViewModel:DonHang
-    {
-        public  decimal? TotalProductAmount { get; set; }
-        public NhanVien? NhanVienGiao { get; set; }
-        public NhanVien? NhanVienDuyet { get; set; }
-    }
+   
     public class CartItem:SanPhamViewModels 
     {
         //public int MaSP { get; set; }
@@ -26,10 +21,10 @@ namespace E_commerce_23TH0024.Models
         {
             get
             {
-                if (Discount != null)
-                {
-                    return FinalPrice * SoLuong;
-                }
+                //if (Discount != null)
+                //{
+                //    return FinalPrice * SoLuong;
+                //}
                 return DonGia * SoLuong;
             }
         }

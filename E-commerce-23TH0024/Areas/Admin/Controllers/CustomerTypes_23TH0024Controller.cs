@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using E_commerce_23TH0024.Data;
 using Microsoft.EntityFrameworkCore;
-using E_commerce_23TH0024.Models.Ecommerce;
 using Microsoft.AspNetCore.Authorization;
+using E_commerce_23TH0024.Models.Order;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {

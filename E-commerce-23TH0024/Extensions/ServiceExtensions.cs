@@ -1,5 +1,6 @@
 ﻿using E_commerce_23TH0024.Models.Users;
 using E_commerce_23TH0024.Service;
+using E_commerce_23TH0024.Service.Api;
 
 namespace E_commerce_23TH0024.Extensions
 {
@@ -11,6 +12,8 @@ namespace E_commerce_23TH0024.Extensions
             services.AddScoped<DonHangService>();
             services.AddScoped<UserService>();
             services.AddScoped<MenuService>();
+            services.AddScoped<MoMoPaymentService>();
+            services.AddScoped<VietQRPaymentService>();
             return services;
         }
     }

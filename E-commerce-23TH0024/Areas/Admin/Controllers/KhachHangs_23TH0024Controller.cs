@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Service;
 using System.Security.Claims;
+using E_commerce_23TH0024.Models.Order;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {

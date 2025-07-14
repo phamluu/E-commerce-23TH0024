@@ -1,12 +1,12 @@
 ﻿using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Models.Location;
-using E_commerce_23TH0024.Models.Ecommerce;
 using E_commerce_23TH0024.Models.SystemSetting;
 using E_commerce_23TH0024.Models.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using E_commerce_23TH0024.Models;
+using E_commerce_23TH0024.Models.Order;
 
 namespace E_commerce_23TH0024.Data
 {
@@ -33,6 +33,7 @@ namespace E_commerce_23TH0024.Data
         public DbSet<DiscountRule> DiscountRules { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<DonHang> DonHangs { get; set; }
+        public DbSet<Payment> Payment { get; set; }
         //public DbSet<ErrorViewModel> ErrorViewModel { get; set; }
         public DbSet<KhachHang> KhachHang { get; set; }
         public DbSet<Menu> Menu { get; set; }
@@ -60,20 +61,23 @@ namespace E_commerce_23TH0024.Data
             {
                 entity.ToTable("DonHang");
                 entity.HasKey(e => e.Id);
-                entity.Property(p => p.TotalProductAmount).HasColumnType("decimal(18,2)");
-                entity.Property(p => p.TotalAmount).HasColumnType("decimal(18,2)");
-                entity.Property(p => p.TotalProductAmount).HasColumnType("decimal(18,2)");
-                entity.Property(p => p.VAT).HasColumnType("decimal(18,2)");
                 entity.HasOne(e => e.DeliveryMethod)
                       .WithMany(p => p.DonHangs)
                       .HasForeignKey(e => e.IdDeliveryMethod);
-                entity.HasOne(e => e.KhachHang)
-                      .WithMany(p => p.DonHangs)
-                      .HasForeignKey(e => e.IdKhachHang);
+                entity.HasOne(e => e.KhachHang);
                 entity.HasMany(e => e.ChiTietDonHangs)
                       .WithOne(p => p.DonHang)
                       .HasForeignKey(e => e.IdDonHang);
+                entity.HasMany(e => e.Payments).WithOne(p => p.DonHang).HasForeignKey(e => e.IdDonHang);
 
+            });
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.ToTable("Payment");
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.DonHang)
+                      .WithMany(p => p.Payments)
+                      .HasForeignKey(e => e.IdDonHang);
             });
 
             modelBuilder.Entity<ChiTietDonHang>(entity =>
@@ -85,9 +89,9 @@ namespace E_commerce_23TH0024.Data
                 entity.HasOne(e => e.DonHang)
                       .WithMany(p => p.ChiTietDonHangs)
                       .HasForeignKey(e => e.IdDonHang);
-                entity.HasOne(e => e.SanPham)
-                      .WithMany(p => p.ChiTietDonHangs)
-                      .HasForeignKey(e => e.IdSanPham);
+                //entity.HasOne(e => e.SanPham)
+                //      .WithMany(p => p.ChiTietDonHangs)
+                //      .HasForeignKey(e => e.IdSanPham);
 
             });
             modelBuilder.Entity<DeliveryMethod>(entity =>
@@ -133,9 +137,6 @@ namespace E_commerce_23TH0024.Data
                 entity.HasOne(e => e.CustomerType)
                       .WithMany(p => p.KhachHangs)
                       .HasForeignKey(e => e.IdCustomerType);
-                entity.HasMany(e => e.DonHangs)
-                      .WithOne(p => p.KhachHang)
-                      .HasForeignKey(e => e.IdKhachHang);
 
             });
             modelBuilder.Entity<DiscountRule>(entity =>
@@ -144,9 +145,9 @@ namespace E_commerce_23TH0024.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(p => p.DiscountAmount).HasColumnType("decimal(18,2)");
                 entity.Property(p => p.MinTotalPrice).HasColumnType("decimal(18,2)");
-                entity.HasOne(e => e.LoaiSanPham)
-                      .WithMany(p => p.DiscountRules)
-                      .HasForeignKey(e => e.IdLoaiSanPham);
+                //entity.HasOne(e => e.LoaiSanPham)
+                //      .WithMany(p => p.DiscountRules)
+                //      .HasForeignKey(e => e.IdLoaiSanPham);
                 entity.HasOne(e => e.CustomerType)
                       .WithMany(p => p.DiscountRules)
                       .HasForeignKey(e => e.IdCustomerType);
@@ -159,9 +160,9 @@ namespace E_commerce_23TH0024.Data
                 entity.HasMany(e => e.SanPhams)
                         .WithOne(p => p.LoaiSanPham)
                         .HasForeignKey(e => e.IdLoaiSanPham);
-                entity.HasMany(e => e.DiscountRules)
-                        .WithOne(p => p.LoaiSanPham)
-                        .HasForeignKey(e => e.IdLoaiSanPham);
+                //entity.HasMany(e => e.DiscountRules)
+                //        .WithOne(p => p.LoaiSanPham)
+                //        .HasForeignKey(e => e.IdLoaiSanPham);
             });
 
             modelBuilder.Entity<SanPham>(entity =>
@@ -175,9 +176,9 @@ namespace E_commerce_23TH0024.Data
                 entity.HasMany(e => e.ProductVariants)
                         .WithOne(p => p.SanPham)
                         .HasForeignKey(e => e.IdSanPham);
-                entity.HasMany(e => e.ChiTietDonHangs)
-                        .WithOne(p => p.SanPham)
-                        .HasForeignKey(e => e.IdSanPham);
+                //entity.HasMany(e => e.ChiTietDonHangs)
+                //        .WithOne(p => p.SanPham)
+                //        .HasForeignKey(e => e.IdSanPham);
 
 
             });

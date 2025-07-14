@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
+namespace E_commerce_23TH0024.Data.Migrations.Order
 {
     /// <inheritdoc />
-    public partial class EcommerceTables : Migration
+    public partial class UpdateOrderSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,28 +42,31 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 });
 
             migrationBuilder.CreateTable(
-                name: "LoaiSanPham",
+                name: "DiscountRules",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenLSP = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MinTotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiscountPercent = table.Column<int>(type: "int", nullable: false),
+                    IdLoaiSanPham = table.Column<int>(type: "int", nullable: true),
+                    IdCustomerType = table.Column<int>(type: "int", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LoaiSanPham", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductAttributes",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AttributeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductAttributes", x => x.Id);
+                    table.PrimaryKey("PK_DiscountRules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiscountRules_CustomerTypes_IdCustomerType",
+                        column: x => x.IdCustomerType,
+                        principalTable: "CustomerTypes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -119,81 +122,6 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 });
 
             migrationBuilder.CreateTable(
-                name: "DiscountRules",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MinTotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountPercent = table.Column<int>(type: "int", nullable: false),
-                    IdLoaiSanPham = table.Column<int>(type: "int", nullable: true),
-                    IdCustomerType = table.Column<int>(type: "int", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DiscountRules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DiscountRules_CustomerTypes_IdCustomerType",
-                        column: x => x.IdCustomerType,
-                        principalTable: "CustomerTypes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DiscountRules_LoaiSanPham_IdLoaiSanPham",
-                        column: x => x.IdLoaiSanPham,
-                        principalTable: "LoaiSanPham",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SanPham",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdLoaiSanPham = table.Column<int>(type: "int", nullable: true),
-                    TenSP = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DonGia = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    DVT = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Anh = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SanPham", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SanPham_LoaiSanPham_IdLoaiSanPham",
-                        column: x => x.IdLoaiSanPham,
-                        principalTable: "LoaiSanPham",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AttributeValues",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdProductAttribute = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AttributeValues", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AttributeValues_ProductAttributes_IdProductAttribute",
-                        column: x => x.IdProductAttribute,
-                        principalTable: "ProductAttributes",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DonHang",
                 columns: table => new
                 {
@@ -207,12 +135,12 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     TinhTrang = table.Column<int>(type: "int", nullable: true),
                     VAT = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: true),
                     ShippingFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IdDeliveryMethod = table.Column<int>(type: "int", nullable: true),
                     TotalProductAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IdDiscountRule = table.Column<int>(type: "int", nullable: true),
-                    DiscountRuleId = table.Column<int>(type: "int", nullable: true)
+                    DiscountRuleId = table.Column<int>(type: "int", nullable: true),
+                    KhachHangId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,29 +156,9 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                         principalTable: "DiscountRules",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_DonHang_KhachHang_IdKhachHang",
-                        column: x => x.IdKhachHang,
+                        name: "FK_DonHang_KhachHang_KhachHangId",
+                        column: x => x.KhachHangId,
                         principalTable: "KhachHang",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductVariants",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdSanPham = table.Column<int>(type: "int", nullable: true),
-                    StockQuantity = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductVariants", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductVariants_SanPham_IdSanPham",
-                        column: x => x.IdSanPham,
-                        principalTable: "SanPham",
                         principalColumn: "Id");
                 });
 
@@ -275,48 +183,31 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                         principalTable: "DonHang",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ChiTietDonHang_SanPham_IdSanPham",
-                        column: x => x.IdSanPham,
-                        principalTable: "SanPham",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductVariantAttributes",
+                name: "Payment",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdProductAttribute = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IdProductVariant = table.Column<int>(type: "int", nullable: true),
-                    IdAttributeValue = table.Column<int>(type: "int", nullable: true)
+                    IdDonHang = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaymentStatus = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GatewayTransactionId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductVariantAttributes", x => x.Id);
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductVariantAttributes_AttributeValues_IdAttributeValue",
-                        column: x => x.IdAttributeValue,
-                        principalTable: "AttributeValues",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProductVariantAttributes_ProductAttributes_IdProductAttribute",
-                        column: x => x.IdProductAttribute,
-                        principalTable: "ProductAttributes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProductVariantAttributes_ProductVariants_IdProductVariant",
-                        column: x => x.IdProductVariant,
-                        principalTable: "ProductVariants",
-                        principalColumn: "Id");
+                        name: "FK_Payment_DonHang_IdDonHang",
+                        column: x => x.IdDonHang,
+                        principalTable: "DonHang",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AttributeValues_IdProductAttribute",
-                table: "AttributeValues",
-                column: "IdProductAttribute");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietDonHang_IdDonHang",
@@ -324,19 +215,9 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 column: "IdDonHang");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChiTietDonHang_IdSanPham",
-                table: "ChiTietDonHang",
-                column: "IdSanPham");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DiscountRules_IdCustomerType",
                 table: "DiscountRules",
                 column: "IdCustomerType");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DiscountRules_IdLoaiSanPham",
-                table: "DiscountRules",
-                column: "IdLoaiSanPham");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DonHang_DiscountRuleId",
@@ -349,9 +230,9 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 column: "IdDeliveryMethod");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DonHang_IdKhachHang",
+                name: "IX_DonHang_KhachHangId",
                 table: "DonHang",
-                column: "IdKhachHang");
+                column: "KhachHangId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KhachHang_IdCustomerType",
@@ -359,29 +240,9 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 column: "IdCustomerType");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductVariantAttributes_IdAttributeValue",
-                table: "ProductVariantAttributes",
-                column: "IdAttributeValue");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductVariantAttributes_IdProductAttribute",
-                table: "ProductVariantAttributes",
-                column: "IdProductAttribute");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductVariantAttributes_IdProductVariant",
-                table: "ProductVariantAttributes",
-                column: "IdProductVariant");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductVariants_IdSanPham",
-                table: "ProductVariants",
-                column: "IdSanPham");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SanPham_IdLoaiSanPham",
-                table: "SanPham",
-                column: "IdLoaiSanPham");
+                name: "IX_Payment_IdDonHang",
+                table: "Payment",
+                column: "IdDonHang");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShippingRates_IdDeliveryMethod",
@@ -396,19 +257,13 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 name: "ChiTietDonHang");
 
             migrationBuilder.DropTable(
-                name: "ProductVariantAttributes");
+                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "ShippingRates");
 
             migrationBuilder.DropTable(
                 name: "DonHang");
-
-            migrationBuilder.DropTable(
-                name: "AttributeValues");
-
-            migrationBuilder.DropTable(
-                name: "ProductVariants");
 
             migrationBuilder.DropTable(
                 name: "DeliveryMethods");
@@ -420,16 +275,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                 name: "KhachHang");
 
             migrationBuilder.DropTable(
-                name: "ProductAttributes");
-
-            migrationBuilder.DropTable(
-                name: "SanPham");
-
-            migrationBuilder.DropTable(
                 name: "CustomerTypes");
-
-            migrationBuilder.DropTable(
-                name: "LoaiSanPham");
         }
     }
 }

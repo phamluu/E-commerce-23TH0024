@@ -10,10 +10,15 @@
 
 	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	<PreserveCompilationContext>true</PreserveCompilationContext>
-  	
+<!-- Biên dịch file View -->
+ <RazorCompileOnBuild>true</RazorCompileOnBuild>
+  <RazorCompileOnPublish>true</RazorCompileOnPublish>
+  <PreserveCompilationContext>false</PreserveCompilationContext> 	
+<!-- Biên dịch file View -->
+<!-- Tắt biên dịch file Views
 	<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
   	<CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
-
+-->
 </PropertyGroup>
 
   <ItemGroup>
@@ -47,7 +52,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Views\FileTransfer\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
@@ -59,7 +63,6 @@
     <Folder Include="wwwroot\lib\jquery-validation\dist\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
-    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -89,5 +92,19 @@
     </Content>
 
   </ItemGroup>
+
+  <!-- 🔽 Bổ sung publish các thư mục ngôn ngữ vào 1 folder chung -->
+  <Target Name="MoveSatelliteAssemblies" AfterTargets="Publish">
+    <ItemGroup>
+      <SatelliteAssemblies Include="$(PublishDir)*\*.resources.dll" />
+    </ItemGroup>
+
+    <Message Importance="high" Text="Moving satellite assemblies to /lang folder" />
+    
+    <Copy SourceFiles="@(SatelliteAssemblies)" DestinationFiles="@(SatelliteAssemblies->'$(PublishDir)lang\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <RemoveDir Directories="@(SatelliteAssemblies->'%(RootDir)%(Directory)')" />
+  </Target>
+  <!-- 🔼 Bổ sung publish các thư mục ngôn ngữ vào 1 folder chung -->
 
 </Project>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace E_commerce_23TH0024.Data.Migrations.User
 {
     /// <inheritdoc />
-    public partial class CreateUserTables : Migration
+    public partial class UpdateUserSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,22 +48,6 @@ namespace E_commerce_23TH0024.Data.Migrations.User
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NhanVien",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HoTen = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdAspNetUsers = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NhanVien", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +156,27 @@ namespace E_commerce_23TH0024.Data.Migrations.User
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "NhanVien",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HoTen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdAspNetUsers = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NhanVien", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NhanVien_AspNetUsers_IdAspNetUsers",
+                        column: x => x.IdAspNetUsers,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -210,6 +215,13 @@ namespace E_commerce_23TH0024.Data.Migrations.User
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NhanVien_IdAspNetUsers",
+                table: "NhanVien",
+                column: "IdAspNetUsers",
+                unique: true,
+                filter: "[IdAspNetUsers] IS NOT NULL");
         }
 
         /// <inheritdoc />

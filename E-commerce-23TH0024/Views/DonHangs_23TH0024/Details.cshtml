@@ -1,5 +1,6 @@
 ﻿@using E_commerce_23TH0024.Models.Ecommerce
-@model DonHang
+@using E_commerce_23TH0024.ViewModels
+@model DonHangViewModel
 
 @{
     ViewBag.Title = "Đơn hàng";
@@ -79,7 +80,7 @@
                         <th>Đơn giá</th>
                         <th>Số lượng</th>
                     </tr>
-                    @foreach (var item in Model.ChiTietDonHangs)
+                    @foreach (var item in Model.ChiTietDonHangVM)
                     {
                         <tr>
                             <td>@item.SanPham.TenSP</td>

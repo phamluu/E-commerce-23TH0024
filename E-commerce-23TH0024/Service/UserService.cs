@@ -2,7 +2,7 @@
 using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Lib.Enums;
 using E_commerce_23TH0024.Models;
-using E_commerce_23TH0024.Models.Ecommerce;
+using E_commerce_23TH0024.Models.Order;
 using E_commerce_23TH0024.Models.Users;
 using Microsoft.EntityFrameworkCore;
 

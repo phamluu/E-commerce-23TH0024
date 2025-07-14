@@ -1,9 +1,4 @@
-﻿
-using E_commerce_23TH0024.Models.Users;
-using System;
-using System.Collections.Generic;
-
-namespace E_commerce_23TH0024.Models.Ecommerce;
+﻿namespace E_commerce_23TH0024.Models.Order;
 
 public partial class DiscountRule
 {
@@ -32,6 +27,4 @@ public partial class DiscountRule
     public DateTime? Created_at { get; set; }
 
     public virtual CustomerType? CustomerType { get; set; }
-
-    public virtual LoaiSanPham? LoaiSanPham { get; set; }
 }

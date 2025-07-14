@@ -1,5 +1,6 @@
 ﻿@using E_commerce_23TH0024.Models
 @using E_commerce_23TH0024.Models.Ecommerce
+@using E_commerce_23TH0024.Models.Order
 @model IEnumerable<DiscountRule>
 
 @{
@@ -48,7 +49,7 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
-                            @(item.LoaiSanPham?.TenLSP ?? "Không xác định")
+                            @* @(item.LoaiSanPham?.TenLSP ?? "Không xác định") *@
                         </td>
                         <td>
                             @Helper.money(item.DiscountAmount)

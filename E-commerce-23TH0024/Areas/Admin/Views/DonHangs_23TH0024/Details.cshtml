@@ -1,6 +1,8 @@
 ﻿@using E_commerce_23TH0024.Lib
+@using E_commerce_23TH0024.Lib.Enums
 @using E_commerce_23TH0024.Models
 @using E_commerce_23TH0024.Models.Ecommerce
+@using E_commerce_23TH0024.ViewModels
 @model DonHangViewModel
 
 @{
@@ -9,113 +11,215 @@
 
 <div>
     <h4 class="title">Đơn hàng</h4>
+    @Html.Partial("_AlertMessages")
     <div class="row">
-        <div class="col-md-4">
-            <h4>Thông tin đơn hàng</h4>
-            <hr />
-            <table class="table">
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Mã đơn hàng")</b>
-                    </td>
+        <div class="col-md-7">
+            <div class="box mb-3">
+                <div class="box-header"><h5>Thông tin đơn hàng</h5></div>
+                <div class="box-body">
+                        <table class="table mb-0">
+                            <tr>
+                                <td>
+                                    <b>@Html.DisplayName("Mã đơn hàng")</b>
+                                </td>
 
-                    <td>
-                        @Html.DisplayFor(model => model.Id)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Ngày đặt hàng")</b>
-                    </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Id)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>@Html.DisplayName("Ngày đặt hàng")</b>
+                                </td>
 
-                    <td>
-                        @Html.DisplayFor(model => model.NgayDatHang)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Ngày giao hàng")</b>
-                    </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.NgayDatHang)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>@Html.DisplayName("Ngày giao hàng")</b>
+                                </td>
 
-                    <td>
-                        @Html.DisplayFor(model => model.NgayGiaoHang)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Nhân viên giao hàng")</b>
-                    </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.NgayGiaoHang)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>@Html.DisplayName("Nhân viên giao hàng")</b>
+                                </td>
 
-                    <td>
-                         @(Model.NhanVienGiao?.SoDienThoai ?? "Không xác định")
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Tình trạng")</b>
-                    </td>
+                                <td>
+                                     @(Model.NhanVienGiao?.SoDienThoai ?? "Không xác định")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>@Html.DisplayName("Tình trạng thanh toán")</b></td>
+                                <td><div class="payment-status">
+                                        <span class="badge @((Model.Payments.Any(p => p.PaymentStatus == (int)PaymentStatus.Completed)) ? "bg-success" : "bg-warning")">
+                                            @(Model.Payments.Any(p => p.PaymentStatus == (int)PaymentStatus.Completed) ? "Đã thanh toán" : "Chưa hoàn tất")
+                                        </span>
+                                         <form action="@Url.Action("DuyetThanhToan", "DonHangs_23TH0024")" method="post"
+                                            onsubmit="return confirm('Bạn có chắc chắn muốn duyệt thanh toán đơn hàng này không?');" style="display: inline-block;">
+                                                @Html.AntiForgeryToken() 
+                                                <input type="hidden" name="OrderId" value="@Model.Id" />
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    Duyệt thanh toán
+                                                </button>
+                                            </form>
+                                        <details>
+                                            <summary>Xem lịch sử thanh toán</summary>
+                                            <ul>
+                                                @foreach (var p in Model.Payments)
+                                                {
+                                                    <li class="d-flex align-items-start justify-content-between mb-2 border-bottom pb-2">
+                                                        <div>
+                                                        <b>@p.Amount.ToString("N0")</b> –
+                                                        @p.PaymentDate.ToString("dd/MM/yyyy HH:mm") –
+                                                        <span class="badge @((p.PaymentStatus == (int)PaymentStatus.Completed) ? "bg-success" : "bg-warning")">@EnumExtensions.GetDisplayName((PaymentStatus)p.PaymentStatus)</span>
+                                                        </div>
+                                                        <details class="dropdown ms-2">
+                                                            <summary class="btn btn-light btn-sm px-2 py-0" style="font-size: 18px;">&#8942;</summary>
+                                                            <div class="dropdown-menu show p-2 shadow-sm border bg-white rounded">
+                                                                <form method="post" action="@Url.Action("CapNhatThanhToan", "DonHangs_23TH0024")" class="mb-1">
+                                                                    @Html.AntiForgeryToken()
+                                                                    <input type="hidden" name="PaymentId" value="@p.Id" />
+                                                                    <input type="hidden" name="Status" value="@((int)PaymentStatus.Cancelled)" />
+                                                                    <button type="submit" class="btn btn-link text-danger p-0">Hủy</button>
+                                                                </form>
+                                                                <form method="post" action="@Url.Action("CapNhatThanhToan", "DonHangs_23TH0024")">
+                                                                    @Html.AntiForgeryToken()
+                                                                    <input type="hidden" name="PaymentId" value="@p.Id" />
+                                                                    <input type="hidden" name="Status" value="@((int)PaymentStatus.Refunded)" />
+                                                                    <button type="submit" class="btn btn-link text-danger p-0">Hoàn trả</button>
+                                                                </form>
+                                                                <form method="post" action="@Url.Action("CapNhatThanhToan", "DonHangs_23TH0024")">
+                                                                    @Html.AntiForgeryToken()
+                                                                    <input type="hidden" name="PaymentId" value="@p.Id" />
+                                                                    <input type="hidden" name="Status" value="@((int)PaymentStatus.Completed)" />
+                                                                    <button type="submit" class="btn btn-link text-danger p-0">Hoàn tất</button>
+                                                                </form>
+                                                            </div>
+                                                        </details>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </details>
+                                    </div>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td><b>@Html.DisplayName("Tình trạng đơn hàng")</b></td>
+                                <td>
+                                    <div class="progress-container">
+                                        @{
+                                            var currentStatus = Model.TinhTrang.HasValue ? (OrderStatus)Model.TinhTrang.Value : OrderStatus.Pending;
+                                            var allSteps = new List<OrderStatus> {
+                                                OrderStatus.Pending,
+                                                OrderStatus.Confirmed,
+                                                OrderStatus.Processing,
+                                                OrderStatus.Shipped,
+                                                OrderStatus.Delivered
+                                            };
+                                        }
 
-                    <td>
-                        @EnumExtensions.GetOrderStatusName(Model.TinhTrang)
-                    </td>
-                </tr>
-                @* <tr>
-                    <td>
-                        <b>@Html.DisplayName("Nhân viên")</b>
-                    </td>
+                                        <div class="step-tracker d-flex justify-content-between">
+                                            @foreach (var step in allSteps)
+                                                {
+                                                    var stepInt = (int)step;
+                                                    var isDone = stepInt <= (int)currentStatus;
+                                                    var isNextStep = stepInt == (int)currentStatus + 1;
 
-                    <td>
-                        @Html.DisplayFor(model => model.NhanVien.HoTen)
-                    </td>
-                </tr> *@
-            </table>
+                                                    <form method="post" action="@Url.Action("DuyetDonHang", "DonHangs_23TH0024")"
+                                                          onsubmit="return confirm('Bạn có chắc muốn chuyển đơn hàng sang trạng thái này không?');">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="OrderId" value="@Model.Id" />
+                                                        <input type="hidden" name="Status" value="@stepInt" />
             
-            <h4>Thông tin khách hàng</h4>
-            <hr />
-            <table class="table">
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Tên khách hàng")</b>
-                    </td>
+                                                        <button type="submit" class="step circle btn btn-sm @(isDone ? "btn-success" : isNextStep ? "btn-primary" : "btn-secondary disabled")"
+                                                                title="@EnumExtensions.GetDisplayName(step)"
+                                                                @(stepInt > (int)currentStatus + 1 ? "disabled" : "")>
+                                                            @stepInt
+                                                        </button>
+                                                        <div class="label text-center small mt-1">@EnumExtensions.GetDisplayName(step)</div>
+                                                    </form>
+                                                }
+                                        </div>
+                                    </div>
+                                    @* @if (Model.TinhTrang.HasValue)
+                                    {
+                                        <span class="badge bg-success">@EnumExtensions.GetDisplayName((OrderStatus)Model.TinhTrang.Value) </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Chưa duyệt</span>
+                                    } *@
+                                </td>
+                            </tr>
 
-                    <td>
-                         @(Model.KhachHang?.HoTen ?? "Không xác định")
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Sđt khách hàng")</b>
-                    </td>
+                            @* <tr>
+                                <td>
+                                    <b>@Html.DisplayName("Nhân viên")</b>
+                                </td>
 
-                    <td>
-                         @(Model.KhachHang?.SoDienThoai ?? "Không xác định")
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>@Html.DisplayName("Email khách hàng")</b>
-                    </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.NhanVien.HoTen)
+                                </td>
+                            </tr> *@
+                        </table>
+                </div>
 
-                    <td>
-                         @(Model.KhachHang?.AspNetUser?.Email ?? "Không xác định")
-                    </td>
-                </tr>
-            </table>
+            </div>
+            <div class="box mb-3">
+                <div class="box-header"><h5>Thông tin khách hàng</h5></div>
+                <div class="box-body">
+                    <table class="table mb-0">
+                        <tr>
+                            <td>
+                                <b>@Html.DisplayName("Tên khách hàng")</b>
+                            </td>
+
+                            <td>
+                                 @(Model.KhachHang?.HoTen ?? "Không xác định")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>@Html.DisplayName("Sđt khách hàng")</b>
+                            </td>
+
+                            <td>
+                                 @(Model.KhachHang?.SoDienThoai ?? "Không xác định")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>@Html.DisplayName("Email khách hàng")</b>
+                            </td>
+
+                            <td>
+                                 @(Model.KhachHang?.AspNetUser?.Email ?? "Không xác định")
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
 
         </div>
-        <div class="col-md-8">
-            <div class="box">
-                <h4>Danh sách sản phẩm</h4>
-                <hr />
-                
-                    <table class="table">
+        <div class="col-md-5">
+            <div class="box mb-3">
+                <div class="box-header"><h5>Danh sách sản phẩm</h5></div>
+                <div class="box-body">
+                     <table class="table mb-0">
                         <tr>
                             <th>Tên sản phẩm</th>
                             <th>Đơn giá</th>
                             <th>Số lượng</th>
                         </tr
                         @if(Model.ChiTietDonHangs != null){
-                            foreach (var item in Model.ChiTietDonHangs)
+                            foreach (var item in Model.ChiTietDonHangVM)
                             {
                                 <tr>
                                     <td>@item.SanPham?.TenSP</td>
@@ -126,7 +230,7 @@
                         }
 
                     </table>
-                    <table class="table">
+                    <table class="table mb-0">
                         <tr>
                             <td><b>Tổng tiền: </b></td>
                             <td>@Helper.money(Model.TotalProductAmount)</td>
@@ -144,8 +248,7 @@
                             <td style="color:red; font-size:20px;">@Helper.money(Model.TotalAmount)</td>
                         </tr>
                     </table>
-
-                
+                </div>
                 
             </div>
         </div>

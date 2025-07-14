@@ -1,8 +1,10 @@
 ﻿using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
-using E_commerce_23TH0024.Models.Ecommerce;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using E_commerce_23TH0024.Models.Order;
+using E_commerce_23TH0024.ViewModels;
+using System.Linq;
 namespace E_commerce_23TH0024.Service
 {
     public class DonHangService: BaseService
@@ -16,30 +18,58 @@ namespace E_commerce_23TH0024.Service
             });
             _mapper = config.CreateMapper();
         }
-        public DonHang GetDonHang(int id)
+        public DonHangViewModel GetDonHang(int id)
         {
-            DonHang donHang = _context.DonHangs.Include(x => x.ChiTietDonHangs).ThenInclude(d => d.SanPham)
-                .Include(x => x.KhachHang)?.FirstOrDefault();
-            return donHang;
-        }
-        public DonHangViewModel GetDonHangViewModel(int id)
-        {
-            DonHang donHang = _context.DonHangs.Include(x => x.ChiTietDonHangs).ThenInclude(d => d.SanPham)
-                .Include(x => x.KhachHang)?.FirstOrDefault();
-            if (donHang != null)
+            DonHang donHang = _context.DonHangs.Include(x => x.KhachHang).Include(x => x.Payments).Where(x => x.Id == id)?.FirstOrDefault();
+            if (donHang == null) return null;
+            
+            var chiTietDonHangs = (from ct in _context.ChiTietDonHang
+                                    join sp in _context.SanPham on ct.IdSanPham equals sp.Id
+                                    where ct.IdDonHang == id
+                                    select new DonHangDetailViewModel
+                                    {
+                                        Id = ct.Id,
+                                        IdDonHang = ct.IdDonHang,
+                                        IdSanPham = ct.IdSanPham,
+                                        DonGia = ct.DonGia,
+                                        SoLuong = ct.SoLuong,
+                                        SanPham = sp
+                                    }).ToList();
+            var model = new DonHangViewModel
             {
-                var rs = _mapper.Map<DonHangViewModel>(donHang);
-                rs.NhanVienGiao = _context.NhanVien.FirstOrDefault(x => x.Id == donHang.IdNhanVienGiao);
-                rs.NhanVienDuyet = _context.NhanVien.FirstOrDefault(x => x.Id == donHang.IdNhanVienDuyet);
-                return rs;
-            }
+                Id = donHang.Id,
+                NgayDatHang = donHang.NgayDatHang,
+                NgayGiaoHang = donHang.NgayGiaoHang,
+                IdNhanVienDuyet = donHang.IdNhanVienDuyet,
+                IdNhanVienGiao = donHang.IdNhanVienGiao,
+                TinhTrang = donHang.TinhTrang,
+                VAT = donHang.VAT,
+                TotalAmount = donHang.TotalAmount,
+                ShippingFee = donHang.ShippingFee,
+                TotalProductAmount = donHang.TotalProductAmount,
+                IdDiscountRule = donHang.IdDiscountRule,
+                KhachHang = donHang.KhachHang,
+                ChiTietDonHangVM = chiTietDonHangs,
+                Payments = donHang.Payments
+            };
 
-            return null;
+            return model;
         }
-        public IEnumerable<DonHang> GetDonHangs()
+       
+        public IEnumerable<DonHangViewModel> GetDonHangs()
         {
             var donHangs = _context.DonHangs.Include(x => x.KhachHang)
-                .Include(x => x.ChiTietDonHangs).ThenInclude(d => d.SanPham).OrderByDescending(x => x.Id);
+                .Include(x => x.ChiTietDonHangs).Select(x => new DonHangViewModel
+                {
+                    Id = x.Id,
+                    NgayDatHang = x.NgayDatHang,
+                    NgayGiaoHang = x.NgayGiaoHang,
+                    IdNhanVienGiao = x.IdNhanVienGiao,
+                    IdNhanVienDuyet = x.IdNhanVienDuyet,
+                    TinhTrang = x.TinhTrang,
+                    KhachHang = x.KhachHang,
+                    ChiTietDonHangs = x.ChiTietDonHangs
+                }).OrderByDescending(x => x.Id);
             return donHangs;
         }
     

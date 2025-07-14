@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace E_commerce_23TH0024.Models.Ecommerce;
+namespace E_commerce_23TH0024.Models.Order;
 
 public partial class KhachHang
 {

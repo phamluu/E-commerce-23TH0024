@@ -9,44 +9,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
+namespace E_commerce_23TH0024.Data.Migrations.Order
 {
-    [DbContext(typeof(EcommerceDbContext))]
-    [Migration("20250517235343_EcommerceTables")]
-    partial class EcommerceTables
+    [DbContext(typeof(OrderDbContext))]
+    [Migration("20250712181026_UpdateOrderSchema")]
+    partial class UpdateOrderSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.AttributeValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("IdProductAttribute")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdProductAttribute");
-
-                    b.ToTable("AttributeValues", (string)null);
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ChiTietDonHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.ChiTietDonHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,12 +52,10 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
 
                     b.HasIndex("IdDonHang");
 
-                    b.HasIndex("IdSanPham");
-
                     b.ToTable("ChiTietDonHang", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.CustomerType", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.CustomerType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +71,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     b.ToTable("CustomerTypes", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DeliveryMethod", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DeliveryMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,7 +101,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     b.ToTable("DeliveryMethods", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DiscountRule", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DiscountRule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,12 +146,10 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
 
                     b.HasIndex("IdCustomerType");
 
-                    b.HasIndex("IdLoaiSanPham");
-
                     b.ToTable("DiscountRules", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DonHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DonHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -200,14 +175,14 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     b.Property<int?>("IdNhanVienGiao")
                         .HasColumnType("int");
 
+                    b.Property<int?>("KhachHangId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("NgayDatHang")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("NgayGiaoHang")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("PaymentMethod")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
@@ -230,12 +205,12 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
 
                     b.HasIndex("IdDeliveryMethod");
 
-                    b.HasIndex("IdKhachHang");
+                    b.HasIndex("KhachHangId");
 
                     b.ToTable("DonHang", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.KhachHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.KhachHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +255,7 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     b.ToTable("KhachHang", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.LoaiSanPham", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,113 +263,32 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("TenLSP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LoaiSanPham", (string)null);
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductAttribute", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AttributeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductAttributes", (string)null);
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductVariant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("IdSanPham")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("StockQuantity")
+                    b.Property<string>("GatewayTransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdDonHang")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdSanPham");
+                    b.HasIndex("IdDonHang");
 
-                    b.ToTable("ProductVariants", (string)null);
+                    b.ToTable("Payment", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductVariantAttribute", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("IdAttributeValue")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdProductAttribute")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("IdProductVariant")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdAttributeValue");
-
-                    b.HasIndex("IdProductAttribute");
-
-                    b.HasIndex("IdProductVariant");
-
-                    b.ToTable("ProductVariantAttributes", (string)null);
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.SanPham", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Anh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DVT")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("DonGia")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("IdLoaiSanPham")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MoTa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenSP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdLoaiSanPham");
-
-                    b.ToTable("SanPham", (string)null);
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ShippingRate", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.ShippingRate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -433,62 +327,39 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     b.ToTable("ShippingRates", (string)null);
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.AttributeValue", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.ChiTietDonHang", b =>
                 {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.ProductAttribute", "ProductAttribute")
-                        .WithMany("AttributeValues")
-                        .HasForeignKey("IdProductAttribute");
-
-                    b.Navigation("ProductAttribute");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ChiTietDonHang", b =>
-                {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.DonHang", "DonHang")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.DonHang", "DonHang")
                         .WithMany("ChiTietDonHangs")
                         .HasForeignKey("IdDonHang")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.SanPham", "SanPham")
-                        .WithMany("ChiTietDonHangs")
-                        .HasForeignKey("IdSanPham")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("DonHang");
-
-                    b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DiscountRule", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DiscountRule", b =>
                 {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.CustomerType", "CustomerType")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.CustomerType", "CustomerType")
                         .WithMany("DiscountRules")
                         .HasForeignKey("IdCustomerType");
 
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.LoaiSanPham", "LoaiSanPham")
-                        .WithMany("DiscountRules")
-                        .HasForeignKey("IdLoaiSanPham");
-
                     b.Navigation("CustomerType");
-
-                    b.Navigation("LoaiSanPham");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DonHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DonHang", b =>
                 {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.DiscountRule", "DiscountRule")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.DiscountRule", "DiscountRule")
                         .WithMany()
                         .HasForeignKey("DiscountRuleId");
 
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.DeliveryMethod", "DeliveryMethod")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.DeliveryMethod", "DeliveryMethod")
                         .WithMany("DonHangs")
                         .HasForeignKey("IdDeliveryMethod");
 
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.KhachHang", "KhachHang")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.KhachHang", "KhachHang")
                         .WithMany("DonHangs")
-                        .HasForeignKey("IdKhachHang");
+                        .HasForeignKey("KhachHangId");
 
                     b.Navigation("DeliveryMethod");
 
@@ -497,116 +368,59 @@ namespace E_commerce_23TH0024.Data.Migrations.Ecommerce
                     b.Navigation("KhachHang");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.KhachHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.KhachHang", b =>
                 {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.CustomerType", "CustomerType")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.CustomerType", "CustomerType")
                         .WithMany("KhachHangs")
                         .HasForeignKey("IdCustomerType");
 
                     b.Navigation("CustomerType");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductVariant", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.Payment", b =>
                 {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.SanPham", "SanPham")
-                        .WithMany("ProductVariants")
-                        .HasForeignKey("IdSanPham");
+                    b.HasOne("E_commerce_23TH0024.Models.Order.DonHang", "DonHang")
+                        .WithMany("Payments")
+                        .HasForeignKey("IdDonHang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("SanPham");
+                    b.Navigation("DonHang");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductVariantAttribute", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.ShippingRate", b =>
                 {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.AttributeValue", "AttributeValue")
-                        .WithMany("ProductVariantAttributes")
-                        .HasForeignKey("IdAttributeValue");
-
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.ProductAttribute", "ProductAttribute")
-                        .WithMany("ProductVariantAttributes")
-                        .HasForeignKey("IdProductAttribute");
-
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.ProductVariant", "ProductVariant")
-                        .WithMany("ProductVariantAttributes")
-                        .HasForeignKey("IdProductVariant");
-
-                    b.Navigation("AttributeValue");
-
-                    b.Navigation("ProductAttribute");
-
-                    b.Navigation("ProductVariant");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.SanPham", b =>
-                {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.LoaiSanPham", "LoaiSanPham")
-                        .WithMany("SanPhams")
-                        .HasForeignKey("IdLoaiSanPham");
-
-                    b.Navigation("LoaiSanPham");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ShippingRate", b =>
-                {
-                    b.HasOne("E_commerce_23TH0024.Models.Ecommerce.DeliveryMethod", "DeliveryMethod")
+                    b.HasOne("E_commerce_23TH0024.Models.Order.DeliveryMethod", "DeliveryMethod")
                         .WithMany("ShippingRates")
                         .HasForeignKey("IdDeliveryMethod");
 
                     b.Navigation("DeliveryMethod");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.AttributeValue", b =>
-                {
-                    b.Navigation("ProductVariantAttributes");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.CustomerType", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.CustomerType", b =>
                 {
                     b.Navigation("DiscountRules");
 
                     b.Navigation("KhachHangs");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DeliveryMethod", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DeliveryMethod", b =>
                 {
                     b.Navigation("DonHangs");
 
                     b.Navigation("ShippingRates");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.DonHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.DonHang", b =>
                 {
                     b.Navigation("ChiTietDonHangs");
+
+                    b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.KhachHang", b =>
+            modelBuilder.Entity("E_commerce_23TH0024.Models.Order.KhachHang", b =>
                 {
                     b.Navigation("DonHangs");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.LoaiSanPham", b =>
-                {
-                    b.Navigation("DiscountRules");
-
-                    b.Navigation("SanPhams");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductAttribute", b =>
-                {
-                    b.Navigation("AttributeValues");
-
-                    b.Navigation("ProductVariantAttributes");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.ProductVariant", b =>
-                {
-                    b.Navigation("ProductVariantAttributes");
-                });
-
-            modelBuilder.Entity("E_commerce_23TH0024.Models.Ecommerce.SanPham", b =>
-                {
-                    b.Navigation("ChiTietDonHangs");
-
-                    b.Navigation("ProductVariants");
                 });
 #pragma warning restore 612, 618
         }

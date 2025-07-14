@@ -1,7 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_commerce_23TH0024.Models.Ecommerce;
 
@@ -21,8 +18,6 @@ public partial class SanPham
     public string? DVT { get; set; }
 
     public string? Anh { get; set; }
-
-    public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
     [ForeignKey("IdLoaiSanPham")]
     public virtual LoaiSanPham? LoaiSanPham { get; set; }
 

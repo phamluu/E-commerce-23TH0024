@@ -13,6 +13,8 @@ using E_commerce_23TH0024.Service;
 using E_commerce_23TH0024.Lib.Enums;
 using E_commerce_23TH0024.Lib;
 using System.Security.Claims;
+using E_commerce_23TH0024.Models.Order;
+using E_commerce_23TH0024.ViewModels;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
@@ -161,7 +163,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
                         IdSanPham = item.Id,
                         SoLuong = item.SoLuong,
                         DonGia = item.DonGia.Value,
-                        DiscountApplied = item.DiscountMax()
+                        //DiscountApplied = item.DiscountMax()
                     };
                     donHang.ChiTietDonHangs.Add(chiTietDonHang);
                     if (chiTietDonHang.DiscountApplied > 0)
@@ -214,7 +216,7 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             {
                 return new BadRequestResult();
             }
-            DonHangViewModel donHang = _service.GetDonHangViewModel(id.Value);
+            DonHangViewModel donHang = _service.GetDonHang(id.Value);
             if (donHang == null)
             {
                 return NotFound();
@@ -332,6 +334,54 @@ namespace E_commerce_23TH0024.Areas.AdminControllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DuyetThanhToan(int OrderId)
+        {
+            var order = db.DonHangs.Find(OrderId);
+            if (order == null)
+            {
+                return NotFound();
+            }  
+            db.Payment.Add(new Payment { 
+                    IdDonHang = OrderId,
+                    PaymentDate = DateTime.Now, 
+                    Amount = order.TotalAmount,
+                    PaymentStatus = (int)PaymentStatus.Completed
+                });
+                db.SaveChanges();
+            
+            TempData["SuccessMessage"] = "Thanh toán đơn hàng thanh công!";
+            return RedirectToAction("Details", new { id = OrderId });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CapNhatThanhToan(int PaymentId, int Status)
+        {
+            var payment = db.Payment.Find(PaymentId);
+            if (payment == null)
+            {
+                return NotFound();
+            }
+            payment.PaymentStatus = Status;
+            db.SaveChanges();
+            TempData["SuccessMessage"] = "Cập nhật Thanh toán đơn hàng thanh công!";
+            return RedirectToAction("Details", new { id = payment.IdDonHang });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DuyetDonHang(int OrderId, int Status)
+        {
+            var order = db.DonHangs.Find(OrderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.TinhTrang = Status;
+            db.SaveChanges();
+            TempData["SuccessMessage"] = "Duyệt đơn hàng thành công!";
+            return RedirectToAction("Details", new { id = OrderId });
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

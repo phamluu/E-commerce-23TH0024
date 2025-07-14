@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-
-namespace E_commerce_23TH0024.Models.Ecommerce;
+﻿namespace E_commerce_23TH0024.Models.Order;
 
 public partial class ChiTietDonHang
 {
@@ -17,8 +13,6 @@ public partial class ChiTietDonHang
     public decimal DonGia { get; set; }
 
     public decimal DiscountApplied { get; set; }
-
-    public virtual SanPham SanPham { get; set; } = null!;
 
     public virtual DonHang DonHang { get; set; } = null!;
 }

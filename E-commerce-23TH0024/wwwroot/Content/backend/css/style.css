@@ -269,3 +269,53 @@ img {
     .filter-group input {
         width: 160px;
     }
+.box {
+    border: #3333332b 1px solid;
+}
+.box .box-header {
+    background: #188c4826;
+    text-align: center;
+    padding: 5px;
+}
+.step-tracker .step {
+    width: 100%;
+    position: relative;
+}
+
+.step .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ccc;
+    margin: auto;
+    line-height: 30px;
+}
+
+.step.done .circle {
+    background: green;
+    color: white;
+}
+
+.step .label {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.step-tracker {
+    margin-bottom: 1rem;
+}
+details.dropdown summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+details.dropdown[open] > .dropdown-menu {
+    display: block !important;
+    position: absolute;
+    z-index: 1000;
+}
+
+.dropdown-menu {
+    display: none;
+    min-width: 120px;
+}
