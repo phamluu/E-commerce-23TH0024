@@ -15,13 +15,15 @@
     
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link href="~/Content/backend\libs\jquery-vectormap\jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
     <link href="~/Content/backend/css/icons.min.css" rel="stylesheet" />
     <link href="~/Content/backend/css/app.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" /> <!-- css cho datatables -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    
     <link href="~/Content/backend/css/style.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -37,58 +39,11 @@
                 <li class="d-none d-sm-block">
                 </li>
 
+                
 
                 <li class="dropdown notification-list"> 
-                    <a class="nav-link dropdown-toggle waves-light waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="fe-bell noti-icon"></i> 
-                        <span class="badge badge-danger rounded-circle noti-icon-badge">5</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-lg"> 
-                        <div class="dropdown-item noti-title">
-                            <h5 class="m-0 text-white">
-                                <span class="float-right">
-                                    <a href="" class="text-white">
-                                        <small>Xóa tất cả</small>
-                                    </a>
-                                </span>Thông báo
-                            </h5>
-                        </div>
-
-                         <div class="slimscroll noti-scroll"> 
-                             <a href="javascript:void(0);" class="dropdown-item notify-item active"> 
-                                 <div class="notify-icon"> 
-                                     <img src="~/Content/backend/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> 
-                                 </div> 
-                                 <p class="notify-details">Cristina Pride</p> 
-                                 <p class="text-muted mb-0 user-msg"> 
-                                     <small>Hi, How are you? What about our next meeting</small> 
-                                 </p> 
-                             </a> 
-                             <a href="javascript:void(0);" class="dropdown-item notify-item"> 
-                                 <div class="notify-icon bg-primary"> 
-                                     <i class="mdi mdi-comment-account-outline"></i> 
-                                 </div> 
-                                 <p class="notify-details"> 
-                                     Caleb Flakelar commented on Admin 
-                                     <small class="text-muted">1 min ago</small> 
-                                 </p> 
-                             </a> 
-                             <a href="javascript:void(0);" class="dropdown-item notify-item"> 
-                                 <div class="notify-icon"> 
-                                     <img src="/backend\images\users\user-4.jpg" class="img-fluid rounded-circle" alt=""> 
-                                 </div> 
-                                 <p class="notify-details">Karen Robinson</p> 
-                                 <p class="text-muted mb-0 user-msg"> 
-                                     <small>Wow ! this admin looks good and awesome design</small> 
-                                 </p> 
-                             </a> 
-                         </div>
-                         <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all"> 
-                             Xem tất cả 
-                             <i class="fi-arrow-right"></i> 
-                         </a>
-
-                     </div>
+                    @Html.Partial("_Notification")
+                   
                   </li> 
                 @if (SignInManager.IsSignedIn(User))
                 {
@@ -115,17 +70,18 @@
                             </a>
 
                             <div class="dropdown-divider"></div>
-                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout" class="form-inline">
-                                <button type="submit" class="nav-link btn btn-link text-dark"><i class="fe-log-out"></i>Logout</button>
-                            </form>
-                            @* @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                            {
+                            <form asp-action="Logout"
+                                  asp-controller="DashBoard_23TH0024"
+                                  asp-area="Admin"
+                                  method="post"
+                                  asp-route-returnUrl="@Url.Action("Index", "DashBoard_23TH0024", new { area = "Admin" })"
+                                  class="form-inline">
                                 @Html.AntiForgeryToken()
-                                <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item notify-item">
-                                    <i class="fe-log-out"></i>
-                                    <span>Đăng xuất</span>
-                                </a>
-                            } *@
+                                <button type="submit" class="nav-link btn btn-link text-dark">
+                                    <i class="fe-log-out"></i>Đăng xuất
+                                </button>
+                            </form>
+
                         </div>
                     </li>
                 }
@@ -195,6 +151,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/Scripts/custom_signalR.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/CustomScript.js"></script>
     <script>
         $(".multiselect").select2();

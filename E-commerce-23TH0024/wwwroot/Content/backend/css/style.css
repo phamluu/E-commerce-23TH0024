@@ -319,3 +319,6 @@ details.dropdown[open] > .dropdown-menu {
     display: none;
     min-width: 120px;
 }
+.form-group {
+    margin-bottom: 1rem;
+}

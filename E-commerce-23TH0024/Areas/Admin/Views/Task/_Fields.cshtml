@@ -1,0 +1,61 @@
+﻿@model WorkManagement.Entities.TaskItem
+@using WorkManagement.Enums
+<!-- Tiêu đề -->
+<div class="mb-3">
+    <label asp-for="Title" class="form-label">Tiêu đề task</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<!-- Dự án -->
+<div class="mb-3">
+    <label asp-for="IdProject" class="form-label">Thuộc dự án</label>
+    <select asp-for="IdProject" class="form-select multiselect" asp-items="ViewBag.IdProject">
+        <option value="">-- Chọn dự án --</option>
+    </select>
+    <span asp-validation-for="IdProject" class="text-danger"></span>
+</div>
+
+<!-- Trạng thái -->
+<div class="mb-3">
+    <label class="form-label">Trạng thái</label>
+    <div class="d-flex flex-wrap gap-3">
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.Status, (int)TaskItemStatus.Todo, new { @class = "form-check-input", id = "status-todo" })
+            <label class="form-check-label" for="status-todo">Chưa làm</label>
+        </div>
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.Status, (int)TaskItemStatus.InProgress, new { @class = "form-check-input", id = "status-progress" })
+            <label class="form-check-label" for="status-progress">Đang làm</label>
+        </div>
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.Status, (int)TaskItemStatus.Done, new { @class = "form-check-input", id = "status-done" })
+            <label class="form-check-label" for="status-done">Hoàn thành</label>
+        </div>
+    </div>
+    <span asp-validation-for="Status" class="text-danger"></span>
+</div>
+
+<!-- Mô tả -->
+<div class="mb-3">
+    <label asp-for="Description" class="form-label">Mô tả</label>
+    <textarea id="Description" name="Description" class="summernote form-control">@Model?.Description</textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+        setTimeout(function () {
+            $('.note-toolbar').removeClass('card-header');
+        }, 100);
+    });
+</script>

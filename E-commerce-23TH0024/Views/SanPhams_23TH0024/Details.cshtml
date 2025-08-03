@@ -8,6 +8,123 @@
 @{
     ViewBag.Title = Model.TenSP;
 }
+<style>
+    .detail.container {
+        max-width: 1100px;
+        margin: 30px auto;
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .detail .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .detail .col-md-4 {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .detail .col-md-4 img {
+        width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .detail .col-md-8 {
+        flex: 1.5;
+        min-width: 300px;
+    }
+
+    .detail h4 {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .detail .price {
+        font-size: 28px;
+        color: red;
+        font-weight: bold;
+    }
+
+    .detail .old-price {
+        font-size: 18px;
+        text-decoration: line-through;
+        color: #888;
+        margin-right: 10px;
+    }
+
+    .detail p {
+        margin: 8px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .detail .btn {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .btn.addToCart {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn.addToCart:hover {
+        background-color: #0056b3;
+    }
+
+    .btn.buyNow {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn.buyNow:hover {
+        background-color: #1c7430;
+    }
+
+    .breadcrumb {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .breadcrumb ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .breadcrumb li a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .breadcrumb li span {
+        color: #666;
+    }
+    .detail .col-md-4 img {
+    width: 100%;
+    max-height: 400px; /* ✅ Giới hạn chiều cao */
+    object-fit: cover; /* ✅ Cắt hình cho đều */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+</style>
+
+
 <div class="banner">
     <div class="banner-overlay"></div>
     <div class="banner-content">
@@ -27,8 +144,11 @@
     <dl class="dl-horizontal">
         <div class="row">
             <div class="col-md-4">
-                <img src="~/Uploads/@Model.Anh" />
+                <div class="square-image">
+                    <img src="~/Uploads/@Model.Anh" alt="@Model.TenSP" />
+                </div>
             </div>
+
             <div class="col-md-8">
                 <h4>Tên sản phẩm: @Html.DisplayFor(model => model.TenSP)</h4>
                 <div>

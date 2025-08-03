@@ -9,12 +9,12 @@ using E_commerce_23TH0024.Areas.Admin.Controllers;
 
 namespace E_commerce_23TH0024.Areas.AdminControllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
     public class ProductVariantAttributes_23TH0024Controller : BaseController
     {
-        public ProductVariantAttributes_23TH0024Controller(ApplicationDbContext context) : base(context)
+        private readonly ApplicationDbContext db;
+        public ProductVariantAttributes_23TH0024Controller(ApplicationDbContext context):base(context)
         {
+            db = context;
         }
         // GET: ProductVariantAttributes_23TH0024
         public ActionResult Index()

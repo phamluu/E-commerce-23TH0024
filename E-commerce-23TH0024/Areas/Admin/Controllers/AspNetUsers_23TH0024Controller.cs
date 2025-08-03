@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using E_commerce_23TH0024.Models.Identity;
-using System.Data;
+﻿using E_commerce_23TH0024.Data;
 using E_commerce_23TH0024.Models;
-using E_commerce_23TH0024.Data;
+using E_commerce_23TH0024.Models.Identity;
+using E_commerce_23TH0024.Models.Order;
+using E_commerce_23TH0024.Models.Users;
+using E_commerce_23TH0024.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using E_commerce_23TH0024.Models.Users;
-using E_commerce_23TH0024.Models.Order;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace E_commerce_23TH0024.Controllers
 {
@@ -151,19 +153,40 @@ namespace E_commerce_23TH0024.Controllers
 
        
         // GET: AspNetUsers_23TH0024/Details/5
-        public ActionResult Details(string id)
+        public async Task<ActionResult> DetailsAsync(string id)
         {
-            if (id == null)
-            {
-                return  BadRequest();
-            }
-            ApplicationUser aspNetUser = db.Users.Find(id);
-            //AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
-            if (aspNetUser == null)
+            var user = db.Users.Find(id);
+
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(aspNetUser);
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var allRoles = _roleManager.Roles.ToList();
+
+            ViewBag.UserRoles = userRoles;
+            ViewBag.AllRoles = allRoles;
+
+            var model = new UserViewModel();
+            model.Id = user.Id;
+            model.UserName = user.UserName;
+            model.Email = user.Email;
+            model.PhoneNumber = user.PhoneNumber;
+            model.EmailConfirmed = user.EmailConfirmed;
+            model.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+            model.LockoutEnabled = user.LockoutEnabled;
+            model.LockoutEnd = user.LockoutEnd;
+            model.AccessFailedCount = user.AccessFailedCount;
+            model.TwoFactorEnabled = user.TwoFactorEnabled;
+            model.SecurityStamp = user.SecurityStamp;
+            model.ConcurrencyStamp = user.ConcurrencyStamp;
+            model.NormalizedUserName = user.NormalizedUserName;
+            model.NormalizedEmail = user.NormalizedEmail;
+            model.EmailConfirmed = user.EmailConfirmed;
+            model.Roles = db.UserRoles.Where(ur => ur.UserId == id)
+                .Join(db.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => r.Name).ToList();
+            return View(model);
         }
 
         // GET: AspNetUsers_23TH0024/Create

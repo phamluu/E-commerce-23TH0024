@@ -1,15 +1,17 @@
 ﻿using E_commerce_23TH0024.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class BaseController : Controller
     {
-        protected readonly ApplicationDbContext db;
-
+       private readonly ApplicationDbContext _context;
         public BaseController(ApplicationDbContext context)
         {
-            db = context;
+            _context = context;
         }
     }
 }

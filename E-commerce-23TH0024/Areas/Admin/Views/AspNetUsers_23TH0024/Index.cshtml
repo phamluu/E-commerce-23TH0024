@@ -16,22 +16,24 @@
                 <th>UserName</th>
                 <th>PhoneNumber</th>
                 <th>Email</th>
-                <th>Vai tro</th>
-                <th>Chuc nang</th>
+                <th>Vai trò</th>
+                <th>Chức năng</th>
             </tr>
         </thead>
         <tbody>
             @if(Model != null && Model.Count() > 0){
+                int i = 1;
                 foreach (var item in Model)
                 {
                     <tr>
-                        <td></td>
+                        <td>@(i++)</td>
                         <td>@item.UserName</td>
                         <td>@item.PhoneNumber</td>
                         <td>@item.Email</td>
                         <td>@string.Join(", ", item.Roles)</td>
                         <td>
-                            <partial name="_TableActions" model=item.UserId />
+                        <a href="@Url.Action("Details", new { id = item.UserId })" class="btn btn-info btn-sm">Xem</a>
+                        <a href="@Url.Action("Delete", new { id = @item.UserId })" class="btn btn-danger btn-sm"><abbr title="Xóa dữ liệu">Xóa</abbr> </a>
                         </td>
                     </tr>
                 }

@@ -1,0 +1,84 @@
+﻿@using E_commerce_23TH0024.Common.Helpers
+@using WorkManagement.Enums
+@model IEnumerable<WorkManagement.Entities.TaskItem>
+
+
+@{
+    ViewData["Title"] = "Quản lý Task";
+}
+<style>
+    .task-card {
+        transition: all 0.3s ease-in-out;
+        background-color: #fdfdfd;
+    }
+
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+
+</style>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Danh sách Task</h2>
+        <a asp-action="Create" class="btn btn-primary btn-sm">
+            <i class="bi bi-plus-circle me-1"></i> Thêm mới
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var pair in Model.Select((item, index) => new { item, index }))
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm border-0 rounded-4 h-100 position-relative task-card transition bg-light">
+                    <div class="card-body">
+                        <a href="@Url.Action("Details", "Task", new { id = pair.item.Id })"
+                           class="text-decoration-none text-dark">
+                            <p class="mb-2 fs-6 fw-semibold text-primary">
+                                @((pair.index + 1).ToString()). @pair.item.Title
+                            </p>
+                        </a>
+
+                        <div class="mb-2">
+                            <span class="text-muted small me-1">Trạng thái:</span>
+                            <span class="badge
+                                @(pair.item.Status == (int)TaskItemStatus.Todo ? "bg-danger" :
+                                                                pair.item.Status == (int)TaskItemStatus.InProgress ? "bg-warning text-dark" :
+                                                                pair.item.Status == (int)TaskItemStatus.Done ? "bg-success" : "bg-secondary")">
+                            @(((TaskItemStatus)pair.item.Status).GetDisplayName())
+                        </span>
+                    </div>
+
+                        <div class="mb-0">
+                            <span class="text-muted small me-1">Dự án:</span>
+                            <span class="text-dark small">@pair.item?.Project?.Name</span>
+                        </div>
+
+                        <!-- Dropdown actions -->
+                        <div class="dropdown position-absolute top-0 end-0 m-2">
+                            <button class="btn btn-sm btn-light border-0" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical text-secondary"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow rounded border-0">
+                                <li class="px-2">
+                                    <div class="d-flex align-items-center gap-2 text-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                        @Html.EditButton("Task", pair.item.Id)
+                                    </div>
+                                </li>
+                                <li class="px-2 mt-2">
+                                    <div class="d-flex align-items-center gap-2 text-danger">
+                                        <i class="bi bi-trash"></i>
+                                        @Html.DeleteButton(pair.item.Id, Url.Action("Delete", "Task"))
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                }
+    </div>
+
+</div>

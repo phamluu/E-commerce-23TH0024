@@ -1,12 +1,14 @@
 using E_commerce_23TH0024.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
-using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Extensions;
+using E_commerce_23TH0024.Hubs;
 using E_commerce_23TH0024.Lib;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using E_commerce_23TH0024.Models.Identity;
 using E_commerce_23TH0024.Service;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using WorkManagement.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +28,14 @@ builder.Services.AddDbContext<SystemSettingDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<OrderDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// từ reference "WorkManagement"
+
+builder.Services.AddDbContext<WorkManagementDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<WorkDbContext>(provider =>
+    provider.GetRequiredService<WorkManagementDbContext>());
 
 // end
 
@@ -65,7 +75,16 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddAppServices();
 // Lưu key
 builder.Services.ConfigureDataProtection(builder.Environment);
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";        // khi chưa đăng nhập
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied"; // khi không đủ quyền
+});
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
+app.MapHub<TaskHub>("/taskHub");
 // Thêm middleware phục vụ file tĩnh
 app.UseStaticFiles();
 // Configure the HTTP request pipeline.

@@ -9,14 +9,16 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+
     public class Districts_23TH0024Controller : BaseController
     {
+        private readonly ApplicationDbContext db;
         private readonly FileTransfer_23TH0024Controller _fileTransfer;
-        public Districts_23TH0024Controller(ApplicationDbContext context) : base(context)
+        public Districts_23TH0024Controller(ApplicationDbContext context, 
+            FileTransfer_23TH0024Controller fileTransfer) : base(context)
         {
-            _fileTransfer = new FileTransfer_23TH0024Controller(db);
+            db = context;
+            _fileTransfer = fileTransfer;
         }
         //private readonly ApplicationDbContext db;
         //public Districts_23TH0024Controller(ApplicationDbContext context)

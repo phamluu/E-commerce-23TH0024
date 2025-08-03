@@ -9,14 +9,14 @@ using E_commerce_23TH0024.Models.Order;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
     public class KhachHangs_23TH0024Controller : BaseController
     {
         private readonly UserService _service;
         private readonly Shipping_23TH0024Controller _location;
+        private readonly ApplicationDbContext db;
         public KhachHangs_23TH0024Controller(ApplicationDbContext context) : base(context)
         {
+            db = context;
             _location = new Shipping_23TH0024Controller(db);
             _service = new UserService(db);
         }

@@ -1,52 +1,119 @@
-﻿@using E_commerce_23TH0024.Models.Identity
-@model AspNetUsers
+﻿@using E_commerce_23TH0024.ViewModels
+@using Microsoft.AspNetCore.Identity
+@model UserViewModel
 
 @{
-    ViewBag.Title = "Xem chi tiết";
+    if (User.Identity.Name == Model.UserName)
+    {
+        ViewBag.Title = "Quản lý tài khoản của tôi";
+    }
+    else
+        ViewBag.Title = "Quản lý tài khoản của " + Model.UserName;
 }
+<h4 class="card-title title mb-4 text-center">@ViewBag.Title</h4>
 
-<h4 class="title">Xem Chi tiết</h4>
-@ViewBag.Success
-<div>
-    <dl class="dl-horizontal table">
-        <div class="row mt-2">
-            <dt class="col-md-2">
-                @Html.DisplayNameFor(model => model.UserName)
-            </dt>
+@Html.Partial("_AlertMessages")
 
-            <dd class="col-md-10">
-                @Html.DisplayFor(model => model.UserName)
-            </dd>
-        </div>
-        <div class="form-group row mt-2">
-            <dt class="col-md-2">
-                Email
-            </dt>
-            <dd class="col-md-10">
-                @Html.DisplayFor(model => model.Email)
-            </dd>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label><strong>Tên đăng nhập:</strong></label>
+            <span>@Model.UserName</span>
         </div>
 
-        <div class="row mt-2">
-            <dt class="col-md-2">
-                @Html.DisplayNameFor(model => model.EmailConfirmed)
-            </dt>
+        <div class="form-group">
+            <label><strong>EmailConfirmed: </strong></label>
+            <span>@Model.EmailConfirmed</span>
+        </div>
+        <div class="form-group">
+            <label><strong>Số lần đăng nhập thất bại: </strong></label>
+            <span>@Model.AccessFailedCount</span>
+        </div>
 
-            <dd class="col-md-10">
-                @Html.DisplayFor(model => model.EmailConfirmed)
-            </dd>
+        <div class="form-group">
+            <label><strong>LockoutEnabled: </strong></label>
+            <span>@Model.LockoutEnabled</span>
         </div>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-10">
-                <a href='@Url.Action("CreatePassWord", "AspNetUsers_23TH0024", new {UserId = Model.Id})'>Tạo mật khẩu mới</a>
-            </div>
+        <div class="form-group">
+            <label><strong>LockoutEnd: </strong></label>
+            <span>@Model.LockoutEnd</span>
         </div>
-        <partial name="_ViewFields" />
-        
-    </dl>
+        <div class="form-group">
+            <label><strong>Xem hồ sơ khách hàng </strong></label>
+            <a href="" class="btn btn-primary btn-sm">Xem</a>
+        </div>
+        <div class="form-group">
+            <label><strong>Xem hồ sơ nhân viên: </strong></label>
+            <a href="" class="btn btn-primary btn-sm">Xem</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label><strong>Email: </strong></label>
+            <span>@Model.Email</span>
+            <a href="" class="btn btn-primary btn-sm">Đổi Email</a>
+        </div>
+        <div class="form-group">
+            <label><strong>Số điện thoại: </strong></label>
+            <span>@Model.PhoneNumber</span>
+            <a href="" class="btn btn-primary btn-sm">Đổi số điện thoại</a>
+        </div>
+        <div class="form-group">
+            <label><strong>Vai trò: </strong></label>
+            <span>@(Model.Roles.Count == 0 ? "Chưa phân quyền" : string.Join(", ", Model.Roles))</span>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#DoiVaiTro">Đổi vai trò</button>
+        </div>
+        <div class="form-group">
+            <label><strong>Mật khẩu: </strong></label>
+            <a href="" class="btn btn-primary btn-sm">Tạo mật khẩu mới</a>
+        </div>
+    </div>
 </div>
-@* <p> *@
-@*     @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new {@class="btn btn-edit"}) | *@
-@*     @Html.ActionLink("Quay lại danh sách", "Index", "", new {@class = "btn btn-list"}) *@
-@* </p> *@
+
+@{
+    var userRoles = ViewBag.UserRoles as List<string>;
+    var allRoles = ViewBag.AllRoles as List<IdentityRole>;
+}
+<div class="modal fade" id="DoiVaiTro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5" id="exampleModalLabel">Đổi vai trò</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @if (User.Identity.Name == Model.UserName)
+            {
+                <div class="modal-body">
+                    <p>Bạn không thể tự đổi vai trò của chính mình</p>
+                </div>
+            }
+            else
+            {
+                <form action="@Url.Action("UpdateUserRoles", "User_23TH0003")" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="email" value="@Model.Email" />
+                        <div class="form-group">
+                            <label>Vai trò người dùng:</label><br />
+                            @foreach (var role in allRoles)
+                            {
+                                <label class="form-check-label; mb-2" style="display: block">
+                                    <input class="mr-2" type="checkbox"
+                                           name="selectedRoles"
+                                           value="@role.Name"
+                                           @(userRoles.Contains(role.Name) ? "checked" : "") />@role.Name
+                                </label>
+
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary btn-sm">Lưu thay đổi</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+
+                </form>
+            }
+
+        </div>
+    </div>
+</div>

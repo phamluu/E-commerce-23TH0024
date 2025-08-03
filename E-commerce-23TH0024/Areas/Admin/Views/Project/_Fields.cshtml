@@ -1,0 +1,74 @@
+﻿@using E_commerce_23TH0024.Common.Helpers
+@model WorkManagement.Entities.Project
+<div class="mb-3">
+    <label asp-for="Name" class="form-label fw-semibold">Tên dự án</label>
+    <input asp-for="Name" class="form-control" placeholder="Nhập tên dự án..." />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        @{
+            var formattedPrice = Model?.ProjectPrice.ToVnCurrency();
+        }
+        <label asp-for="ProjectPrice" class="form-label fw-semibold">Giá dự án</label>
+        <input id="displayPrice" class="form-control" type="text" placeholder="Nhập giá..." value="@formattedPrice" />
+        <input type="hidden" asp-for="ProjectPrice" id="projectPriceHidden" />
+        <span asp-validation-for="ProjectPrice" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="StartDate" class="form-label fw-semibold">Ngày triển khai</label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="EndDate" class="form-label fw-semibold">Ngày hoàn thành</label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+</div>
+<div class="mb-3">
+    <label asp-for="Description" class="form-label fw-semibold">Mô tả</label>
+    <textarea id="Description" name="Description" class="summernote form-control">@Model?.Description</textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+        setTimeout(function () {
+            $('.note-toolbar').removeClass('card-header');
+        }, 100);
+    });
+</script>
+
+<script>
+    const displayInput = document.getElementById('displayPrice');
+    const hiddenInput = document.getElementById('projectPriceHidden');
+
+    function formatNumber(value) {
+        const number = value.replace(/\D/g, '');
+        return number.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    displayInput.addEventListener('input', function () {
+        const raw = this.value.replace(/\D/g, '');
+        this.value = formatNumber(this.value);
+        hiddenInput.value = raw;
+    });
+
+    document.querySelector("form").addEventListener("submit", function () {
+        const raw = displayInput.value.replace(/\D/g, '');
+        hiddenInput.value = raw;
+    });
+</script>

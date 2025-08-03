@@ -9,12 +9,13 @@ using E_commerce_23TH0024.Models.Ecommerce;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+
     public class FileTransfer_23TH0024Controller : BaseController
     {
+        private readonly ApplicationDbContext db;
         public FileTransfer_23TH0024Controller(ApplicationDbContext context) : base(context)
         {
+            db = context;
         }
 
         #region ImportExcel

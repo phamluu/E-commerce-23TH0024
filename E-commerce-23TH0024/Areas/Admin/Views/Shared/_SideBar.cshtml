@@ -6,6 +6,21 @@
         <li>
             <a href="javascript: void(0);">
                 <i class="la la-clone"></i>
+                <span> Quản lý công việc </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    @Html.ActionLink("Dự án", "Index", "Project")
+                </li>
+                <li>
+                    @Html.ActionLink("Task", "Index", "Task")
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="la la-clone"></i>
                 <span> Sản phẩm </span>
                 <span class="menu-arrow"></span>
             </a>

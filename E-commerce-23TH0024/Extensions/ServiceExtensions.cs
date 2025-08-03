@@ -1,6 +1,8 @@
 ﻿using E_commerce_23TH0024.Models.Users;
 using E_commerce_23TH0024.Service;
 using E_commerce_23TH0024.Service.Api;
+using Microsoft.Build.Evaluation;
+using WorkManagement.Services;
 
 namespace E_commerce_23TH0024.Extensions
 {
@@ -14,6 +16,7 @@ namespace E_commerce_23TH0024.Extensions
             services.AddScoped<MenuService>();
             services.AddScoped<MoMoPaymentService>();
             services.AddScoped<VietQRPaymentService>();
+            services.AddScoped<ProjectService>();
             return services;
         }
     }

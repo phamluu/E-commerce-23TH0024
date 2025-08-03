@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].Project (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(MAX) NULL,
+    ProjectPrice DECIMAL(18,2) NULL,
+    CreatedAt DATETIME NOT NULL,
+    StartDate DATETIME NULL,
+    EndDate DATETIME NULL
+);
+CREATE TABLE [dbo].Task (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(200) NOT NULL,
+    Description NVARCHAR(MAX) NULL,
+    Status INT NOT NULL,
+    IdProject INT NOT NULL,
+	CreatedAt DATETIME NOT NULL,
+    SortOrder INT NULL,
+    FOREIGN KEY (IdProject) REFERENCES Project(Id)
+);
+
+CREATE TABLE [dbo].TaskRead(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	IdTask INT NOT NULL,
+	UserId NVARCHAR(200) NOT NULL,
+	ReadAt DATETIME NOT NULL,
+	FOREIGN KEY (IdTask) REFERENCES Task(Id),      
+);

@@ -1,0 +1,32 @@
+﻿@model WorkManagement.Entities.Project
+
+@{
+    ViewData["Title"] = "Sửa Dự án";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Sửa Dự án</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div class="d-flex justify-content-between mb-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Quay lại</a>
+                    <button type="submit" class="btn btn-success btn-sm">
+                        <i class="bi bi-check-circle"></i> Lưu
+                    </button>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                @Html.HiddenFor(m => m.Id)
+                @Html.Partial("_Fields", Model)
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
