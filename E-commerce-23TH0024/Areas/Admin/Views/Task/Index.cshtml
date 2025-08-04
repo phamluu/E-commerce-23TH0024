@@ -1,16 +1,44 @@
 ﻿@using E_commerce_23TH0024.Common.Helpers
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
 @using WorkManagement.Enums
 @model IEnumerable<WorkManagement.Entities.TaskItem>
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 
 @{
     ViewData["Title"] = "Quản lý Task";
+     var statusOptions = Enum.GetValues(typeof(TaskItemStatus))
+                            .Cast<TaskItemStatus>()
+                            .Select(e => new {
+                                Id = (int)e,
+                                Name = e.GetType()
+                                        .GetMember(e.ToString())
+                                        .First()
+                                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? e.ToString()
+                            });
 }
 <style>
-    .task-card {
-        transition: all 0.3s ease-in-out;
-        background-color: #fdfdfd;
-    }
+        .filter-box select {
+            min-width: 160px;
+        }
+
+        .filter-box {
+            background-color: #fff;
+            border-radius: 12px;
+        }
+
+        .form-select-sm {
+            font-size: 0.875rem;
+        }
+
+        .form-group select:focus {
+            box-shadow: none;
+            border-color: #0d6efd;
+        }
+        .task-card {
+            transition: all 0.3s ease-in-out;
+            background-color: #fdfdfd;
+        }
 
         .task-card:hover {
             transform: translateY(-3px);
@@ -19,17 +47,44 @@
 
 </style>
 <div class="container mt-4 mb-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Danh sách Task</h2>
-        <a asp-action="Create" class="btn btn-primary btn-sm">
-            <i class="bi bi-plus-circle me-1"></i> Thêm mới
+   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <h2 class="fw-semibold d-flex align-items-center gap-2 mb-0">
+        <i class="bi bi-kanban-fill text-primary fs-4"></i> Danh sách Task
+    </h2>
+
+    <div class="d-flex flex-wrap align-items-center gap-3 filter-box px-3 py-2 rounded-3 shadow-sm bg-white border">
+        <div class="form-group mb-0 d-flex align-items-center gap-2">
+            <i class="bi bi-filter text-muted"></i>
+            <select id="statusFilter" class="form-select form-select-sm">
+                <option value="">Tất cả trạng thái</option>
+                @foreach (var opt in statusOptions)
+                {
+                    <option value="@opt.Id">@opt.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-0 d-flex align-items-center gap-2">
+            <i class="bi bi-diagram-3 text-muted"></i>
+            <select id="projectFilter" class="form-select form-select-sm ">
+                <option value="">Tất cả dự án</option>
+                @foreach (var project in Model.Select(x => x.Project).Where(x => x != null).DistinctBy(x => x.Id))
+                {
+                    <option value="@project.Id">@project.Name</option>
+                }
+            </select>
+        </div>
+
+        <a asp-action="Create" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+            <i class="bi bi-plus-circle"></i> Thêm mới
         </a>
     </div>
+</div>
 
     <div class="row g-4" id="task-list">
         @foreach (var pair in Model.Select((item, index) => new { item, index }))
         {
-            <div class="col-lg-4 col-md-6" data-id="@pair.item.Id">
+            <div class="col-lg-4 col-md-6" data-id="@pair.item.Id" data-status-id="@pair.item.Status" data-project-id="@pair.item.Project?.Id">
                 <div class="card shadow-sm border-0 rounded-4 h-100 position-relative task-card transition bg-light">
                     <div class="card-body">
                         <a href="@Url.Action("Details", "Task", new { id = pair.item.Id })"
@@ -116,4 +171,31 @@
             }
         });
     </script>
+
+    <script>
+    document.getElementById("statusFilter").addEventListener("change", filterTasks);
+    document.getElementById("projectFilter").addEventListener("change", filterTasks);
+
+    function filterTasks() {
+        const selectedStatus = document.getElementById("statusFilter").value;
+        const selectedProject = document.getElementById("projectFilter").value;
+
+        document.querySelectorAll("#task-list > div").forEach(card => {
+            const cardStatusId = card.getAttribute("data-status-id");
+            const cardProjectId = card.getAttribute("data-project-id");
+
+            const statusMatch = !selectedStatus || cardStatusId === selectedStatus;
+            const projectMatch = !selectedProject || cardProjectId === selectedProject;
+
+            card.style.display = (statusMatch && projectMatch) ? "block" : "none";
+        });
+    }
+
+
+    function getProjectName(projectId) {
+        const option = document.querySelector(`#projectFilter option[value="${projectId}"]`);
+        return option ? option.textContent : "";
+    }
+</script>
+
 }
