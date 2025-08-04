@@ -34,6 +34,28 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateOrder([FromBody] List<int> orderedIds)
+        {
+            var tasks = await _workManagement.Tasks
+                .Where(t => orderedIds.Contains(t.Id))
+                .ToListAsync();
+
+            for (int i = 0; i < orderedIds.Count; i++)
+            {
+                var task = tasks.FirstOrDefault(t => t.Id == orderedIds[i]);
+                if (task != null)
+                {
+                    task.SortOrder = i;
+                }
+            }
+
+            await _workManagement.SaveChangesAsync();
+            return Ok();
+        }
+
+
         // GET: TaskController/Details/5
         public ActionResult Details(int id)
         {

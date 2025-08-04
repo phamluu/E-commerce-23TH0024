@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Quản Trị Khách Hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Wrapper -->
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md">
+            <div class="p-6 border-b">
+                <h1 class="text-xl font-bold">Khách Hàng</h1>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">🏠 Trang chủ</a>
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">📦 Đơn hàng</a>
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">💳 Thanh toán</a>
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">👤 Hồ sơ</a>
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">📩 Hỗ trợ</a>
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100 text-red-600">🚪 Đăng xuất</a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+                <h2 class="text-2xl font-semibold">Bảng Điều Khiển</h2>
+                <div class="flex items-center gap-4">
+                    <button class="relative">
+                        🔔
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">3</span>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <img src="https://i.pravatar.cc/32" alt="Avatar" class="rounded-full w-8 h-8" />
+                        <span>Nguyễn Văn A</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="p-6 space-y-6">
+                <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h3 class="text-lg font-bold">Tổng đơn hàng</h3>
+                        <p class="text-2xl font-semibold mt-2">12</p>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow">
+                        <h3 class="text-lg font-bold">Số dư tài khoản</h3>
+                        <p class="text-2xl font-semibold mt-2">2.350.000₫</p>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow">
+                        <h3 class="text-lg font-bold">Hỗ trợ đang mở</h3>
+                        <p class="text-2xl font-semibold mt-2">1</p>
+                    </div>
+                </section>
+
+                <section class="bg-white p-4 rounded shadow">
+                    <h3 class="text-xl font-semibold mb-2">Thông báo gần đây</h3>
+                    <ul class="list-disc list-inside text-gray-700">
+                        <li>Đơn hàng #1234 đã được giao thành công.</li>
+                        <li>Bạn đã nạp 1.000.000₫ vào tài khoản.</li>
+                        <li>Cập nhật chính sách bảo mật ngày 01/08/2025.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+
+    </div>
+
+</body>
+</html>

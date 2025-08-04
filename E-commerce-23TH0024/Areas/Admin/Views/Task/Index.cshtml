@@ -1,7 +1,7 @@
 ﻿@using E_commerce_23TH0024.Common.Helpers
 @using WorkManagement.Enums
 @model IEnumerable<WorkManagement.Entities.TaskItem>
-
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 
 @{
     ViewData["Title"] = "Quản lý Task";
@@ -18,7 +18,7 @@
         }
 
 </style>
-<div class="container mt-4">
+<div class="container mt-4 mb-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Danh sách Task</h2>
         <a asp-action="Create" class="btn btn-primary btn-sm">
@@ -26,10 +26,10 @@
         </a>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4" id="task-list">
         @foreach (var pair in Model.Select((item, index) => new { item, index }))
         {
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-4 col-md-6" data-id="@pair.item.Id">
                 <div class="card shadow-sm border-0 rounded-4 h-100 position-relative task-card transition bg-light">
                     <div class="card-body">
                         <a href="@Url.Action("Details", "Task", new { id = pair.item.Id })"
@@ -39,16 +39,19 @@
                             </p>
                         </a>
 
+                        <div class="mb-0">
+                            <span class="text-muted small me-1">Ngày tạo:</span>
+                            <span class="text-dark small">@pair.item?.CreatedAt.ToString("dd/MM/yyyy")</span>
+                        </div>
                         <div class="mb-2">
                             <span class="text-muted small me-1">Trạng thái:</span>
                             <span class="badge
-                                @(pair.item.Status == (int)TaskItemStatus.Todo ? "bg-danger" :
-                                                                pair.item.Status == (int)TaskItemStatus.InProgress ? "bg-warning text-dark" :
-                                                                pair.item.Status == (int)TaskItemStatus.Done ? "bg-success" : "bg-secondary")">
+                                    @(pair.item.Status == (int)TaskItemStatus.Todo ? "bg-danger" :
+                                                                                                  pair.item.Status == (int)TaskItemStatus.InProgress ? "bg-warning text-dark" :
+                                                                                                  pair.item.Status == (int)TaskItemStatus.Done ? "bg-success" : "bg-secondary")">
                             @(((TaskItemStatus)pair.item.Status).GetDisplayName())
                         </span>
                     </div>
-
                         <div class="mb-0">
                             <span class="text-muted small me-1">Dự án:</span>
                             <span class="text-dark small">@pair.item?.Project?.Name</span>
@@ -82,3 +85,35 @@
     </div>
 
 </div>
+<input type="hidden" id="RequestVerificationToken" name="__RequestVerificationToken" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        const csrfToken = document.getElementById('RequestVerificationToken').value;
+        const taskList = document.getElementById('task-list');
+        
+        const sortable = Sortable.create(taskList, {
+            animation: 150,
+            onEnd: function () {
+                const orderedIds = Array.from(taskList.children)
+                    .map(item => item.getAttribute('data-id'));
+
+                fetch('/Admin/Task/UpdateOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': csrfToken
+                    },
+                    body: JSON.stringify(orderedIds)
+                })
+                .then(res => {
+                    if (res.ok) {
+                        console.log("Thứ tự đã được cập nhật!");
+                    } else {
+                        alert("Có lỗi xảy ra khi cập nhật thứ tự.");
+                    }
+                });
+            }
+        });
+    </script>
+}

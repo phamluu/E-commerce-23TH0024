@@ -14,14 +14,12 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetUnreadTasks()
         {
-            
             string UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var unreadTasks = _workManagement.Tasks
                 .Include(x => x.Project)
                 .Where(task => !_workManagement.TaskReads
                  .Any(tr => tr.IdTask == task.Id && tr.UserId == UserId))
                 .OrderByDescending(t => t.CreatedAt)
-                .Take(10)
                 .Select(x => new
                 {
                     x.Id,

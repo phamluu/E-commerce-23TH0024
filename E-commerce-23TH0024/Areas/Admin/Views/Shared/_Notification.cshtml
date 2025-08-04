@@ -13,7 +13,7 @@
         </h5>
     </div>
 
-    <div class="slimscroll noti-scroll" id="notification-list">
+    <div class="slimscroll noti-scroll" id="notification-list" style="height:auto !important ; max-height: 400px; overflow-y: auto; ">
         
     </div>
     <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
@@ -24,6 +24,15 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+        $(".slimscroll").slimScroll({
+        height: "400px", // hoặc giá trị bạn muốn
+        position: "right",
+        size: "8px",
+        touchScrollStep: 20,
+        color: "#9ea5ab"
+    });
+
 <script>
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("/taskHub")
@@ -63,6 +72,7 @@
 </script>
 
 <script>
+
     function loadNotifications() {
         $.get("/Admin/Notification/GetUnreadTasks", function (data) {
             let html = "";

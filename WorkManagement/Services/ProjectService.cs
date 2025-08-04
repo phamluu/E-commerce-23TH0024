@@ -27,7 +27,7 @@ namespace WorkManagement.Services
         #region Task
             public IEnumerable<TaskItem> GetTaskItems()
             {
-                var model = _context.Tasks.Include(x => x.Project).OrderByDescending(x => x.CreatedAt).ToList();
+                var model = _context.Tasks.Include(x => x.Project).OrderByDescending(x => x.CreatedAt).OrderBy(x => x.SortOrder).ToList();
                 return model;
             }
             public IEnumerable<TaskItem> GetTasksForProject(int IdProject)
