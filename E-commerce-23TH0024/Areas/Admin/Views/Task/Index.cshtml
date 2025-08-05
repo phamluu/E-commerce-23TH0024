@@ -52,33 +52,34 @@
         <i class="bi bi-kanban-fill text-primary fs-4"></i> Danh sách Task
     </h2>
 
-    <div class="d-flex flex-wrap align-items-center gap-3 filter-box px-3 py-2 rounded-3 shadow-sm bg-white border">
-        <div class="form-group mb-0 d-flex align-items-center gap-2">
-            <i class="bi bi-filter text-muted"></i>
-            <select id="statusFilter" class="form-select form-select-sm">
-                <option value="">Tất cả trạng thái</option>
-                @foreach (var opt in statusOptions)
-                {
-                    <option value="@opt.Id">@opt.Name</option>
-                }
-            </select>
+        <div class="d-flex flex-wrap align-items-center gap-3 filter-box px-3 py-2 rounded-3 shadow-sm bg-white border">
+            <div class="form-group mb-0 d-flex align-items-center gap-2 align-self-stretch">
+                <label class="mb-0 d-flex align-items-center"><i class="bi bi-filter text-muted"></i></label>
+                <select id="statusFilter" class="form-select form-select-sm h-100">
+                    <option value="">Tất cả trạng thái</option>
+                    @foreach (var opt in statusOptions)
+                    {
+                        <option value="@opt.Id">@opt.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mb-0 d-flex align-items-center gap-2 align-self-stretch">
+                <label class="mb-0 d-flex align-items-center"><i class="bi bi-diagram-3 text-muted"></i></label>
+                <select id="projectFilter" class="form-select form-select-sm h-100">
+                    <option value="">Tất cả dự án</option>
+                    @foreach (var project in Model.Select(x => x.Project).Where(x => x != null).DistinctBy(x => x.Id))
+                    {
+                        <option value="@project.Id">@project.Name</option>
+                    }
+                </select>
+            </div>
+
+            <a asp-action="Create" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+                <i class="bi bi-plus-circle"></i> Thêm mới
+            </a>
         </div>
 
-        <div class="form-group mb-0 d-flex align-items-center gap-2">
-            <i class="bi bi-diagram-3 text-muted"></i>
-            <select id="projectFilter" class="form-select form-select-sm ">
-                <option value="">Tất cả dự án</option>
-                @foreach (var project in Model.Select(x => x.Project).Where(x => x != null).DistinctBy(x => x.Id))
-                {
-                    <option value="@project.Id">@project.Name</option>
-                }
-            </select>
-        </div>
-
-        <a asp-action="Create" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
-            <i class="bi bi-plus-circle"></i> Thêm mới
-        </a>
-    </div>
 </div>
 
     <div class="row g-4" id="task-list">
@@ -144,58 +145,64 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script>
-        const csrfToken = document.getElementById('RequestVerificationToken').value;
-        const taskList = document.getElementById('task-list');
-        
-        const sortable = Sortable.create(taskList, {
-            animation: 150,
-            onEnd: function () {
-                const orderedIds = Array.from(taskList.children)
-                    .map(item => item.getAttribute('data-id'));
+        function isMobileDevice() {
+            return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
 
-                fetch('/Admin/Task/UpdateOrder', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': csrfToken
-                    },
-                    body: JSON.stringify(orderedIds)
-                })
-                .then(res => {
-                    if (res.ok) {
-                        console.log("Thứ tự đã được cập nhật!");
-                    } else {
-                        alert("Có lỗi xảy ra khi cập nhật thứ tự.");
+        if (!isMobileDevice()) {
+                const csrfToken = document.getElementById('RequestVerificationToken').value;
+                const taskList = document.getElementById('task-list');
+
+                const sortable = Sortable.create(taskList, {
+                    animation: 150,
+                    onEnd: function () {
+                        const orderedIds = Array.from(taskList.children)
+                            .map(item => item.getAttribute('data-id'));
+
+                        fetch('/Admin/Task/UpdateOrder', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'RequestVerificationToken': csrfToken
+                            },
+                            body: JSON.stringify(orderedIds)
+                        })
+                        .then(res => {
+                            if (res.ok) {
+                                console.log("Thứ tự đã được cập nhật!");
+                            } else {
+                                alert("Có lỗi xảy ra khi cập nhật thứ tự.");
+                            }
+                        });
                     }
                 });
             }
-        });
     </script>
 
     <script>
-    document.getElementById("statusFilter").addEventListener("change", filterTasks);
-    document.getElementById("projectFilter").addEventListener("change", filterTasks);
+        document.getElementById("statusFilter").addEventListener("change", filterTasks);
+        document.getElementById("projectFilter").addEventListener("change", filterTasks);
 
-    function filterTasks() {
-        const selectedStatus = document.getElementById("statusFilter").value;
-        const selectedProject = document.getElementById("projectFilter").value;
+        function filterTasks() {
+            const selectedStatus = document.getElementById("statusFilter").value;
+            const selectedProject = document.getElementById("projectFilter").value;
 
-        document.querySelectorAll("#task-list > div").forEach(card => {
-            const cardStatusId = card.getAttribute("data-status-id");
-            const cardProjectId = card.getAttribute("data-project-id");
+            document.querySelectorAll("#task-list > div").forEach(card => {
+                const cardStatusId = card.getAttribute("data-status-id");
+                const cardProjectId = card.getAttribute("data-project-id");
 
-            const statusMatch = !selectedStatus || cardStatusId === selectedStatus;
-            const projectMatch = !selectedProject || cardProjectId === selectedProject;
+                const statusMatch = !selectedStatus || cardStatusId === selectedStatus;
+                const projectMatch = !selectedProject || cardProjectId === selectedProject;
 
-            card.style.display = (statusMatch && projectMatch) ? "block" : "none";
-        });
-    }
+                card.style.display = (statusMatch && projectMatch) ? "block" : "none";
+            });
+        }
 
 
-    function getProjectName(projectId) {
-        const option = document.querySelector(`#projectFilter option[value="${projectId}"]`);
-        return option ? option.textContent : "";
-    }
-</script>
+        function getProjectName(projectId) {
+            const option = document.querySelector(`#projectFilter option[value="${projectId}"]`);
+            return option ? option.textContent : "";
+        }
+    </script>
 
 }

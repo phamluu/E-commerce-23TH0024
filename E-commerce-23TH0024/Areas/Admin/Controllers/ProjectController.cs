@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WorkManagement.Services;
 using WorkManagement.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_23TH0024.Areas.Admin.Controllers
 {
@@ -28,7 +29,12 @@ namespace E_commerce_23TH0024.Areas.Admin.Controllers
         // GET: ProjectController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var model = _workManagement.Projects.Include(x => x.Tasks).FirstOrDefault(x => x.Id == id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
         }
 
         // GET: ProjectController/Create

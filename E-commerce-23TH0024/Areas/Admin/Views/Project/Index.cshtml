@@ -50,7 +50,7 @@
                 {
                     <tr>
                         <td>@(pair.index + 1)</td>
-                        <td>@Html.DisplayFor(m => pair.item.Name)</td>
+                        <td><a href="@Url.Action("Details", "Project", new { id = pair.item.Id })">@Html.DisplayFor(m => pair.item.Name)</a></td>
                         <td>@pair.item.StartDate?.ToString("dd/MM/yyyy")</td>
                         <td>@pair.item.EndDate?.ToString("dd/MM/yyyy")</td>
                         <td>@pair.item.ProjectPrice.ToVnCurrency()</td>
@@ -70,13 +70,38 @@
         {
             <div class="card mb-3 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title fw-bold">@(pair.index + 1). @pair.item.Name</h5>
-                    <p class="mb-1"><strong>Ngày triển khai:</strong> @pair.item.StartDate?.ToString("dd/MM/yyyy")</p>
-                    <p class="mb-1"><strong>Ngày hoàn thành:</strong> @pair.item.EndDate?.ToString("dd/MM/yyyy")</p>
-                    <p class="mb-1"><strong>Giá:</strong> @pair.item.ProjectPrice.ToVnCurrency()</p>
-                    <div class="mt-2 d-flex gap-2">
-                        @Html.EditButton("Project", pair.item.Id)
-                        @Html.DeleteButton(pair.item.Id, Url.Action("Delete", "Project"))
+                    <h5 class="card-title fw-bold"><a href="@Url.Action("Details", "Project", new { id = pair.item.Id })">@(pair.index + 1). @pair.item.Name</a></h5>
+                    @if (pair.item.StartDate.HasValue)
+                    {
+                        <p class="mb-1"><strong>Ngày triển khai:</strong> @pair.item.StartDate?.ToString("dd/MM/yyyy")</p>
+                    }
+                    @if (pair.item.EndDate.HasValue)
+                    {
+                        <p class="mb-1"><strong>Ngày hoàn thành:</strong> @pair.item.EndDate?.ToString("dd/MM/yyyy")</p>
+                    }
+                    @if (pair.item.ProjectPrice.HasValue)
+                    {
+                        <p class="mb-1"><strong>Giá:</strong> @pair.item.ProjectPrice.ToVnCurrency()</p>
+                    }
+                    <div class="dropdown position-absolute top-0 end-0 m-2">
+                        <button class="btn btn-sm btn-light border-0" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical text-secondary"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow rounded border-0">
+                            <li class="px-2">
+                                <div class="d-flex align-items-center gap-2 text-warning">
+                                    <i class="bi bi-pencil-square"></i>
+                                    @Html.EditButton("Project", pair.item.Id)
+                                </div>
+                            </li>
+                            <li class="px-2 mt-2">
+                                <div class="d-flex align-items-center gap-2 text-danger">
+                                    <i class="bi bi-trash"></i>
+                                    @Html.DeleteButton(pair.item.Id, Url.Action("Delete", "Project"))
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

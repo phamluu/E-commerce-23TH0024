@@ -5,36 +5,83 @@
     ViewBag.Title = "Danh sách thuộc tính";
 }
 
-<h4 class="title">Danh sách thuộc tính</h4>
+<style>
+    .table th,
+    .table td {
+        font-size: 0.95rem;
+        vertical-align: middle;
+    }
 
-@{
-    await Html.RenderPartialAsync("~/Areas/Admin/Views/Shared/_HeadActions.cshtml");
-}
+    .table td {
+        white-space: normal;
+    }
 
-<partial name="_AlertMessages" />
-<table id="grid">
-    <thead>
-        <tr>
-            <th>@Html.DisplayName("Mã thuộc tính")</th>
-            <th>@Html.DisplayName("Tên thuộc tính")</th>
-            <th>Chức năng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model != null && Model.Count > 0){
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.AttributeName)</td>
-                    <td>
-                        <a href="@Url.Action("Edit", new { id = item.Id})" class="edit-btn"><abbr title="Cập nhật"><i class="fa fa-edit"></i></abbr></a>
-                        <a href="@Url.Action("Details",new { id = item.Id})" class="detail-btn"><abbr title="Xem chi tiết"><i class="fa fa-eye"></i></abbr></a>
-                        <a href="@Url.Action("Delete", new { id = item.Id})" class="delete-btn"><abbr title="Xóa dữ liệu"><i class="fa fa-trash"></i></abbr> </a>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+    .btn-sm i {
+        font-size: 1rem;
+    }
+</style>
 
+<section class="mb-4 mt-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <h2 class="fs-5 fw-semibold text-primary d-flex align-items-center gap-2 mb-0">
+            <i class="bi bi-ui-checks-grid"></i> @ViewBag.Title
+        </h2>
+        <a href="@Url.Action("Create")" class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+            <i class="bi bi-plus-circle"></i> Thêm mới
+        </a>
+    </div>
+
+    <partial name="_AlertMessages" />
+
+    <div class="card shadow-sm border border-light-subtle rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered align-middle mb-0">
+                    <thead class="table-light text-nowrap">
+                        <tr>
+                            <th class="text-center">Mã thuộc tính</th>
+                            <th>Tên thuộc tính</th>
+                            <th class="text-center">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.Id</td>
+                                    <td>@item.AttributeName</td>
+                                    <td class="text-center">
+                                        <div class="d-inline-flex gap-2">
+                                            <a href="@Url.Action("Edit", new { id = item.Id })"
+                                               class="btn btn-sm btn-outline-warning" title="Cập nhật">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a href="@Url.Action("Details", new { id = item.Id })"
+                                               class="btn btn-sm btn-outline-info" title="Xem chi tiết">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", new { id = item.Id })"
+                                               class="btn btn-sm btn-outline-danger"
+                                               onclick="return confirm('Bạn có chắc chắn muốn xóa?');"
+                                               title="Xóa">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">Không có dữ liệu</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
