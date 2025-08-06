@@ -1,8 +1,7 @@
 ﻿@using Azure.Core
 @using Microsoft.AspNetCore.Identity
-@using E_commerce_23TH0024.Models.Identity
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,7 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -23,8 +22,7 @@
     <link href="~/Content/backend/css/app.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" /> <!-- css cho datatables -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-    
-    <link href="~/Content/backend/css/style.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -34,17 +32,14 @@
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
                 <li class="d-sm-block">
-                    @Html.ActionLink("In thiệp cưới", "Index", "DashBoard_23TH0024", "", new { @class = "logo" })
+                    <a href="" class="logo">XÂY DỰNG DHLC</a>
                 </li>
                 <li class="d-none d-sm-block">
                 </li>
 
-                
+                <li class="dropdown notification-list">
 
-                <li class="dropdown notification-list"> 
-                    @Html.Partial("_Notification")
-                   
-                  </li> 
+                </li>
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <li class="dropdown notification-list">
@@ -87,9 +82,9 @@
                 }
             </ul>
             <div class="logo-box">
-                <a href='@Url.Action("Index", "DashBoard_23TH0024")' class="logo text-center">
+                <a href='' class="logo text-center">
                     <span class="logo-lg">
-                        <span class="logo-lg-text-light">Hồng Len</span>
+                        <span class="logo-lg-text-light">DHLC</span>
                     </span>
                     <span class="logo-sm">
                         <span class="logo-sm-text-dark">X</span>
@@ -110,7 +105,7 @@
 
         <div class="left-side-menu">
             <div class="slimscroll-menu">
-                @await Html.PartialAsync("~/Areas/Admin/Views/Shared/_SideBar.cshtml")
+                @await Html.PartialAsync("_Sidebar.cshtml")
 
                 <div class="clearfix"></div>
             </div>
@@ -118,7 +113,7 @@
         <div class="content-page">
             <script src="~/Content/backend/js/vendor.min.js"></script>
             @RenderBody()
-            
+
             <script>
                 $(document).ready(function () {
                     $('#grid').DataTable();
@@ -128,7 +123,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            2024 &copy; Design by <a href="">Phạm Thị Thanh Lưu - 23TH0024</a>
+                            2024 &copy; Design by <a href="">DHLC</a>
                         </div>
                         <div class="col-md-6">
                         </div>
@@ -151,7 +146,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/Scripts/custom_signalR.js"></script>
-   
+
     <script src="~/Scripts/CustomScript.js"></script>
     <script>
         $(".multiselect").select2();

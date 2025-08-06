@@ -1,0 +1,324 @@
+a {
+    text-decoration: none;
+}
+#grid .img-fluid{
+    width:100px;
+}
+.btn-action .btn {
+    font-size: 10px;
+}
+.table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+}
+
+.action .alert {
+    float: right;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+    .pagination li a, .pagination li span {
+        text-decoration: none;
+        padding: 8px 12px;
+        border: 1px solid #fff;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    .pagination li.active span {
+        color: white;
+    }
+
+    .pagination li.disabled span {
+        color: #ccc;
+    }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Chia thành 2 cột đều nhau */
+    gap: 20px; /* Khoảng cách giữa các cột */
+}
+
+.grid-item {
+    padding: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+#datatable-buttons img {
+    width: 50px;
+}
+
+.overflow-x-scroll {
+    overflow-x: scroll;
+}
+
+.logo {
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 23px;
+    text-transform: uppercase;
+}
+
+.grid-footer a {
+    border: grey 1px solid;
+    padding: 3px 11px;
+}
+
+.grid-footer {
+    text-align: center;
+}
+
+.btn-default {
+    background: #3b434e;
+    color: #fff;
+    font-size: 13px;
+}
+
+    .btn-default:hover {
+        background: grey;
+    }
+
+.title {
+    padding: 10px 0;
+    color: green;
+    margin-bottom: 30px;
+    border-bottom: green 1px solid;
+}
+.head-action {
+    margin-bottom: 20px;
+}
+.detail-btn {
+    color: green;
+}
+
+.edit-btn {
+    color: #333;
+}
+
+.delete-btn {
+    color: red;
+}
+
+.grid-header {
+    background: gray;
+    color: #fff;
+}
+
+    .grid-header a {
+        color: #fff;
+        font-size: 14px;
+    }
+
+.form-container {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-importexcel {
+    background: green;
+    color: #fff;
+}
+
+.btn-exportexcel {
+    background: #007cff;
+    color: #fff;
+}
+
+.btn-add {
+    background: #ff5722;
+    color: #fff;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #fff;
+}
+
+.btn-list {
+    background: #343a40;
+    color: #fff;
+}
+
+.btn-save {
+    background: #28a745;
+    color: #fff;
+}
+
+.btn-delete {
+    background: red;
+    color: #fff;
+}
+
+.alert-danger {
+    color: #dc3545;
+}
+
+.sub-header {
+    cursor: pointer;
+    color: green;
+    display: inline-block;
+    border-bottom: green 1px solid;
+    padding: 8px 0;
+}
+
+.select2-container .select2-selection--single {
+    background-color: #f0f0f0;
+    color: #333333;
+    border: 2px solid #4CAF50;
+}
+
+.select2-container .select2-selection--multiple {
+    background-color: #f0f0f0;
+    color: #333333;
+    border: 2px solid #4CAF50;
+}
+
+.select2-container .select2-selection__rendered {
+    color: #ff5733;
+}
+
+.select2-container .select2-dropdown {
+    background-color: #e0e0e0;
+    border: 2px solid #4CAF50;
+}
+
+.select2-container .select2-results__option {
+    color: #000000;
+}
+
+.select2-container .select2-results__option--highlighted {
+    background-color: #ffcc00;
+    color: #000000;
+}
+
+.select2-container .select2-selection__clear {
+    color: #4CAF50;
+}
+
+.select2-container--open .select2-dropdown {
+    background-color: #e0e0e0;
+}
+
+.select2-container--open .select2-dropdown {
+    border: 2px solid #4CAF50;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+    padding-left: 12px;
+    color: #333;
+}
+
+.content-page {
+    overflow: auto;
+}
+
+.content-page table {
+    overflow-x: scroll;
+}
+.mr-1 {
+    margin-right: 1rem;
+}
+.font-weight-bold{
+    font-weight:bold;
+}
+
+/*search*/
+
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .filter-group label {
+        margin: 0;
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .filter-group input {
+        width: 160px;
+    }
+.box {
+    border: #3333332b 1px solid;
+}
+.box .box-header {
+    background: #188c4826;
+    text-align: center;
+    padding: 5px;
+}
+.step-tracker .step {
+    width: 100%;
+    position: relative;
+}
+
+.step .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ccc;
+    margin: auto;
+    line-height: 30px;
+}
+
+.step.done .circle {
+    background: green;
+    color: white;
+}
+
+.step .label {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.step-tracker {
+    margin-bottom: 1rem;
+}
+details.dropdown summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+details.dropdown[open] > .dropdown-menu {
+    display: block !important;
+    position: absolute;
+    z-index: 1000;
+}
+
+.dropdown-menu {
+    display: none;
+    min-width: 120px;
+}
+.form-group {
+    margin-bottom: 1rem;
+}

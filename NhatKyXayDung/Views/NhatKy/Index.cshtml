@@ -1,0 +1,243 @@
+﻿@using E_commerce_23TH0024.Common.Helpers
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+@using NhatKyXayDung.Enums
+@model IEnumerable<NhatKyXayDung.Models.NhatKy>
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{
+    ViewData["Title"] = "Nhật ký xây dựng";
+     var statusOptions = Enum.GetValues(typeof(ThoiTiet))
+                           .Cast<ThoiTiet>()
+                            .Select(e => new {
+                                Id = (int)e,
+                                Name = e.GetType()
+                                        .GetMember(e.ToString())
+                                        .First()
+                                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? e.ToString()
+                            });
+}
+<style>
+        .filter-box select {
+            min-width: 160px;
+        }
+
+        .filter-box {
+            background-color: #fff;
+            border-radius: 12px;
+        }
+
+        .form-select-sm {
+            font-size: 0.875rem;
+        }
+
+        .form-group select:focus {
+            box-shadow: none;
+            border-color: #0d6efd;
+        }
+
+    .task-card {
+        background-color: #f8f9fa; /* Bootstrap's lightest gray */
+        transition: all 0.3s ease-in-out;
+        border: 1px solid #dee2e6; /* Nhẹ nhàng hơn, rõ ràng hơn */
+    }
+
+        .task-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            background-color: #ffffff; /* sáng hơn khi hover */
+        }
+
+</style>
+<div class="container mt-4 mb-4">
+   <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <h2 class="fw-semibold d-flex align-items-center gap-2 mb-0">
+            <i class="bi bi-kanban-fill text-primary fs-4"></i> @ViewData["Title"]
+    </h2>
+
+        <div class="d-flex flex-wrap align-items-center gap-3 filter-box px-3 py-2 rounded-3 shadow-sm bg-white border">
+            <div class="form-group mb-0 d-flex align-items-center gap-2 align-self-stretch">
+                <label class="mb-0 d-flex align-items-center"><i class="bi bi-filter text-muted"></i></label>
+                <select id="statusFilter" class="form-select form-select-sm h-100">
+                    <option value="">Thời tiết buổi sáng</option>
+                    @foreach (var opt in statusOptions)
+                    {
+                        <option value="@opt.Id">@opt.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mb-0 d-flex align-items-center gap-2 align-self-stretch">
+                <label class="mb-0 d-flex align-items-center"><i class="bi bi-filter text-muted"></i></label>
+                <select id="statusFilter" class="form-select form-select-sm h-100">
+                    <option value="">Thời tiết buổi chiều</option>
+                    @foreach (var opt in statusOptions)
+                    {
+                        <option value="@opt.Id">@opt.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mb-0 d-flex align-items-center gap-2 align-self-stretch">
+                <label class="mb-0 d-flex align-items-center"><i class="bi bi-diagram-3 text-muted"></i></label>
+                <select id="projectFilter" class="form-select form-select-sm h-100">
+                    <option value="">Tất cả dự án</option>
+                    @foreach (var project in Model.Select(x => x.CongTrinh).Where(x => x != null).DistinctBy(x => x.Id))
+                    {
+                        <option value="@project.Id">@project.TenCongTrinh</option>
+                    }
+                </select>
+            </div>
+
+            <a asp-action="Create" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+                <i class="bi bi-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+
+</div>
+
+    <div class="row g-4" id="task-list">
+        @foreach (var pair in Model.Select((item, index) => new { item, index }))
+        {
+            <div class="col-lg-4 col-md-6" data-id="@pair.item.Id" data-status-id="@pair.item.TrangThai" data-project-id="@pair.item.CongTrinh?.Id">
+                <div class="card shadow-sm border-0 rounded-4 h-100 position-relative task-card transition bg-light">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <a href="@Url.Action("Details", "NhatKy", new { id = pair.item.Id })"
+                           class="text-decoration-none text-dark">
+                            <p class="mb-2 fs-6 fw-semibold text-primary">
+                                @((pair.index + 1).ToString()). @pair.item.TenNhatKy
+                            </p>
+                        </a>
+
+                        @if (pair.item.ThoiTietSang.HasValue || pair.item.ThoiTietChieu.HasValue)
+                        {
+                            <div class="mb-2 d-flex flex-wrap gap-2">
+                                <span class="text-muted small d-block mb-1">Thời tiết:</span>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @if (pair.item.ThoiTietSang.HasValue)
+                                    {
+                                            <span class="badge d-flex align-items-center gap-1
+                                                @(pair.item.ThoiTietSang == (int)ThoiTiet.Nang ? "bg-warning text-dark" :
+                                                                                    pair.item.ThoiTietSang == (int)ThoiTiet.Mua ? "bg-primary" : "bg-secondary")">
+                                                                                                                                                              <i class="bi
+                                                    @(pair.item.ThoiTietSang == (int)ThoiTiet.Nang ? "bi-brightness-high" :
+                                                                                         pair.item.ThoiTietSang == (int)ThoiTiet.Mua ? "bi-cloud-rain" : "bi-cloud")"></i>
+                                                    Sáng: @(((ThoiTiet)pair.item.ThoiTietSang).GetDisplayName())
+                                                </span>
+                                                                }
+                                            @if (pair.item.ThoiTietChieu.HasValue)
+                                            {
+                                                <span class="badge d-flex align-items-center gap-1
+                                                    @(pair.item.ThoiTietChieu == (int)ThoiTiet.Nang ? "bg-warning text-dark" :
+                                                                                        pair.item.ThoiTietChieu == (int)ThoiTiet.Mua ? "bg-primary" : "bg-secondary")">
+                                                                                                                                                                   <i class="bi
+                                                        @(pair.item.ThoiTietChieu == (int)ThoiTiet.Nang ? "bi-brightness-high" :
+                                                                                             pair.item.ThoiTietChieu == (int)ThoiTiet.Mua ? "bi-cloud-rain" : "bi-cloud")"></i>
+                                                    Chiều: @(((ThoiTiet)pair.item.ThoiTietChieu).GetDisplayName())
+                                                </span>
+                                        }
+                                </div>
+                            </div>
+                        }
+
+                        
+                        <div class="mb-0">
+                            <span class="text-muted small me-1">Dự án:</span>
+                            <a class="text-dark small" href="@Url.Action("Details", "CongTrinh", new { id = pair.item?.IdCongTrinh })">@pair.item?.CongTrinh?.TenCongTrinh</a>
+                        </div>
+                        <div class="mt-auto d-flex justify-content-end align-items-center pt-2 border-top">
+                            <small class="text-muted me-1">Ngày triển khai:</small>
+                            <small class="text-dark">@pair.item?.NgayTrienKhai?.ToString("dd/MM/yyyy")</small>
+                        </div>
+                        <!-- Dropdown actions -->
+                        <div class="dropdown position-absolute top-0 end-0 m-2">
+                            <button class="btn btn-sm btn-light border-0" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical text-secondary"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow rounded border-0">
+                                <li class="px-2">
+                                    <div class="d-flex align-items-center gap-2 text-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                        @Html.EditButton("NhatKy", pair.item.Id)
+                                    </div>
+                                </li>
+                                <li class="px-2 mt-2">
+                                    <div class="d-flex align-items-center gap-2 text-danger">
+                                        <i class="bi bi-trash"></i>
+                                        @Html.DeleteButton(pair.item.Id, Url.Action("Delete", "NhatKy"))
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                }
+    </div>
+
+</div>
+<input type="hidden" id="RequestVerificationToken" name="__RequestVerificationToken" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        function isMobileDevice() {
+            return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        if (!isMobileDevice()) {
+                const csrfToken = document.getElementById('RequestVerificationToken').value;
+                const taskList = document.getElementById('task-list');
+
+                const sortable = Sortable.create(taskList, {
+                    animation: 150,
+                    onEnd: function () {
+                        const orderedIds = Array.from(taskList.children)
+                            .map(item => item.getAttribute('data-id'));
+
+                        fetch('/Admin/Task/UpdateOrder', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'RequestVerificationToken': csrfToken
+                            },
+                            body: JSON.stringify(orderedIds)
+                        })
+                        .then(res => {
+                            if (res.ok) {
+                                console.log("Thứ tự đã được cập nhật!");
+                            } else {
+                                alert("Có lỗi xảy ra khi cập nhật thứ tự.");
+                            }
+                        });
+                    }
+                });
+            }
+    </script>
+
+    <script>
+        document.getElementById("statusFilter").addEventListener("change", filterTasks);
+        document.getElementById("projectFilter").addEventListener("change", filterTasks);
+
+        function filterTasks() {
+            const selectedStatus = document.getElementById("statusFilter").value;
+            const selectedProject = document.getElementById("projectFilter").value;
+
+            document.querySelectorAll("#task-list > div").forEach(card => {
+                const cardStatusId = card.getAttribute("data-status-id");
+                const cardProjectId = card.getAttribute("data-project-id");
+
+                const statusMatch = !selectedStatus || cardStatusId === selectedStatus;
+                const projectMatch = !selectedProject || cardProjectId === selectedProject;
+
+                card.style.display = (statusMatch && projectMatch) ? "block" : "none";
+            });
+        }
+
+
+        function getProjectName(projectId) {
+            const option = document.querySelector(`#projectFilter option[value="${projectId}"]`);
+            return option ? option.textContent : "";
+        }
+    </script>
+
+}

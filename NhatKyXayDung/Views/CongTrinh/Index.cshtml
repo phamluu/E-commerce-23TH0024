@@ -1,0 +1,127 @@
+﻿@using E_commerce_23TH0024.Common.Helpers
+@model IEnumerable<CongTrinh>
+
+@{
+    ViewData["Title"] = "Quản lý công trình";
+}
+
+<div class="container mt-4">
+
+    <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+        <h4 class="mb-2 mb-md-0 text-primary">Quản lý công trình</h4>
+
+        <div class="d-flex gap-2">
+            <a asp-action="Create" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+    </div>
+
+    @* @Html.Partial("_AlertMessages") *@
+
+    <!-- Tổng doanh thu -->
+    <div class="mb-3">
+        <!-- Desktop -->
+        <div class="alert alert-success d-none d-md-flex justify-content-between align-items-center shadow-sm">
+            <div><i class="bi bi-cash-coin me-2"></i><strong>Tổng doanh thu:</strong></div>
+            @* <div class="fs-5 fw-bold text-end">@Model.Sum(p => p.ProjectPrice).ToVnCurrency() đ</div> *@
+        </div>
+
+        <!-- Mobile -->
+        <div class="card bg-light border-success d-block d-md-none shadow-sm">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div><i class="bi bi-cash-coin me-2 text-success"></i><strong>Tổng doanh thu</strong></div>
+                @* <div class="fw-bold text-success">@Model.Sum(p => p.ProjectPrice).ToVnCurrency() đ</div> *@
+            </div>
+        </div>
+    </div>
+
+    <!-- Table for desktop -->
+    <div class="table-responsive d-none d-md-block">
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên công trình</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày triển khai</th>
+                    <th>Ngày hoàn thành</th>
+                    <th>Giá thầu</th>
+                    <th class="text-center" style="width: 180px;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pair in Model.Select((item, index) => new { item, index }))
+                {
+                    <tr>
+                        <td>@(pair.index + 1)</td>
+                        <td><a href="@Url.Action("Details", "CongTrinh", new { id = pair.item.Id })">@Html.DisplayFor(m => pair.item.TenCongTrinh)</a></td>
+                        <td>@Html.DisplayFor(m => pair.item.DiaChi)</td>
+                        <td>@pair.item.NgayTrienKhai?.ToString("dd/MM/yyyy")</td>
+                        <td>@pair.item.NgayHoanThanh?.ToString("dd/MM/yyyy")</td>
+                        <td></td>
+                        <td class="text-center">
+                            @Html.EditButton("CongTrinh", pair.item.Id)
+                            @Html.DeleteButton(pair.item.Id, Url.Action("Delete", "CongTrinh"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Cards for mobile -->
+    <div class="d-block d-md-none">
+        @foreach (var pair in Model.Select((item, index) => new { item, index }))
+        {
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold"><a href="@Url.Action("Details", "CongTrinh", new { id = pair.item.Id })">@(pair.index + 1). @pair.item.TenCongTrinh</a></h5>
+                    @if (pair.item.NgayTrienKhai.HasValue)
+                    {
+                        <p class="mb-1"><strong>Ngày triển khai:</strong> @pair.item.NgayTrienKhai?.ToString("dd/MM/yyyy")</p>
+                    }
+                    @if (pair.item.NgayHoanThanh.HasValue)
+                    {
+                        <p class="mb-1"><strong>Ngày hoàn thành:</strong> @pair.item.NgayHoanThanh?.ToString("dd/MM/yyyy")</p>
+                    }
+                    @if (!string.IsNullOrEmpty(pair.item.DiaChi))
+                    {
+                        <p class="mb-1"><strong>Địa chỉ:</strong> @pair.item.DiaChi</p>
+                    }
+                    <div class="dropdown position-absolute top-0 end-0 m-2">
+                        <button class="btn btn-sm btn-light border-0 p-1 shadow-sm rounded-circle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                title="Tùy chọn">
+                            <i class="bi bi-three-dots-vertical text-secondary fs-5"></i>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 animate__animated animate__fadeIn"
+                            style="min-width: 150px;">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center text-warning gap-2"
+                                   href="@Url.Action("Edit", "CongTrinh", new { id = pair.item.Id })">
+                                    <i class="bi bi-pencil-square fs-5"></i> <span>Chỉnh sửa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <form method="post"
+                                      action="@Url.Action("Delete", "CongTrinh", new { id = pair.item.Id })"
+                                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                    <button type="submit" class="dropdown-item d-flex align-items-center text-danger gap-2">
+                                        <i class="bi bi-trash fs-5"></i> <span>Xóa</span>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

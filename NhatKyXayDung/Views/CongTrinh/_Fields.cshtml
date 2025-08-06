@@ -1,0 +1,54 @@
+﻿@using E_commerce_23TH0024.Common.Helpers
+@model NhatKyXayDung.Models.CongTrinh
+<div class="mb-3">
+    <label asp-for="TenCongTrinh" class="form-label fw-semibold">Tên công trình</label>
+    <input asp-for="TenCongTrinh" class="form-control" placeholder="Nhập tên công trình..." />
+    <span asp-validation-for="TenCongTrinh" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="DiaChi" class="form-label fw-semibold">Địa chỉ</label>
+    <input asp-for="TenCongTrinh" class="form-control" placeholder="Nhập địa chỉ công trình..." />
+    <span asp-validation-for="TenCongTrinh" class="text-danger"></span>
+</div>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label asp-for="DiaChi" class="form-label fw-semibold">Giá thầu</label>
+        <input id="DiaChi" class="form-control" type="text" placeholder="Nhập giá thầu..." value="" />
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="NgayTrienKhai" class="form-label fw-semibold">Ngày triển khai</label>
+        <input asp-for="NgayTrienKhai" class="form-control" type="date" />
+        <span asp-validation-for="NgayTrienKhai" class="text-danger"></span>
+    </div>
+    <div class="col-md-4 mb-3">
+        <label asp-for="NgayHoanThanh" class="form-label fw-semibold">Ngày hoàn thành</label>
+        <input asp-for="NgayHoanThanh" class="form-control" type="date" />
+        <span asp-validation-for="NgayHoanThanh" class="text-danger"></span>
+    </div>
+</div>
+<div class="mb-3">
+    <label asp-for="MoTa" class="form-label fw-semibold">Mô tả</label>
+    <textarea id="MoTa" name="MoTa" class="summernote form-control">@Model?.MoTa</textarea>
+    <span asp-validation-for="MoTa" class="text-danger"></span>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+        setTimeout(function () {
+            $('.note-toolbar').removeClass('card-header');
+        }, 100);
+    });
+</script>

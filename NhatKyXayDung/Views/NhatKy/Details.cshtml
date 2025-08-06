@@ -1,0 +1,106 @@
+﻿@using E_commerce_23TH0024.Common.Helpers
+@using NhatKyXayDung.Enums
+@model NhatKyXayDung.Models.NhatKy
+
+@{
+    ViewData["Title"] = "Xem Task";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+
+        <!-- Card Header -->
+        <div class="card-header bg-primary text-white d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+            <h5 class="mb-0 text-break text-wrap" style="max-width: 100%">
+                @Html.DisplayFor(model => model.TenNhatKy)
+            </h5>
+            <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-light btn-sm">
+                    ✏️ Sửa
+                </a>
+                <a asp-action="Index" class="btn btn-outline-light btn-sm">
+                    ⬅️ Quay lại
+                </a>
+            </div>
+        </div>
+
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="row row-cols-1 g-4">
+
+                <!-- Trạng thái -->
+                @{
+                    var status = (ThoiTiet)Model.ThoiTietSang;
+                    var statusClass = status switch
+                    {
+                        ThoiTiet.Mua => "badge bg-danger",
+                        ThoiTiet.Nang => "badge bg-success",
+                        _ => "badge bg-secondary"
+                    };
+                }
+                <div class="col">
+                    @if (Model.ThoiTietSang.HasValue || Model.ThoiTietChieu.HasValue)
+                    {
+                        <div class="mb-2 d-flex flex-wrap gap-2">
+                            <span class="text-muted small d-block mb-1">Thời tiết:</span>
+                            <div class="d-flex flex-wrap gap-2">
+                                @if (Model.ThoiTietSang.HasValue)
+                                {
+                                    <span class="badge d-flex align-items-center gap-1
+                                                                @(Model.ThoiTietSang == (int)ThoiTiet.Nang ? "bg-warning text-dark" :
+                                                                                                                                                                        Model.ThoiTietSang == (int)ThoiTiet.Mua ? "bg-primary" : "bg-secondary")">
+                                                                                                                                                                                                        <i class="bi
+                                                                    @(Model.ThoiTietSang == (int)ThoiTiet.Nang ? "bi-brightness-high" :
+                                                                                                                                                                              Model.ThoiTietSang == (int)ThoiTiet.Mua ? "bi-cloud-rain" : "bi-cloud")"></i>
+                                Sáng: @(((ThoiTiet)Model.ThoiTietSang).GetDisplayName())
+                            </span>
+                                                        }
+                                @if (Model.ThoiTietChieu.HasValue)
+                                {
+                                    <span class="badge d-flex align-items-center gap-1
+                                                                    @(Model.ThoiTietChieu == (int)ThoiTiet.Nang ? "bg-warning text-dark" :
+                                                                                                                                                                            Model.ThoiTietChieu == (int)ThoiTiet.Mua ? "bg-primary" : "bg-secondary")">
+                                                                                                                                                                                                             <i class="bi
+                                                                        @(Model.ThoiTietChieu == (int)ThoiTiet.Nang ? "bi-brightness-high" :
+                                                                                                                                                                                   Model.ThoiTietChieu == (int)ThoiTiet.Mua ? "bi-cloud-rain" : "bi-cloud")"></i>
+                                Chiều: @(((ThoiTiet)Model.ThoiTietChieu).GetDisplayName())
+                            </span>
+                                                        }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- Ngày thực hiện -->
+                <div class="col">
+                    <div class="d-flex align-items-center mb-1 text-muted small">
+                        <i class="bi bi-folder me-2"></i> Ngày triển khai
+                    </div>
+                    <div class="fw-semibold">@Model.NgayTrienKhai?.ToString("dd/MM/yyyy")</div>
+                </div>
+                <!-- Dự án -->
+                <div class="col">
+                    <div class="d-flex align-items-center mb-1 text-muted small">
+                        <i class="bi bi-folder me-2"></i> Dự án
+                    </div>
+                    <div class="fw-semibold">@Model.CongTrinh?.TenCongTrinh</div>
+                </div>
+
+                <!-- Mô tả -->
+                <div class="col">
+                    <div class="d-flex align-items-center mb-1 text-muted small">
+                        <i class="bi bi-file-earmark-richtext me-2"></i> Mô tả
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.NoiDung))
+                    {
+                        <div class="border rounded p-2 bg-light small">
+                            @Html.Raw(Model.NoiDung)
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

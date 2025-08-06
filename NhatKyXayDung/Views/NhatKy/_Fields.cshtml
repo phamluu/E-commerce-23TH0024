@@ -1,0 +1,91 @@
+﻿@using NhatKyXayDung.Enums
+@model NhatKy
+<!-- Dự án -->
+<div class="mb-3">
+    <label asp-for="IdCongTrinh" class="form-label">Thuộc dự án</label>
+    <select asp-for="IdCongTrinh" class="form-select multiselect" asp-items="ViewBag.IdCongTrinh">
+        <option value="">-- Chọn dự án --</option>
+    </select>
+    <span asp-validation-for="IdCongTrinh" class="text-danger"></span>
+</div>
+<!-- Tiêu đề -->
+<div class="mb-3">
+    <label asp-for="TenNhatKy" class="form-label">Tiêu đề</label>
+    <input asp-for="TenNhatKy" class="form-control" />
+    <span asp-validation-for="TenNhatKy" class="text-danger"></span>
+</div>
+
+<!-- Ngày thực hiện-->
+<div class="mb-3">
+    <label asp-for="NgayTrienKhai" class="form-label">Ngày triển khai</label>
+    <div class="input-group">
+        <input asp-for="NgayTrienKhai" class="form-control" type="date" id="NgayTrienKhai" />
+        <button class="btn btn-outline-secondary" type="button" id="btnToday">
+            Hôm nay
+        </button>
+    </div>
+    <span asp-validation-for="NgayTrienKhai" class="text-danger"></span>
+</div>
+
+
+<div class="mb-3">
+    <label class="form-label">Thời tiết</label>
+    <div class="d-flex flex-wrap gap-3">
+        <label class="form-check-label" for="sang">Buổi sáng</label>
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.ThoiTietSang, (int)ThoiTiet.Mua, new { @class = "form-check-input", id = "sang-mua" })
+            <label class="form-check-label bg-primary badge" for="sang-mua">
+                <i class="bi bi-cloud-rain"></i> Mưa
+            </label>
+        </div>
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.ThoiTietSang, (int)ThoiTiet.Nang, new { @class = "form-check-input", id = "sang-nang" })
+            <label class="form-check-label bg-warning text-dark badge" for="sang-nang"><i class="bi-brightness-high"></i> Nắng</label>
+        </div>
+        <span asp-validation-for="ThoiTietSang" class="text-danger"></span>
+    </div>
+    <div class="d-flex flex-wrap gap-3">
+        <label class="form-check-label" for="chieu">Buổi chiều</label>
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.ThoiTietChieu, (int)ThoiTiet.Mua, new { @class = "form-check-input", id = "chieu-mua" })
+            <label class="form-check-label bg-primary badge" for="chieu-mua"><i class="bi bi-cloud-rain"></i> Mưa</label>
+        </div>
+        <div class="form-check">
+            @Html.RadioButtonFor(m => m.ThoiTietChieu, (int)ThoiTiet.Nang, new { @class = "form-check-input", id = "chieu-nang" })
+            <label class="form-check-label badge bg-warning text-dark" for="chieu-nang"><i class="bi-brightness-high"></i> Nắng</label>
+        </div>
+        <span asp-validation-for="ThoiTietChieu" class="text-danger"></span>
+    </div>
+    
+</div>
+
+<!-- Mô tả -->
+<div class="mb-3">
+    <label asp-for="NoiDung" class="form-label">Mô tả</label>
+    <textarea id="NoiDung" name="NoiDung" class="summernote form-control">@Model?.NoiDung</textarea>
+    <span asp-validation-for="NoiDung" class="text-danger"></span>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+        setTimeout(function () {
+            $('.note-toolbar').removeClass('card-header');
+        }, 100);
+
+         // Gán ngày hôm nay khi nhấn nút
+        $('#btnToday').click(function () {
+            const today = new Date().toISOString().split('T')[0];
+            $('#NgayTrienKhai').val(today);
+        });
+    });
+</script>
